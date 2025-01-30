@@ -1,0 +1,23 @@
+{
+  "name": "cleanwatertechnology",
+  "version": "1.0.0",
+  "description": "El proyecto tiene como propósito diseñar e implementar un sistema de gestión de capacitaciones para Clean Water Technology (CWT), orientado a fortalecer el entrenamiento continuo del personal encargado del mantenimiento.",
+  "homepage": "https://github.com/MarkoEchevarria/CleanWaterTechnology#readme",
+  "bugs": {
+    "url": "https://github.com/MarkoEchevarria/CleanWaterTechnology/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarkoEchevarria/CleanWaterTechnology.git"
+  },
+  "license": "MIT",
+  "author": "MarkoEchevarria",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
