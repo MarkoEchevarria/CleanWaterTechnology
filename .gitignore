@@ -1,5 +1,8 @@
-# Ignore modules
-node_modules/
+# Ignora node_modules
+node_modules
 
-# Ignore  package-lock
+# Ignora las variables de entorno
+.env
+
+# Ignora el package-lock.json
 package-lock.json

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capacitación - Clean Water Technology</title>
+   
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- CSS Personalizado -->
+    <link rel="stylesheet" href="stylesem.css">
+</head>
+<body>
+    <!-- Encabezado -->
+    <div class="bg-teal-500 p-4 text-center shadow-md relative">
+        <h2 class="text-encabezado"><strong>Clean Water Technology</strong></h2>
+    </div>
+
+    <!-- Cabecera -->
+    <header class="bg-gray-200 text-center relative">
+        <img src="imagenes/FONDO5.JPG" alt="Banner" class="banner">
+        <h1 class="banner-text"><strong>Iniciaste sesión como empleado</strong></h1>
+        <div class="absolute top-4 right-4 flex gap-4">
+            <button id="btnNotificaciones" class="bg-white text-black p-2 rounded-full shadow-md">🔔</button>
+            <button id="btnCerrarSesion" class="bg-red-500 text-white px-3 py-1 rounded shadow-md">Cerrar sesión</button>
+        </div>
+        <div id="notificacionesDropdown" class="hidden absolute right-4 top-12 bg-white shadow-md rounded p-4 w-64 z-10">
+            <p class="text-black">No tienes nuevas notificaciones</p>
+        </div>
+    </header>
+
+    <!-- Contenedor principal -->
+    <main class="container mx-auto flex flex-wrap justify-center gap-4 p-4">
+        
+        <!-- Sección de Usuario -->
+        <aside>
+            <div class="user-icon">
+                <img src="imagenes/ICONO2.PNG">
+            </div>
+            <h1 class="Usuario-text"> Bienvenido Juan Pérez</h1>
+        </aside>
+
+        <!-- Sección Principal -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+            
+            <!-- Mis Cursos -->
+            <div class="p-5 bg-white shadow-md rounded-lg text-center cursor-pointer" id="misCursos">
+                <h2 class="text-xl font-semibold">Mis Cursos</h2>
+                <img src="imagenes/curso.png" class="mx-auto w-40">
+            </div>
+
+            <!-- Lista de Cursos -->
+            <div class="listaCurso hidden p-5 bg-gray-100 shadow-md rounded-lg w-full text-center">
+                <h3 class="text-lg font-semibold">Mantenimiento de Equipos</h3>
+            </div>
+            <div class="listaCurso hidden p-5 bg-gray-100 shadow-md rounded-lg w-full text-center">
+                <h3 class="text-lg font-semibold">Seguridad de Trabajo</h3>
+            </div>
+            <div class="listaCurso hidden p-5 bg-gray-100 shadow-md rounded-lg w-full text-center">
+                <h3 class="text-lg font-semibold">Tratamiento de Aguas Residuales</h3>
+            </div>
+
+            <!-- Historial de Certificados -->
+            <div id="historialCertificados" class="p-5 bg-white shadow-md rounded-lg text-center cursor-pointer">
+                <h2 class="text-xl font-semibold">Historial de Certificados</h2>
+                <img src="imagenes/historial.png" class="mx-auto w-40">
+            </div>
+
+            <!-- Lista de Certificados -->
+            <div id="listaCertificados" class="hidden p-5 bg-gray-100 shadow-md rounded-lg w-full text-center">
+                <h3 class="text-lg font-semibold text-center">Certificados Obtenidos</h3>
+                <ul class="list-disc pl-6 text-left mx-auto w-fit">
+                    <li>Certificado en Mantenimiento de Equipos</li>
+                    <li>Certificado en Seguridad de Trabajo</li>
+                    <li>Certificado en Tratamiento de Aguas Residuales</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <!-- Botón de Regresar -->
+    <button id="btnRegresar" class="hidden fixed bottom-5 right-5 bg-teal-500 text-white px-4 py-2 rounded shadow-md">
+        Regresar
+    </button>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById("btnNotificaciones").addEventListener("click", function() {
+            document.getElementById("notificacionesDropdown").classList.toggle("hidden");
+        });
+
+        document.getElementById("misCursos").addEventListener("click", function() {
+            document.querySelectorAll("#misCursos, #historialCertificados, header, aside").forEach(el => el.classList.add("hidden"));
+            document.querySelectorAll(".listaCurso").forEach(curso => curso.classList.remove("hidden"));
+            document.getElementById("btnRegresar").classList.remove("hidden");
+        });
+
+        document.getElementById("historialCertificados").addEventListener("click", function() {
+            document.querySelectorAll("#misCursos, #historialCertificados, header, aside").forEach(el => el.classList.add("hidden"));
+            document.getElementById("listaCertificados").classList.remove("hidden");
+            document.getElementById("btnRegresar").classList.remove("hidden");
+        });
+
+        document.getElementById("btnRegresar").addEventListener("click", function() {
+            document.querySelectorAll("#misCursos, #historialCertificados, header, aside").forEach(el => el.classList.remove("hidden"));
+            document.querySelectorAll(".listaCurso, #listaCertificados").forEach(el => el.classList.add("hidden"));
+            document.getElementById("btnRegresar").classList.add("hidden");
+        });
+        document.getElementById("btnCerrarSesion").addEventListener("click", function() {
+        window.location.href = "index.html";
+        });
+
+    </script>
+</body>
+</html>

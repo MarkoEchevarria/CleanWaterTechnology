@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capacitacion Clean Water Technology</title>
+    <link rel="preload" href="../css/normalize.css" as="style">
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link href="https://fonts.googleapis.com/css2?family=Krub:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="../css/styles.css" as="style">
+    <link href="../css/styles.css" rel="stylesheet">
+</head>
+
+
+
+
+<body>
+    <header>
+        <h1 class="titulo">Clean Water Technology</h1>
+    </header>
+
+
+
+
+    <div class="nav-bg">
+        <nav class="navegacion-principal contenedor">
+            
+            
+            <a href="/index.html">Inicio</a>
+                <div class="dropdown">
+                    <a href="#" class="dropbtn">Empleados</a>
+                        <div class="dropdown-content">
+                            <a href="/empleados/registrar-empleado.html">Registrar empleado</a>
+                            <a href="/empleados/modificar-empleado.html">Modificar empleado</a>
+                            <a href="/empleados/eliminar-empleado.html">Eliminar empleado</a>
+                        </div>
+                </div>
+                
+                <div class="dropdown">
+                    <a href="#" class="dropbtn">Cursos</a>
+                        <div class="dropdown-content">
+                            <a href="/cursos/crear-curso.html">Crear curso</a>
+                            <a href="/cursos/modificar-curso.html">Modificar Curso</a>
+                            <a href="/cursos/eliminar-curso.html">Eliminar Curso</a>
+                        </div>
+                </div>
+
+                <div class="dropdown">
+                    <a href="#" class="dropbtn">Evaluaciones</a>
+                        <div class="dropdown-content">
+                            <a href="/evaluaciones/crear-evalucion.html">Crear evaluación</a>
+                            <a href="/evaluaciones/calificar-evaluacion.html">Calificar evaluación</a>
+                            <a href="/evaluaciones/ver-calificaciones.html">Ver calificaciones</a>
+                        </div>
+                </div>
+
+            <a href="#">Reportes</a>
+
+
+        </nav>
+    </div>
+
+    <section>
+        <h2>Crear curso</h2>
+
+        <form class="formulario">
+            <fieldset>
+                <legend>Rellene los campos</legend>
+                
+                <div class="contenedor-cursos">
+                    <div class="campo">
+                        <label>Nombre</label>
+                        <input class="input-text" type="text" placeholder="Nombre">
+                    </div>
+
+                    <div class="campo">
+                        <label>Descripción</label>
+                        <textarea class="input-text" type="text" placeholder="Descripción"></textarea>
+                    </div>
+
+                    <div class="campo">
+                        <label>Número de módulos</label>
+                        <input class="input-text" type="number" min="1" max="99" placeholder="Número de módulos">
+                    </div>
+
+                </div> <!-- .contenedor-campos -->
+
+                <div class="alinear-derecha flex">
+                    <input class="boton w-sm-100" type="submit" value="Crear">
+                </div>
+
+            </fieldset>
+        </form>
+
+    </section>
+
+    <!-- Nuevo -->
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const formulario = document.querySelector(".formulario");
+    
+            formulario.addEventListener("submit", function (e) {
+                e.preventDefault();
+    
+                // Capturar valores del formulario
+                const nombre = document.querySelector("input[placeholder='Nombre']").value;
+                const descripcion = document.querySelector("textarea[placeholder='Descripción']").value;
+                const modulos = document.querySelector("input[placeholder='Número de módulos']").value;
+    
+                if (nombre.trim() === "" || descripcion.trim() === "" || modulos.trim() === "") {
+                    alert("Todos los campos son obligatorios");
+                    return;
+                }
+    
+                // Obtener cursos existentes en localStorage
+                let cursos = JSON.parse(localStorage.getItem("cursos")) || [];
+    
+                // Crear objeto curso
+                const nuevoCurso = { nombre, descripcion, modulos };
+    
+                // Agregar curso al array
+                cursos.push(nuevoCurso);
+    
+                // Guardar en localStorage
+                localStorage.setItem("cursos", JSON.stringify(cursos));
+    
+                // Limpiar formulario
+                formulario.reset();
+    
+                alert("Curso creado con éxito!");
+            });
+        });
+    </script>
+
+    
+</body>
+
+</html>

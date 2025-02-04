@@ -1,0 +1,143 @@
+<!DOCTYPE html> 
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capacitación Clean Water Technology</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link href="https://fonts.googleapis.com/css2?family=Krub:wght@400;700&display=swap" rel="stylesheet">
+    <link href="css/stylesin.css" rel="stylesheet">
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+        .close {
+            color: red;
+            font-size: 20px;
+            cursor: pointer;
+            float: right;
+        }
+        .close:hover {
+            color: darkred;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .modal button {
+            background-color: #0088a9;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 5px;
+        }
+        .modal button:hover {
+            background-color: #006d85;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="titulo">Clean Water Technology</h1>
+    </header>
+
+    <div class="nav-bg">
+        <nav class="navegacion-principal contenedor">
+            <a href="#">Inicio</a>
+            <a href="#">Noticias</a>
+            <a href="#">Quienes somos</a>
+            <a href="#">Contactános</a>
+        </nav>
+    </div>
+
+    <section class="hero">
+        <div class="contenido-hero">
+            <h2>Sistema de capacitaciones para el personal</h2>
+            <div class="bienvenida-container">
+                <div class="bienvenida">
+                    <h2>Seleccione su rol:</h2>
+                    <div class="opciones">
+                        <button onclick="openModal('Administrador')">Administrador</button>
+                        <button onclick="openModal('Usuario')">Usuario</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="contenedor sombra">
+        <section>
+            <h2>CWT líder en el tratamiento de aguas residuales</h2>
+            <div class="inspiracion">
+                <img src="img/cwt-procesos.webp" alt="Imagen de perfil" width="500" height="500">
+                <p>"En cada gota de esfuerzo está la clave para ser mejores"</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>Todos los derechos reservados. Grupo 04</p>
+    </footer>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h3 id="modal-title"></h3>
+            <input type="text" id="username" placeholder="Usuario" required>
+            <input type="password" id="password" placeholder="Contraseña" required>
+            <button onclick="validateLogin()">Ingresar</button>
+        </div>
+    </div>
+
+    <script>
+        function openModal(role) {
+            document.getElementById('modal-title').innerText = "Iniciar sesión como " + role;
+            document.getElementById('loginModal').style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById('loginModal').style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            let modal = document.getElementById('loginModal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        function validateLogin() {
+            let username = document.getElementById('username').value;
+            let password = document.getElementById('password').value;
+            if (username === "admin" && password === "admin") {
+                window.location.href = "admin.html";
+            } else if (username === "usuario" && password === "usuario") {
+                window.location.href = "emple.html";
+            } else {
+                alert("Usuario o contraseña incorrectos");
+            }
+        }
+    </script>
+</body>
+</html>
