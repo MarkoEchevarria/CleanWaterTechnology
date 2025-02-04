@@ -1,7 +1,5 @@
 import { Router } from "express";
 import { registerEmployee, showEmployee } from "../controllers/controllers.js";
-import path from "path"
-import { register } from "module";
 
 const router = Router()
 
