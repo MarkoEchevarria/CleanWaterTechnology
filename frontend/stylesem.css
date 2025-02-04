@@ -1,0 +1,115 @@
+/* Establece un fondo y ajusta el tamaño del body */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f1f1f1;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Sección superior con el banner */
+header {
+    position: relative;
+    width: 100%;
+    height: 50vh; /* El banner ocupa el 50% de la altura de la pantalla */
+}
+/*modificar tamaño bammer imagen*/
+.banner {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Asegura que la imagen cubra todo el área sin deformarse */
+}
+
+/* Texto en el banner */
+.banner-text {
+    position: absolute;
+    top: 15%; /* Centrado verticalmente */
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centrado exacto */
+    color: rgb(250, 248, 243);
+    font-size: 2rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Añade sombra para mejorar la visibilidad del texto */
+}
+
+/* Ajustar texto en el encabezado */
+.text-encabezado {
+    font-size: 2.3rem;
+    color: rgb(255, 252, 252);
+    font-weight: bold;
+}
+
+/* Ajustes para la sección de usuario */
+.Usuario-text {
+    position: absolute;
+    top: 55%; /* Centrado más hacia abajo */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 1.8rem;
+}
+
+/* Ajustar el contenedor para que se adapte al tamaño de la ventana */
+.container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Asegura que el ícono del usuario se centre bien */
+.user-icon img {
+    position: absolute;
+    top: 38%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: rgb(92, 27, 27);
+    font-size: 2rem;
+    width: 9%; /* Ajusta el tamaño */
+    height: auto;
+    object-fit: cover;
+}
+
+/* Asegura que la sección de cursos y otras secciones se ajusten */
+.grid {
+    display: grid;
+    grid-template-columns: 1fr; /* En pantallas pequeñas, solo una columna */
+    gap: 1rem;
+    margin-top: 10px;
+}
+
+@media(min-width: 768px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr); /* En pantallas medianas y grandes, dos columnas */
+    }
+}
+
+.grid > div {
+    padding: 1rem;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+}
+
+/* Añadir un borde y más espacio a la cabecera */
+header img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+#btnRegresar{
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #008080;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+#btnRegresar:hover{
+    background-color: #006f6f;
+}

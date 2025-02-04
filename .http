@@ -1,0 +1,18 @@
+##3 METHOD GET
+GET http://localhost:3000/data
+
+### METHOD POST 
+GET http://localhost:3000/showEmployee
+
+### POST registerEmployee
+POST http://localhost:3000/registerEmployee
+Content-Type: application/json
+
+{
+  "id_empleado": 1,
+  "nombre": "Marko",
+  "apellido": "Echevarria",
+  "dni": 12345678,
+  "correo": "markofidel10@gmail.com",
+  "rol": "estudiante"
+}

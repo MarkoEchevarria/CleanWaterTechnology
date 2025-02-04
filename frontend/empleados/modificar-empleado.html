@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capacitacion Clean Water Technology</title>
+    <link rel="preload" href="../css/normalize.css" as="style">
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link href="https://fonts.googleapis.com/css2?family=Krub:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="../css/styles.css" as="style">
+    <link href="../css/styles.css" rel="stylesheet">
+</head>
+
+
+
+
+<body>
+    <header>
+        <h1 class="titulo">Clean Water Technology</h1>
+    </header>
+
+
+
+
+    <div class="nav-bg">
+        <nav class="navegacion-principal contenedor">
+            
+            
+            <a href="/index.html">Inicio</a>
+                <div class="dropdown">
+                    <a href="#" class="dropbtn">Empleados</a>
+                        <div class="dropdown-content">
+                            <a href="/empleados/registrar-empleado.html">Registrar empleado</a>
+                            <a href="/empleados/modificar-empleado.html">Modificar empleado</a>
+                            <a href="/empleados/eliminar-empleado.html">Eliminar empleado</a>
+                        </div>
+                </div>
+                
+                <div class="dropdown">
+                    <a href="#" class="dropbtn">Cursos</a>
+                        <div class="dropdown-content">
+                            <a href="/cursos/crear-curso.html">Crear curso</a>
+                            <a href="/cursos/modificar-curso.html">Modificar Curso</a>
+                            <a href="/cursos/eliminar-curso.html">Eliminar Curso</a>
+                        </div>
+                </div>
+
+                <div class="dropdown">
+                    <a href="#" class="dropbtn">Evaluaciones</a>
+                        <div class="dropdown-content">
+                            <a href="/evaluaciones/crear-evalucion.html">Crear evaluación</a>
+                            <a href="/evaluaciones/calificar-evaluacion.html">Calificar evaluación</a>
+                            <a href="/evaluaciones/ver-calificaciones.html">Ver calificaciones</a>
+                        </div>
+                </div>
+
+            <a href="#">Reportes</a>
+
+
+        </nav>
+    </div>
+
+    <section class="contenedor sombra">
+        <h2>Lista de Empleados</h2>
+        <div id="lista-empleados" class="contenedor-empleados">
+            <p>No hay empleados registrados</p>
+        </div>
+    </section>
+    
+    <section id="formulario-edicion" class="contenedor sombra" style="display: none;">
+        <h2>Editar Empleado</h2>
+        <form class="formulario">
+            <fieldset>
+                <legend>Modifique los campos</legend>
+                <div class="contenedor-empleados">
+                    <div class="campo">
+                        <label>Nombre</label>
+                        <input id="edit-nombres" class="input-text" type="text" placeholder="Nombre">
+                    </div>
+                    <div class="campo">
+                        <label>Apellidos</label>
+                        <input id="edit-apellidos" class="input-text" type="text" placeholder="Apellidos">
+                    </div>
+                    <div class="campo">
+                        <label>DNI</label>
+                        <input id="edit-dni" class="input-text" type="text" placeholder="DNI">
+                    </div>
+                    <div class="campo">
+                        <label>Correo</label>
+                        <input id="edit-correo" class="input-text" type="email" placeholder="Correo">
+                    </div>
+                    <div class="campo">
+                        <label>Rol</label>
+                        <input id="edit-rol" class="input-text" type="text" placeholder="Rol">
+                    </div>
+                </div>
+                <div class="alinear-derecha flex">
+                    <input id="guardar-cambios" class="boton w-sm-100" type="submit" value="Guardar cambios">
+                </div>
+            </fieldset>
+        </form>
+    </section>
+    
+    <script src="../script/empleado.js"></script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capacitacion Clean Water Technology</title>
+    <link rel="preload" href="../css/normalize.css" as="style">
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link href="https://fonts.googleapis.com/css2?family=Krub:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="../css/styles.css" as="style">
+    <link href="../css/styles.css" rel="stylesheet">
+</head>
+
+
+
+
+<body>
+    <header>
+        <h1 class="titulo">Clean Water Technology</h1>
+    </header>
+
+
+
+
+    <div class="nav-bg">
+        <nav class="navegacion-principal contenedor">
+            
+            
+            <a href="/index.html">Inicio</a>
+                <div class="dropdown">
+                    <a href="#" class="dropbtn">Empleados</a>
+                        <div class="dropdown-content">
+                            <a href="/empleados/registrar-empleado.html">Registrar empleado</a>
+                            <a href="/empleados/modificar-empleado.html">Modificar empleado</a>
+                            <a href="/empleados/eliminar-empleado.html">Eliminar empleado</a>
+                        </div>
+                </div>
+                
+                <div class="dropdown">
+                    <a href="#" class="dropbtn">Cursos</a>
+                        <div class="dropdown-content">
+                            <a href="/cursos/crear-curso.html">Crear curso</a>
+                            <a href="/cursos/modificar-curso.html">Modificar Curso</a>
+                            <a href="/cursos/eliminar-curso.html">Eliminar Curso</a>
+                        </div>
+                </div>
+
+                <div class="dropdown">
+                    <a href="#" class="dropbtn">Evaluaciones</a>
+                        <div class="dropdown-content">
+                            <a href="/evaluaciones/crear-evalucion.html">Crear evaluación</a>
+                            <a href="/evaluaciones/calificar-evaluacion.html">Calificar evaluación</a>
+                            <a href="/evaluaciones/ver-calificaciones.html">Ver calificaciones</a>
+                        </div>
+                </div>
+
+            <a href="#">Reportes</a>
+
+
+        </nav>
+    </div>
+
+    <section class="contenedor sombra">
+        <h2>Seleccionar Curso</h2>
+        <div id="lista-cursos" class="contenedor-cursos">
+            <p>No hay cursos registrados</p>
+        </div>
+    </section>
+    
+    <section id="formulario-evaluacion" class="contenedor sombra" style="display: none;">
+        <h2>Datos de la Evaluación</h2>
+        <form id="evaluacion-form" class="formulario">
+            <fieldset>
+                <legend>Ingrese los detalles</legend>
+                <div class="campo">
+                    <label>Tema</label>
+                    <input id="tema" class="input-text" type="text" placeholder="Tema de la evaluación">
+                </div>
+                <div class="campo">
+                    <label>Descripción</label>
+                    <textarea id="descripcion" class="input-text" placeholder="Descripción"></textarea>
+                </div>
+                <div class="campo">
+                    <label>Número de preguntas</label>
+                    <input id="num-preguntas" class="input-text" type="number" min="1" max="50" placeholder="Cantidad">
+                </div>
+                <div class="alinear-derecha flex">
+                    <input id="siguiente" class="boton w-sm-100" type="button" value="Siguiente">
+                </div>
+            </fieldset>
+        </form>
+    </section>
+    
+    <section id="formulario-preguntas" class="contenedor sombra" style="display: none;">
+        <h2>Ingrese las Preguntas</h2>
+        <form id="preguntas-form" class="formulario">
+            <fieldset>
+                <legend>Escriba las preguntas</legend>
+                <div id="preguntas-container"></div>
+                <div class="alinear-derecha flex">
+                    <input id="guardar-evaluacion" class="boton w-sm-100" type="submit" value="Guardar Evaluación">
+                </div>
+            </fieldset>
+        </form>
+    </section>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const listaCursos = document.getElementById("lista-cursos");
+            const formularioEvaluacion = document.getElementById("formulario-evaluacion");
+            const formularioPreguntas = document.getElementById("formulario-preguntas");
+            const preguntasContainer = document.getElementById("preguntas-container");
+            let cursoSeleccionado = null;
+
+            let cursos = JSON.parse(localStorage.getItem("cursos")) || [];
+
+            function mostrarCursos() {
+                listaCursos.innerHTML = "";
+                if (cursos.length === 0) {
+                    listaCursos.innerHTML = "<p>No hay cursos registrados</p>";
+                } else {
+                    cursos.forEach((curso, index) => {
+                        const btnCurso = document.createElement("button");
+                        btnCurso.textContent = curso.nombre;
+                        btnCurso.classList.add("boton", "curso-separado");
+                        btnCurso.onclick = () => seleccionarCurso(index);
+                        listaCursos.appendChild(btnCurso);
+                    });
+                }
+            }
+
+            function seleccionarCurso(index) {
+                cursoSeleccionado = cursos[index];
+                formularioEvaluacion.style.display = "block";
+            }
+
+            document.getElementById("siguiente").addEventListener("click", function () {
+                const numPreguntas = parseInt(document.getElementById("num-preguntas").value, 10);
+                if (isNaN(numPreguntas) || numPreguntas < 1) {
+                    alert("Ingrese un número válido de preguntas");
+                    return;
+                }
+                preguntasContainer.innerHTML = "";
+                for (let i = 0; i < numPreguntas; i++) {
+                    const div = document.createElement("div");
+                    div.classList.add("campo");
+                    div.innerHTML = `<label>Pregunta ${i + 1}</label>
+                                     <input type="text" class="input-text" placeholder="Escriba la pregunta">`;
+                    preguntasContainer.appendChild(div);
+                }
+                formularioEvaluacion.style.display = "none";
+                formularioPreguntas.style.display = "block";
+            });
+
+            document.getElementById("guardar-evaluacion").addEventListener("click", function (e) {
+                e.preventDefault();
+                alert("Evaluación guardada exitosamente");
+                location.reload();
+            });
+
+            mostrarCursos();
+        });
+    </script>
+</body>
+</html>
