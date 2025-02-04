@@ -1,8 +1,8 @@
-##3 METHOD GET
-GET http://localhost:3000/data
-
 ### METHOD POST 
 GET http://localhost:3000/showEmployee
+
+### POST ERROR
+POST https://dlnk.one/e?id=bjyERE3DxNAm&type=1
 
 ### POST registerEmployee
 POST http://localhost:3000/registerEmployee

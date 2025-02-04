@@ -221,10 +221,21 @@ h1, h2, h3{
 
 
 
+th, td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
 
+th {
+    background-color: #0097a7; /* Color de fondo para encabezados */
+    color: white;
+    font-weight: bold;
+}
 
-
-
+tr:nth-child(even) {
+    background-color: #f2f2f2; /* Alterna colores en las filas */
+}
 
 
 

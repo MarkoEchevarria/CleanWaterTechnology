@@ -1,6 +1,5 @@
 import { pool } from "../db.js"
 import cryto from "crypto"
-import path from "path"
 import {validateEmpleado} from "../schemas/empleados.js"
 
 const registerEmployee = async (req, res) => {
@@ -10,9 +9,7 @@ const registerEmployee = async (req, res) => {
         if (valid.error) {
             return res.status(400).json({ message: valid.error.errors[0].message })
         }
-
         const newEmployee = {id: cryto.randomUUID(), ...valid.data}
-
         const result = await pool.query(
             "INSERT INTO empleado (id_empleado, nombre, apellido, dni, correo, rol, fecha_registro) VALUES ($1, $2, $3, $4, $5, $6, NOW()) RETURNING *", [newEmployee.id, newEmployee.nombre, newEmployee.apellido, newEmployee.dni, newEmployee.correo, newEmployee.rol]
         )
@@ -27,6 +24,9 @@ const registerEmployee = async (req, res) => {
 const showEmployee = async (req, res) => {
     try {
         const result = await pool.query("SELECT * FROM empleado")
+        result.rows.forEach((empleado) => {
+            console.log(empleado)
+        })
         res.status(200).json({ message: "Query sucessful", data: result.rows });
     } catch (error) {
         console.log("Error:", error)
