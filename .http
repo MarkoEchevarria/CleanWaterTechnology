@@ -1,8 +1,8 @@
 ### METHOD POST 
 GET http://localhost:3000/showEmployee
 
-### POST ERROR
-POST https://dlnk.one/e?id=bjyERE3DxNAm&type=1
+### GET ONE EMPLOYEE
+GET http://localhost:3000/showOneEmployee/788eeec8-9f69-4661-9dad-bea397a8a35b
 
 ### POST registerEmployee
 POST http://localhost:3000/registerEmployee
@@ -16,3 +16,5 @@ Content-Type: application/json
   "correo": "markofidel10@gmail.com",
   "rol": "estudiante"
 }
+### DELETE 
+DELETE http://localhost:3000/deleteEmployee/aa16719e-9d8c-4305-a8d7-7ed22c9995d2
