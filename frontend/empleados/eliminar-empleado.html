@@ -61,7 +61,7 @@
         </nav>
     </div>
 
-    <section class="contenedor sombra">
+    <section class="contenedor sombra" id="section-lista-empleados">
         <h2>Lista de Empleados</h2>
         <div id="lista-empleados" class="contenedor-empleados">
             <p>No hay empleados registrados</p>
@@ -75,7 +75,8 @@
                         <th>DNI</th>
                         <th>Correo</th>
                         <th>Rol</th>
-                        <th>Eliminar</th>
+                        <th>Acciones</th>
+
 
                     </tr>
                 </thead>
@@ -85,7 +86,7 @@
     </section>
     
     <section id="formulario-edicion" class="contenedor sombra" style="display: none;">
-        <h2>Editar Empleado</h2>
+        <h2 id="titulo-formulario-edicion">Editar Empleado</h2>
         <form class="formulario">
             <fieldset>
                 <legend>Modifique los campos</legend>
@@ -111,8 +112,8 @@
                         <input id="edit-rol" class="input-text" type="text" placeholder="Rol">
                     </div>
                 </div>
-                <div class="alinear-derecha flex">
-                    <input id="guardar-cambios" class="boton w-sm-100" type="submit" value="Guardar cambios">
+                <div class="alinear-derecha flex update-guardar-cambios">
+                    <input id="guardar-cambios" class="boton w-sm-100" value="Guardar cambios" style="color:#a9aaaa; background-color:  #d6d7d7;">
                 </div>
             </fieldset>
         </form>

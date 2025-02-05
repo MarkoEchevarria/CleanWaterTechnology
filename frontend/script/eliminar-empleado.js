@@ -64,29 +64,3 @@ function eliminarEmpleado(id) {
     });
 }
 */
-function eliminarEmpleado(id) {
-    if (!confirm("¿Estás seguro de que deseas eliminar este empleado?")) {
-        return;
-    }
-
-    fetch(`/deleteEmployee/${id}`, {
-        method: "DELETE",
-        headers: {
-            "Content-Type": "application/json",
-        },
-    })
-    .then(response => {
-        if (!response.ok) {
-            return response.json().then(err => { throw new Error(err.message || "Error desconocido"); });
-        }
-        return response.json();
-    })
-    .then(data => {
-        alert("Empleado eliminado correctamente");
-        location.reload();
-    })
-    .catch(error => {
-        console.error("Error al eliminar empleado:", error);
-        alert("No se pudo eliminar el empleado: " + error.message);
-    });
-}

@@ -30,6 +30,8 @@ document.addEventListener("DOMContentLoaded", function() {
                         <td>${capitalizeFirstLetter(emp.rol)}</td>
                         <td>
                             <button class="btn btn-primary modify-btn" onclick="recuperarEmpleado('${emp.id_empleado}')" style="padding: 20px auto; border-collapse: collapse; font-size: 18px; background-color:rgba(255, 234, 2, 0.87)">Modificar</button>
+
+                            <button class="btn btn-danger delete-btn" onclick="eliminarEmpleado('${emp.id_empleado}')" style="padding: 20px auto; border-collapse: collapse; font-size: 18px; background-color: #ff4141">Eliminar</button>
                         </td>
                     `;
                     
@@ -49,7 +51,32 @@ document.addEventListener("DOMContentLoaded", function() {
     cargarEmpleados();
 });
 
+function eliminarEmpleado(id) {
+    if (!confirm("¿Estás seguro de que deseas eliminar este empleado?")) {
+        return;
+    }
 
+    fetch(`/deleteEmployee/${id}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(err => { throw new Error(err.message || "Error desconocido"); });
+        }
+        return response.json();
+    })
+    .then(data => {
+        alert("Empleado eliminado correctamente");
+        location.reload();
+    })
+    .catch(error => {
+        console.error("Error al eliminar empleado:", error);
+        alert("No se pudo eliminar el empleado: " + error.message);
+    });
+}
 
 function recuperarEmpleado(id_empleado) {
     document.getElementById("formulario-edicion").style.display = "block";
