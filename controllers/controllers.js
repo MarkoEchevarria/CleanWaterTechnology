@@ -27,6 +27,42 @@ const showEmployee = async (req, res) => {
         result.rows.forEach((empleado) => {
             console.log(empleado)
         })
+        res.status(200).json({ message: "Query sucessful", data: result.rows});
+    } catch (error) {
+        console.log("Error:", error)
+        res.status(500).json({ message: error.message }); 
+    }
+}
+
+const showOneEmployee = async (req, res) => {
+    try {
+        const { id } = req.params
+        const result = await pool.query("SELECT * FROM empleado WHERE id_empleado = $1", [id])
+        res.status(200).json({ message: "Query sucessful", data: result.rows });
+    } catch (error) {
+        console.log("Error:", error)
+        res.status(500).json({ message: error.message });
+    }
+}
+
+const deleteEmployee = async (req, res) => {
+    try {
+        const { id } = req.params
+        const result = await pool.query("DELETE FROM empleado WHERE id_empleado = $1", [id])
+        res.status(200).json({ message: "Query sucessful", data: result.rows });
+    } catch (error) {
+        console.log("Error:", error)
+        res.status(500).json({ message: error.message }).redirect("/empleados/eliminar-empleado.html"); 
+    }
+} 
+
+const updateEmployee = async (req, res) => {
+    try {
+        const { id } = req.params
+        const { nombre, apellido, dni, correo, rol } = req.body
+        const result = await pool.query(
+            "UPDATE empleado SET nombre = $1, apellido = $2, dni = $3, correo = $4, rol = $5 WHERE id_empleado = $6 RETURNING *", [nombre, apellido, dni, correo, rol, id]
+        )
         res.status(200).json({ message: "Query sucessful", data: result.rows });
     } catch (error) {
         console.log("Error:", error)
@@ -34,4 +70,4 @@ const showEmployee = async (req, res) => {
     }
 }
 
-export {registerEmployee, showEmployee}
+export {registerEmployee, showEmployee, deleteEmployee, updateEmployee, showOneEmployee}
