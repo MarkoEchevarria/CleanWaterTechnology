@@ -1,140 +1,187 @@
-// Variable global para el índice del empleado editado
-let empleadoEditandoIndex = null;
-
-// Función para agregar un nuevo empleado
-function agregarEmpleado() {
-    let nombres = document.getElementById("nombres").value;
-    let apellidos = document.getElementById("apellidos").value;
-    let dni = document.getElementById("dni").value;
-    let correo = document.getElementById("correo").value;
-    let rol = document.getElementById("rol").value;
-
-    // Verificar que todos los campos estén completos
-    if (nombres && apellidos && dni && correo && rol) {
-        let nuevoEmpleado = { nombres, apellidos, dni, correo, rol };
-        let empleados = JSON.parse(localStorage.getItem("empleados")) || [];
-        empleados.push(nuevoEmpleado);
-        localStorage.setItem("empleados", JSON.stringify(empleados));
-
-        // Limpiar los campos después de agregar
-        document.getElementById("nombres").value = "";
-        document.getElementById("apellidos").value = "";
-        document.getElementById("dni").value = "";
-        document.getElementById("correo").value = "";
-        document.getElementById("rol").value = "";
-
-        // Mostrar mensaje de éxito
-        alert("Empleado registrado con éxito.");
-        mostrarEmpleados(); // Refrescar la lista de empleados
-    } else {
-        alert("No se puede dejar ningún campo vacío.");
-    }
+function capitalizeFirstLetter(word) {
+    const firstLetter = word.charAt(0)
+    const firstLetterCap = firstLetter.toUpperCase()
+    const remainingLetters = word.slice(1)
+    const capitalizedWord = firstLetterCap + remainingLetters
+    return capitalizedWord
 }
 
-// Función para mostrar los empleados registrados
-function mostrarEmpleados() {
-    const listaEmpleados = document.getElementById("lista-empleados");
-    let empleados = JSON.parse(localStorage.getItem("empleados")) || [];
-    listaEmpleados.innerHTML = "";
+document.addEventListener("DOMContentLoaded", function() {
+    async function cargarEmpleados() {
+        try {
+            const response = await fetch("/showEmployee");
+            const data = await response.json();
+            const tabla = document.getElementById("tabla-empleados");
+            const listaEmpleados = document.getElementById("listaEmpleados");
+            const mensajeEmpleados = document.getElementById("lista-empleados");
 
-    if (empleados.length === 0) {
-        listaEmpleados.innerHTML = "<p>No hay empleados registrados</p>";
-    } else {
-        const ul = document.createElement("ul");
-        ul.classList.add("sombra");
-        empleados.forEach((empleado, index) => {
-            const li = document.createElement("li");
-            li.classList.add("sombra", "campo");
+            if (response.ok && data.data.length > 0) {
+                listaEmpleados.innerHTML = "";
+                mensajeEmpleados.style.display = "none";  // Oculta el mensaje
+                tabla.style.display = "table";  // Muestra la tabla
 
-            // Crear un contenedor para los datos
-            const contenedorDatos = document.createElement("div");
-            contenedorDatos.classList.add("contenedor-datos");
+                data.data.forEach(emp => {
+                    const fila = document.createElement("tr");
+                    fila.innerHTML = `
+                        <td>${capitalizeFirstLetter(emp.nombre)}</td>
+                        <td>${capitalizeFirstLetter(emp.apellido)}</td>
+                        <td>${emp.dni}</td>
+                        <td>${emp.correo}</td>
+                        <td>${capitalizeFirstLetter(emp.rol)}</td>
+                        <td>
+                            <button class="btn btn-primary modify-btn" onclick="recuperarEmpleado('${emp.id_empleado}')" style="padding: 20px auto; border-collapse: collapse; font-size: 18px; background-color:rgba(255, 234, 2, 0.87)"><i class="fa-solid fa-user-pen"></i></button>
 
-            // Crear los divs para cada dato con el formato deseado
-            const nombre = document.createElement("div");
-            nombre.innerHTML = `<strong>Empleado:</strong> ${empleado.nombres} ${empleado.apellidos}`;
-            contenedorDatos.appendChild(nombre);
+                            <button class="btn btn-danger delete-btn" onclick="eliminarEmpleado('${emp.id_empleado}')" style="padding: 20px auto; border-collapse: collapse; font-size: 18px; background-color: #ff4141"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    `;
+                    
+                    listaEmpleados.appendChild(fila);
+                });
+            } else {
+                listaEmpleados.innerHTML = "";
+                tabla.style.display = "none";
+                mensajeEmpleados.style.display = "block";
+            }
+        } catch (error) {
+            console.error("Error en la petición:", error);
+            document.getElementById("mensaje-empleados").innerHTML = "<p>Error al cargar los empleados</p>";
+        }
+    }
 
-            const dni = document.createElement("div");
-            dni.innerHTML = `<strong>DNI:</strong> ${empleado.dni}`;
-            contenedorDatos.appendChild(dni);
+    cargarEmpleados();
+});
 
-            const correo = document.createElement("div");
-            correo.innerHTML = `<strong>Correo:</strong> ${empleado.correo}`;
-            contenedorDatos.appendChild(correo);
+function mostrarFormularioRegistrar() {
+    document.getElementById("formulario-registrar-edicion").style.display = "block"
+    document.getElementById("section-lista-empleados").style.display = "none"
+} 
 
-            const rol = document.createElement("div");
-            rol.innerHTML = `<strong>Rol:</strong> ${empleado.rol}`;
-            contenedorDatos.appendChild(rol);
+function registrarEmpleado() {
+    document.getElementById("formularioRegistrarEmpleado").addEventListener("submit", agregarEmpleado)
 
-
-            // Crear el botón de modificar
-            const btnModificar = document.createElement("button");
-            btnModificar.textContent = "Modificar";
-            btnModificar.classList.add("boton");
-            btnModificar.onclick = () => editarEmpleado(index);
-
-            // Agregar el contenedor de datos y el botón
-            li.appendChild(contenedorDatos);
-            li.appendChild(btnModificar);
-            ul.appendChild(li);
+    async function agregarEmpleado(event) {
+        event.preventDefault();
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData.entries());
+        console.log(JSON.stringify(data))
+    
+        const response = await fetch("/registerEmployee", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
         });
-        listaEmpleados.appendChild(ul);
+    
+        if (response.ok) {
+            alert("Datos enviados correctamente.");
+            location.reload();
+        } else {
+            alert("Hubo un error al enviar los datos.");
+        }
     }
 }
 
-
-// Función para eliminar un empleado
-function eliminarEmpleado(index) {
-    let empleados = JSON.parse(localStorage.getItem("empleados")) || [];
-    if (confirm("¿Estás seguro de que deseas eliminar a este empleado?")) {
-        empleados.splice(index, 1); // Eliminar el empleado del array
-        localStorage.setItem("empleados", JSON.stringify(empleados)); // Actualizar el localStorage
-        mostrarEmpleados(); // Refrescar la lista de empleados
+function eliminarEmpleado(id) {
+    if (!confirm("¿Estás seguro de que deseas eliminar este empleado?")) {
+        return;
     }
+
+    fetch(`/deleteEmployee/${id}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(err => { throw new Error(err.message || "Error desconocido"); });
+        }
+        return response.json();
+    })
+    .then(data => {
+        alert("Empleado eliminado correctamente");
+        location.reload();
+    })
+    .catch(error => {
+        console.error("Error al eliminar empleado:", error);
+        alert("No se pudo eliminar el empleado: " + error.message);
+    });
 }
-// Función para editar un empleado
-function editarEmpleado(index) {
-    const empleados = JSON.parse(localStorage.getItem("empleados")) || [];
-    const empleado = empleados[index];
 
-    // Guardar el índice del empleado que se está editando
-    empleadoEditandoIndex = index;
-
-    // Rellenar los campos del formulario con la información del empleado
-    document.getElementById("edit-nombres").value = empleado.nombres;
-    document.getElementById("edit-apellidos").value = empleado.apellidos;
-    document.getElementById("edit-dni").value = empleado.dni;
-    document.getElementById("edit-correo").value = empleado.correo;
-    document.getElementById("edit-rol").value = empleado.rol;
-
+function recuperarEmpleado(id_empleado) {
     document.getElementById("formulario-edicion").style.display = "block";
+    document.getElementById("section-lista-empleados").style.display = "none";
+    async function cargarEmpleados() {
+        try {
+            const response = await fetch(`/showOneEmployee/${id_empleado}`);
+            const data = await response.json();
+            empleado  = data.data[0];
+            document.getElementById("titulo-formulario-edicion").innerHTML=`<h2>Actualizar datos : ${capitalizeFirstLetter(empleado.nombre)} ${capitalizeFirstLetter(empleado.apellido)}</h2>`;
+
+            document.getElementById("edit-nombres").value = capitalizeFirstLetter(empleado.nombre);
+            document.getElementById("edit-apellidos").value = capitalizeFirstLetter(empleado.apellido);
+            document.getElementById("edit-dni").value = empleado.dni;
+            document.getElementById("edit-correo").value = empleado.correo;
+            document.getElementById("edit-rol").value = capitalizeFirstLetter(empleado.rol);
+
+            const inputs = document.querySelectorAll('.input-text');
+            inputs.forEach(input => {
+                input.addEventListener('input', () => habilitarBoton(empleado.id_empleado));
+            });
+
+        } catch (error) {
+            console.error("Error en la petición:", error);
+        }
+    }
+    cargarEmpleados()
 }
 
-// Función para guardar los cambios del empleado
-document.getElementById("guardar-cambios").addEventListener("click", function (e) {
-    e.preventDefault();
-    let empleados = JSON.parse(localStorage.getItem("empleados")) || [];
+function habilitarBoton(id_empleado) {
+    const nombre = document.getElementById('edit-nombres').value.trim();
+    const apellido = document.getElementById('edit-apellidos').value.trim();
+    const dni = document.getElementById('edit-dni').value.trim();
+    const correo = document.getElementById('edit-correo').value.trim();
+    const rol = document.getElementById('edit-rol').value.trim();
 
-    // Verificar que se haya seleccionado un empleado para editar
-    if (empleadoEditandoIndex !== null) {
-        empleados[empleadoEditandoIndex].nombres = document.getElementById("edit-nombres").value;
-        empleados[empleadoEditandoIndex].apellidos = document.getElementById("edit-apellidos").value;
-        empleados[empleadoEditandoIndex].dni = document.getElementById("edit-dni").value;
-        empleados[empleadoEditandoIndex].correo = document.getElementById("edit-correo").value;
-        empleados[empleadoEditandoIndex].rol = document.getElementById("edit-rol").value;
+    const botonGuardar = document.getElementById('guardar-cambios');
 
-        // Guardar los cambios en el localStorage
-        localStorage.setItem("empleados", JSON.stringify(empleados));
-
-        // Cerrar el formulario de edición y actualizar la lista
-        document.getElementById("formulario-edicion").style.display = "none";
-        alert("Empleado modificado con exito");
-        mostrarEmpleados();
+    if (nombre && apellido && dni && correo && rol) {
+        botonGuardar.disabled = false;
+        botonGuardar.style.color = '#fff';
+        botonGuardar.style.backgroundColor = '#4CAF50'
+        botonGuardar.onclick = () => modificarEmpleado(id_empleado);
+    } else {
+        botonGuardar.disabled = true;
+        botonGuardar.style.color = '#a9aaaa';
+        botonGuardar.style.backgroundColor = '#d6d7d7';
     }
-});
+}
 
-// Cuando el DOM esté cargado, mostrar los empleados
-document.addEventListener("DOMContentLoaded", function () {
-    mostrarEmpleados();
-});
+function modificarEmpleado(id_empleado) {
+    console.log(id_empleado)
+
+    const nombre = document.getElementById("edit-nombres").value;
+    const apellido = document.getElementById("edit-apellidos").value;
+    const dni = document.getElementById("edit-dni").value;
+    const correo = document.getElementById("edit-correo").value;
+    const rol = document.getElementById("edit-rol").value;
+
+    async function updateEmployee() {
+        try {
+            const response = await fetch(`/updateEmployee/${id_empleado}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ nombre, apellido, dni, correo, rol })
+            })
+            if (response.ok) {
+                location.reload();
+            } else {
+                console.error("Error al modificar empleado");
+            }
+        } catch (error) {
+            console.error("Error en la petición:", error);
+        }
+    }
+    updateEmployee();
+}
