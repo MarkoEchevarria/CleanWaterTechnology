@@ -236,8 +236,33 @@ th {
 tr:nth-child(even) {
     background-color: #f2f2f2; /* Alterna colores en las filas */
 }
+.modify-btn {
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: rgba(255, 234, 2, 0.87);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
 
+.modify-btn:hover {
+    background-color: rgba(255, 234, 2, 1);
+}
 
+.delete-btn {
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #ff4141;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.delete-btn:hover {
+    background-color: #ff0000;
+}
 
 
 @media (min-width: 768px) { /* 480px: teléfono, 768px: tablet, 1140px: laptop o computadora, 1400px: TV */
