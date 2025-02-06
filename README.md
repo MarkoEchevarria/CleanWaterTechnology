@@ -39,5 +39,5 @@ To run this project, you will need to add the following environment variables to
 
 ## Database Diagram
 
-![ERD Diagram](Database-diagram/db_postgresql.png)
+![ERD Diagram](database/db_postgresql.png)
 

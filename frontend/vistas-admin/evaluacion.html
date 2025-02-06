@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capacitacion Clean Water Technology</title>
+    <link rel="preload" href="../css/normalize.css" as="style">
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link href="https://fonts.googleapis.com/css2?family=Krub:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="../css/styles.css" as="style">
+    <link href="../css/styles.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/ca00aacec8.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <header>
+        <h1 class="titulo">Clean Water Technology</h1>
+    </header>
+
+    <div class="nav-bg">
+        <nav class="navegacion-principal contenedor">
+
+            <div class="dropdown">
+                <a href="/index.html">Inicio</a>
+            </div>
+            
+            <div class="dropdown">
+                <a href="/vistas-admin/empleado.html" class="dropbtn">Empleados</a>
+            </div>
+            
+            <div class="dropdown">
+                <a href="/vistas-admin/curso.html" class="dropbtn">Cursos</a>
+            </div>
+
+            <div class="dropdown">
+                <a href="#" class="dropbtn">Evaluaciones</a>
+            </div>
+
+            <div class="dropdown">
+                <a href="#" class="dropbtn">Reportes</a>
+            </div>
+
+        </nav>
+    </div>
+
+    <section class="contenedor sombra" id="section-lista-empleados">
+        <h2>Evaluaciones</h2>
+        <div id="lista-empleados" class="contenedor-empleados">
+            <p>No hay empleados registrados</p>
+        </div>
+        <table border="1" id="tabla-empleados"
+            style="display: none; width: 80%; margin: 20px auto; border-collapse: collapse; font-size: 18px">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>DNI</th>
+                    <th>Correo</th>
+                    <th>Rol</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="listaEmpleados"></tbody>
+        </table>
+
+        </div>
+
+        <div class="alinear-derecha flex registrar-empleado">
+            <button id="registrar-empleado" class="boton w-sm-100" style="color:#fff; background-color:  #4CAF50;"
+                onclick="mostrarFormularioRegistrar()">Registrar Empleado <i class="fa-solid fa-user-plus"></i>
+            </button>
+        </div>
+    </section>
+
+    <section id="formulario-edicion" class="contenedor sombra" style="display: none;">
+        <h2 id="titulo-formulario-edicion">Editar Empleado</h2>
+        <form class="formulario">
+            <fieldset>
+                <legend>Modifique los campos</legend>
+                <div class="contenedor-empleados">
+                    <div class="campo">
+                        <label>Nombre</label>
+                        <input id="edit-nombres" class="input-text" type="text" placeholder="Nombre">
+                    </div>
+                    <div class="campo">
+                        <label>Apellidos</label>
+                        <input id="edit-apellidos" class="input-text" type="text" placeholder="Apellidos">
+                    </div>
+                    <div class="campo">
+                        <label>DNI</label>
+                        <input id="edit-dni" class="input-text" type="text" placeholder="DNI">
+                    </div>
+                    <div class="campo">
+                        <label>Correo</label>
+                        <input id="edit-correo" class="input-text" type="email" placeholder="Correo">
+                    </div>
+                    <div class="campo">
+                        <label>Rol </label>
+                        <input id="edit-rol" class="input-text" type="text" placeholder="Rol">
+                    </div>
+                </div>
+                <div style=" flex-wrap: wrap; justify-content: space-between; width: 100%">
+                    <div class="alinear-derecha flex regresar-empleados ">
+                        <a href="../empleado/empleado.html"><input id="regresar-empleados" class="boton w-sm-100"
+                                value="Regresar" style="background-color: #ff4141"></a>
+
+                    </div>
+                    <div class="alinear-derecha flex update-guardar-cambios">
+                        <input id="guardar-cambios" class="boton w-sm-100" value="Guardar cambios "
+                            style="color:#a9aaaa; background-color:  #d6d7d7;">
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </section>
+
+    <section id="formulario-registrar-edicion" class="contenedor sombra" style="display: none;" style="background: #4D4D4D;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    color: white;
+    font-family: Arial, sans-serif;">
+        <h2>Registrar empleado</h2>
+
+        <form class="formulario" id="formularioRegistrarEmpleado">
+            <fieldset>
+                <legend>Rellene los campos</legend>
+
+                <div class="contenedor-campos">
+                    <div class="campo">
+                        <label for="nombre" style="font-weight: bold;">Nombres</label>
+                        <input class="input-text" id="nombre" name="nombre" placeholder="Nombres" required />
+                    </div>
+
+                    <div class="campo">
+                        <label for="apellido" style="font-weight: bold;">Apellidos</label>
+                        <input class="input-text" id="apellido" name="apellido" placeholder="Apellidos" required />
+                    </div>
+
+                    <div class="campo">
+                        <label for="dni" style="font-weight: bold;">DNI <span class="info-campo">(8
+                                digitos)</span></label>
+                        <input class="input-text" id="dni" name="dni" placeholder="DNI" required />
+                    </div>
+
+                    <div class="campo">
+                        <label for="correo" style="font-weight: bold;">Correo <span class="info-campo">(formato:
+                                ejemplo@ejemplo.ejemplo)</span></label>
+                        <input class="input-text" id="correo" name="correo" type="email" placeholder="Correo"
+                            required />
+                    </div>
+
+                    <div class="campo">
+                        <label for="rol" style="font-weight: bold;">Rol</label>
+                        <input class="input-text" id="rol" name="rol" placeholder="Rol" required />
+                    </div>
+                </div> <!-- .contenedor-campos -->
+
+                <div class="alinear-derecha flex">
+                    <button type="submit" class="boton w-sm-100" onclick="registrarEmpleado()">Registrar</button>
+                </div>
+            </fieldset>
+        </form>
+    </section>
+
+    <script src="../script/evaluacion.js"></script>
+</body>
+
+</html>

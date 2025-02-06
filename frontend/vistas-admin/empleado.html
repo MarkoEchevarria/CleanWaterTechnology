@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
-
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,45 +13,33 @@
     <script src="https://kit.fontawesome.com/ca00aacec8.js" crossorigin="anonymous"></script>
 </head>
 
-
-
-
 <body>
     <header>
         <h1 class="titulo">Clean Water Technology</h1>
     </header>
 
-
-
-
     <div class="nav-bg">
         <nav class="navegacion-principal contenedor">
+
+            <div class="dropdown">
+                <a href="/index.html">Inicio</a>
+            </div>
             
-            <a href="/index.html">Inicio</a>
-                <div class="dropdown">
-                    <a href="/empleados/empleados.html" class="dropbtn">Empleados</a>
-                </div>
-                
-                <div class="dropdown">
-                    <a href="#" class="dropbtn">Cursos</a>
-                        <div class="dropdown-content">
-                            <a href="/cursos/crear-curso.html">Crear curso</a>
-                            <a href="/cursos/modificar-curso.html">Ver Curso</a>
-                            <a href="/cursos/eliminar-curso.html">Eliminar Curso</a>
-                        </div>
-                </div>
-
-                <div class="dropdown">
-                    <a href="#" class="dropbtn">Evaluaciones</a>
-                        <div class="dropdown-content">
-                            <a href="/evaluaciones/crear-evalucion.html">Crear evaluación</a>
-                            <a href="/evaluaciones/calificar-evaluacion.html">Calificar evaluación</a>
-                            <a href="/evaluaciones/ver-calificaciones.html">Ver calificaciones</a>
-                        </div>
-                </div>
-
-            <a href="#">Reportes</a>
-
+            <div class="dropdown">
+                <a href="/vistas-admin/empleado.html" class="dropbtn">Empleados</a>
+            </div>
+            
+            <div class="dropdown">
+                <a href="/vistas-admin/curso.html" class="dropbtn">Cursos</a>
+            </div>
+            
+            <div class="dropdown">
+                <a href="#" class="dropbtn">Evaluaciones</a>
+            </div>
+            
+            <div class="dropdown">
+                <a href="#" class="dropbtn">Reportes</a>
+            </div>
 
         </nav>
     </div>
@@ -63,31 +48,31 @@
         <h2>Empleados</h2>
         <div id="lista-empleados" class="contenedor-empleados">
             <p>No hay empleados registrados</p>
-        </div >
-            <table border="1" id="tabla-empleados" style="display: none; width: 80%; margin: 20px auto; border-collapse: collapse; font-size: 18px">
-                <thead>
-                    <tr>
-                        <!-- <th>ID</th> -->
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>DNI</th>
-                        <th>Correo</th>
-                        <th>Rol</th>
-                        <th>Acciones</th>
+        </div>
+        <table border="1" id="tabla-empleados"
+            style="display: none; width: 80%; margin: 20px auto; border-collapse: collapse; font-size: 18px">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>DNI</th>
+                    <th>Correo</th>
+                    <th>Rol</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="listaEmpleados"></tbody>
+        </table>
 
-                    </tr>
-                </thead>
-                <tbody id="listaEmpleados"></tbody>
-            </table>
-    
         </div>
 
         <div class="alinear-derecha flex registrar-empleado">
-            <button id="registrar-empleado" class="boton w-sm-100" style="color:#fff; background-color:  #4CAF50;" onclick="mostrarFormularioRegistrar()">Registrar Empleado <i class="fa-solid fa-user-plus"></i> </button>
+            <button id="registrar-empleado" class="boton w-sm-100" style="color:#fff; background-color:  #4CAF50;"
+                onclick="mostrarFormularioRegistrar()">Registrar Empleado <i class="fa-solid fa-user-plus"></i>
+            </button>
         </div>
-
     </section>
-    
+
     <section id="formulario-edicion" class="contenedor sombra" style="display: none;">
         <h2 id="titulo-formulario-edicion">Editar Empleado</h2>
         <form class="formulario">
@@ -115,20 +100,21 @@
                         <input id="edit-rol" class="input-text" type="text" placeholder="Rol">
                     </div>
                 </div>
-                <div style=" flex-wrap: wrap; justify-content: space-between; width: 100%;
-                  ">
+                <div style=" flex-wrap: wrap; justify-content: space-between; width: 100%">
                     <div class="alinear-derecha flex regresar-empleados ">
-                        <a href="../empleado/empleado.html"><input id="regresar-empleados" class="boton w-sm-100" value="Regresar" style="background-color: #ff4141"></a>
-                        
+                        <a href="../vistas-admin/empleado.html"><input id="regresar-empleados" class="boton w-sm-100"
+                                value="Regresar" style="background-color: #ff4141"></a>
+
                     </div>
-                    <div class="alinear-derecha flex update-guardar-cambios" >
-                        <input id="guardar-cambios" class="boton w-sm-100" value="Guardar cambios "  style="color:#a9aaaa; background-color:  #d6d7d7;">
+                    <div class="alinear-derecha flex update-guardar-cambios">
+                        <input id="guardar-cambios" class="boton w-sm-100" value="Guardar cambios "
+                            style="color:#a9aaaa; background-color:  #d6d7d7;">
                     </div>
                 </div>
             </fieldset>
         </form>
     </section>
-    
+
     <section id="formulario-registrar-edicion" class="contenedor sombra" style="display: none;" style="background: #4D4D4D;
     padding: 20px;
     border-radius: 10px;
@@ -140,41 +126,45 @@
         <form class="formulario" id="formularioRegistrarEmpleado">
             <fieldset>
                 <legend>Rellene los campos</legend>
-                
+
                 <div class="contenedor-campos">
                     <div class="campo">
                         <label for="nombre" style="font-weight: bold;">Nombres</label>
-                        <input class="input-text" id="nombre"  name="nombre" placeholder="Nombres" required />
+                        <input class="input-text" id="nombre" name="nombre" placeholder="Nombres" required />
                     </div>
-        
+
                     <div class="campo">
                         <label for="apellido" style="font-weight: bold;">Apellidos</label>
                         <input class="input-text" id="apellido" name="apellido" placeholder="Apellidos" required />
                     </div>
-        
+
                     <div class="campo">
-                        <label for="dni" style="font-weight: bold;">DNI <span class="info-campo">(8 digitos)</span></label>
+                        <label for="dni" style="font-weight: bold;">DNI <span class="info-campo">(8
+                                digitos)</span></label>
                         <input class="input-text" id="dni" name="dni" placeholder="DNI" required />
                     </div>
-        
+
                     <div class="campo">
-                        <label for="correo" style="font-weight: bold;">Correo <span class="info-campo">(formato: ejemplo@ejemplo.ejemplo)</span></label>
-                        <input class="input-text" id="correo" name="correo" type="email" placeholder="Correo" required />
+                        <label for="correo" style="font-weight: bold;">Correo <span class="info-campo">(formato:
+                                ejemplo@ejemplo.ejemplo)</span></label>
+                        <input class="input-text" id="correo" name="correo" type="email" placeholder="Correo"
+                            required />
                     </div>
-        
+
                     <div class="campo">
                         <label for="rol" style="font-weight: bold;">Rol</label>
                         <input class="input-text" id="rol" name="rol" placeholder="Rol" required />
                     </div>
                 </div> <!-- .contenedor-campos -->
-        
+
                 <div class="alinear-derecha flex">
                     <button type="submit" class="boton w-sm-100" onclick="registrarEmpleado()">Registrar</button>
-                </div> <!--  onclick="agregarEmpleado()" -->
+                </div>
             </fieldset>
-        </form>     
+        </form>
     </section>
 
     <script src="../script/empleado.js"></script>
 </body>
+
 </html>
