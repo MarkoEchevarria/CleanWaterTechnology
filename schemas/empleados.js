@@ -1,11 +1,11 @@
-import { object, string } from "zod"
+import { z } from "zod"
 
-const empleadoSchema = object({
-    nombre: string(),
-    apellido: string(),
-    dni: string().length(8),
-    rol: string(),
-    correo: string().email(),
+const empleadoSchema = z.object({
+    nombre: z.string(),
+    apellido: z.string(),
+    dni: z.string().length(8),
+    rol: z.string(),
+    correo: z.string().email(),
 })
 
 export function validateEmpleado(empleado) {

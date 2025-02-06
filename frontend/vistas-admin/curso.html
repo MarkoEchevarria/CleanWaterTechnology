@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capacitacion Clean Water Technology</title>
+    <link rel="preload" href="../css/normalize.css" as="style">
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link href="https://fonts.googleapis.com/css2?family=Krub:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="../css/styles.css" as="style">
+    <link href="../css/styles.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/ca00aacec8.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <header>
+        <h1 class="titulo">Clean Water Technology</h1>
+    </header>
+
+    <div class="nav-bg">
+        <nav class="navegacion-principal contenedor">
+
+            <div class="dropdown">
+                <a href="/index.html">Inicio</a>
+            </div>
+            
+            <div class="dropdown">
+                <a href="/vistas-admin/empleado.html" class="dropbtn">Empleados</a>
+            </div>
+            
+            <div class="dropdown">
+                <a href="/vistas-admin/curso.html" class="dropbtn">Cursos</a>
+            </div>
+            
+            <div class="dropdown">
+                <a href="#" class="dropbtn">Evaluaciones</a>
+            </div>
+            
+            <div class="dropdown">
+                <a href="#" class="dropbtn">Reportes</a>
+            </div>
+
+        </nav>
+    </div>
+
+    <section class="contenedor sombra" id="section-lista-cursos">
+        <h2>Cursos</h2>
+        <div id="lista-cursos" class="contenedor-cursos">
+            <p>No hay cursos registrados</p>
+        </div>
+        <table border="1" id="tabla-cursos"
+            style="display: none; width: 80%; margin: 20px auto; border-collapse: collapse; font-size: 18px">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripcion</th>
+                    <th>Numero de Modulos</th>
+                    <th>Fecha de creacion</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="listaCursos"></tbody>
+        </table>
+
+        </div>
+
+        <div class="alinear-derecha flex registrar-curso">
+            <button id="registrar-curso" class="boton w-sm-100" style="color:#fff; background-color:  #4CAF50;"
+                onclick="mostrarFormularioRegistrar()">Registrar Curso <i class="fa-solid fa-user-plus"></i>
+            </button>
+        </div>
+    </section>
+
+    <section id="formulario-edicion" class="contenedor sombra" style="display: none;">
+        <h2 id="titulo-formulario-edicion">Editar Curso</h2>
+        <form class="formulario">
+            <fieldset>
+                <legend>Modifique los campos</legend>
+                <div class="contenedor-cursos">
+                    <div class="campo">
+                        <label>Nombre</label>
+                        <input id="edit-nombres" class="input-text" type="text" placeholder="Nombre">
+                    </div>
+                    <div class="campo">
+                        <label>Numeror de Modulos</label>
+                        <input id="edit-num_modulos" class="input-text" type="text" placeholder="Numero de Modulos">
+                    </div>
+                    <div class="campo">
+                        <label>Descripcion</label>
+                        <input id="edit-descripcion" class="input-text" type="text" placeholder="Descripcion">
+                    </div>
+                </div>
+                <div style=" flex-wrap: wrap; justify-content: space-between; width: 100%">
+                    <div class="alinear-derecha flex regresar-cursos ">
+                        <a href="../vistas-admin/curso.html"><input id="regresar-cursos" class="boton w-sm-100"
+                                value="Regresar" style="background-color: #ff4141"></a>
+
+                    </div>
+                    <div class="alinear-derecha flex update-guardar-cambios">
+                        <input id="guardar-cambios" class="boton w-sm-100" value="Guardar cambios "
+                            style="color:#a9aaaa; background-color:  #d6d7d7;">
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </section>
+
+    <section id="formulario-registrar-edicion" class="contenedor sombra" style="display: none;" style="background: #4D4D4D;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    color: white;
+    font-family: Arial, sans-serif;">
+        <h2>Registrar Curso</h2>
+
+        <form class="formulario" id="formularioRegistrarCurso">
+            <fieldset>
+                <legend>Rellene los campos</legend>
+
+                <div class="contenedor-campos">
+                    <div class="campo">
+                        <label for="nombre" style="font-weight: bold;">Nombre del Curso</label>
+                        <input class="input-text" id="nombre" name="nombre" placeholder="Nombres" required />
+                    </div>
+
+                    <div class="campo">
+                        <label for="num_modulos" style="font-weight: bold;">Numero de Modulos</label>
+                        <input class="input-text" id="num_modulos" name="num_modulos" placeholder="Numero de modulos" type="number" required />
+                    </div>
+
+                    <div class="campo">
+                        <label for="descripcion" style="font-weight: bold;">Descripcion del Curso</label>
+                        <input class="input-text" id="descripcion" name="descripcion" placeholder="Descripcion" required/>
+                    </div>
+                </div>
+
+                <div class="alinear-derecha flex">
+                    <button type="submit" class="boton w-sm-100" onclick="registrarCurso()">Registrar</button>
+                </div>
+            </fieldset>
+        </form>
+    </section>
+
+    <script src="../script/curso.js"></script>
+</body>
+
+</html>

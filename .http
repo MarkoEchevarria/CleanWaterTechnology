@@ -18,3 +18,21 @@ Content-Type: application/json
 }
 ### DELETE 
 DELETE http://localhost:3000/deleteEmployee/aa16719e-9d8c-4305-a8d7-7ed22c9995d2
+
+### GET Register Curso
+
+POST http://localhost:3000/registerCurso
+Content-Type: application/json
+
+{
+  "nombre": "CURSO DE APRENDER A MANEJAR",
+  "descripcion": "ESTA ES LA DESCRIPCION DEL CURSO",
+  "num_modulos": 10
+}
+
+### GET Curso
+GET http://localhost:3000/showOneCurso/9e13e785-4d78-4118-8cd9-66066c2d6a01
+
+### DELETE Curso
+
+DELETE http://localhost:3000/deleteCurso/ca38679b-b8e0-4840-a625-676698fd6b55

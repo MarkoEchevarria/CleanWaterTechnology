@@ -2,6 +2,7 @@
 -- Please log an issue at https://github.com/pgadmin-org/pgadmin4/issues/new/choose if you find any bugs, including reproduction steps.
 BEGIN;
 
+
 CREATE TABLE IF NOT EXISTS public.certificado
 (
     id_certificado integer NOT NULL,
@@ -13,18 +14,18 @@ CREATE TABLE IF NOT EXISTS public.certificado
 
 CREATE TABLE IF NOT EXISTS public.curso
 (
-    id_curso integer NOT NULL,
+    id_curso uuid NOT NULL,
     nombre character varying(255) COLLATE pg_catalog."default",
     descripcion character varying(255) COLLATE pg_catalog."default",
     fecha_creacion timestamp without time zone,
-    nota_final integer,
+    num_modulos integer,
     CONSTRAINT curso_pkey PRIMARY KEY (id_curso)
 );
 
 CREATE TABLE IF NOT EXISTS public.curso_empleado
 (
     id_curso_empleado integer NOT NULL,
-    id_curso integer,
+    id_curso uuid,
     id_empleado uuid,
     fecha_inscripcion timestamp without time zone,
     CONSTRAINT curso_empleado_pkey PRIMARY KEY (id_curso_empleado)
@@ -54,7 +55,7 @@ CREATE TABLE IF NOT EXISTS public.evaluacion
 CREATE TABLE IF NOT EXISTS public.modulo
 (
     id_modulo integer NOT NULL,
-    id_curso integer,
+    id_curso uuid,
     titulo character varying(255) COLLATE pg_catalog."default",
     descripcion character varying(255) COLLATE pg_catalog."default",
     numeracion integer,
@@ -90,15 +91,16 @@ ALTER TABLE IF EXISTS public.certificado
 
 
 ALTER TABLE IF EXISTS public.curso_empleado
-    ADD CONSTRAINT curso_empleado_id_curso_fkey FOREIGN KEY (id_curso)
-    REFERENCES public.curso (id_curso) MATCH SIMPLE
+    ADD CONSTRAINT curso_empleado_id_empleado_fkey FOREIGN KEY (id_empleado)
+    REFERENCES public.empleado (id_empleado) MATCH SIMPLE
     ON UPDATE NO ACTION
-    ON DELETE NO ACTION;
+    ON DELETE NO ACTION
+    NOT VALID;
 
 
 ALTER TABLE IF EXISTS public.curso_empleado
-    ADD CONSTRAINT curso_empleado_id_empleado_fkey FOREIGN KEY (id_empleado)
-    REFERENCES public.empleado (id_empleado) MATCH SIMPLE
+    ADD CONSTRAINT curso_empleado_id_curso_fkey FOREIGN KEY (id_curso)
+    REFERENCES public.curso (id_curso) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION
     NOT VALID;
@@ -112,10 +114,11 @@ ALTER TABLE IF EXISTS public.evaluacion
 
 
 ALTER TABLE IF EXISTS public.modulo
-    ADD CONSTRAINT modulo_id_curso_fkey FOREIGN KEY (id_curso)
+    ADD FOREIGN KEY (id_curso)
     REFERENCES public.curso (id_curso) MATCH SIMPLE
     ON UPDATE NO ACTION
-    ON DELETE NO ACTION;
+    ON DELETE NO ACTION
+    NOT VALID;
 
 
 ALTER TABLE IF EXISTS public.multimedia
