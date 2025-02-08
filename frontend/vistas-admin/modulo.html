@@ -11,6 +11,7 @@
     <link rel="preload" href="../css/styles.css" as="style">
     <link href="../css/styles.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/ca00aacec8.js" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
@@ -32,7 +33,7 @@
             <div class="dropdown">
                 <a href="/vistas-admin/curso.html" class="dropbtn">Cursos</a>
             </div>
-    
+
             <div class="dropdown">
                 <a href="/vistas-admin/modulo.html" class="dropbtn">Modulos</a>
             </div>
@@ -53,65 +54,49 @@
     
     </div>
 
-    <section class="contenedor sombra" id="section-lista-empleados">
-        <h2>Evaluaciones</h2>
-        <div id="lista-empleados" class="contenedor-empleados">
-            <p>No hay empleados registrados</p>
+    <section class="contenedor sombra" id="section-lista-modulos">
+        <h2>Cursos y modulos</h2>
+        <div id="lista-modulos" class="contenedor-modulos">
+            <p>No hay modulos registrados</p>
         </div>
-        <table border="1" id="tabla-empleados"
+        <table border="1" id="tabla-modulos"
             style="display: none; width: 80%; margin: 20px auto; border-collapse: collapse; font-size: 18px">
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>DNI</th>
-                    <th>Correo</th>
-                    <th>Rol</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody id="listaEmpleados"></tbody>
+            <tbody id="listaModulos"></tbody>
         </table>
 
         </div>
 
-        <div class="alinear-derecha flex registrar-empleado">
-            <button id="registrar-empleado" class="boton w-sm-100" style="color:#fff; background-color:  #4CAF50;"
-                onclick="mostrarFormularioRegistrar()">Registrar Empleado <i class="fa-solid fa-user-plus"></i>
-            </button>
-        </div>
+
+            <!-- <div class="alinear-derecha flex registrar-curso">
+                        <button id="registrar-curso" class="boton w-sm-100" style="color:#fff; background-color:  #4CAF50;"
+                            onclick="mostrarFormularioRegistrar()">Registrar Curso <i class="fa-solid fa-user-plus"></i>
+                        </button>
+                    </div> -->
+
     </section>
 
     <section id="formulario-edicion" class="contenedor sombra" style="display: none;">
-        <h2 id="titulo-formulario-edicion">Editar Empleado</h2>
+        <h2 id="titulo-formulario-edicion">Editar Curso</h2>
         <form class="formulario">
             <fieldset>
                 <legend>Modifique los campos</legend>
-                <div class="contenedor-empleados">
+                <div class="contenedor-cursos">
                     <div class="campo">
                         <label>Nombre</label>
                         <input id="edit-nombres" class="input-text" type="text" placeholder="Nombre">
                     </div>
                     <div class="campo">
-                        <label>Apellidos</label>
-                        <input id="edit-apellidos" class="input-text" type="text" placeholder="Apellidos">
+                        <label>Numeror de Modulos</label>
+                        <input id="edit-num_modulos" class="input-text" type="text" placeholder="Numero de Modulos">
                     </div>
                     <div class="campo">
-                        <label>DNI</label>
-                        <input id="edit-dni" class="input-text" type="text" placeholder="DNI">
-                    </div>
-                    <div class="campo">
-                        <label>Correo</label>
-                        <input id="edit-correo" class="input-text" type="email" placeholder="Correo">
-                    </div>
-                    <div class="campo">
-                        <label>Rol </label>
-                        <input id="edit-rol" class="input-text" type="text" placeholder="Rol">
+                        <label>Descripcion</label>
+                        <input id="edit-descripcion" class="input-text" type="text" placeholder="Descripcion">
                     </div>
                 </div>
                 <div style=" flex-wrap: wrap; justify-content: space-between; width: 100%">
-                    <div class="alinear-derecha flex regresar-empleados ">
-                        <a href="../empleado/empleado.html"><input id="regresar-empleados" class="boton w-sm-100"
+                    <div class="alinear-derecha flex regresar-cursos ">
+                        <a href="../vistas-admin/curso.html"><input id="regresar-cursos" class="boton w-sm-100"
                                 value="Regresar" style="background-color: #ff4141"></a>
 
                     </div>
@@ -130,50 +115,40 @@
     width: 400px;
     color: white;
     font-family: Arial, sans-serif;">
-        <h2>Registrar empleado</h2>
+        <h2>Registrar Curso</h2>
 
-        <form class="formulario" id="formularioRegistrarEmpleado">
+        <form class="formulario" id="formularioRegistrarCurso">
             <fieldset>
                 <legend>Rellene los campos</legend>
 
                 <div class="contenedor-campos">
                     <div class="campo">
-                        <label for="nombre" style="font-weight: bold;">Nombres</label>
+                        <label for="nombre" style="font-weight: bold;">Nombre del Curso</label>
                         <input class="input-text" id="nombre" name="nombre" placeholder="Nombres" required />
                     </div>
 
                     <div class="campo">
-                        <label for="apellido" style="font-weight: bold;">Apellidos</label>
-                        <input class="input-text" id="apellido" name="apellido" placeholder="Apellidos" required />
+                        <label for="num_modulos" style="font-weight: bold;">Numero de Modulos</label>
+                        <input class="input-text" id="num_modulos" name="num_modulos" placeholder="Numero de modulos" type="number" required />
                     </div>
 
                     <div class="campo">
-                        <label for="dni" style="font-weight: bold;">DNI <span class="info-campo">(8
-                                digitos)</span></label>
-                        <input class="input-text" id="dni" name="dni" placeholder="DNI" required />
+                        <label for="descripcion" style="font-weight: bold;">Descripcion del Curso</label>
+                        <input class="input-text" id="descripcion" name="descripcion" placeholder="Descripcion" required/>
                     </div>
-
-                    <div class="campo">
-                        <label for="correo" style="font-weight: bold;">Correo <span class="info-campo">(formato:
-                                ejemplo@ejemplo.ejemplo)</span></label>
-                        <input class="input-text" id="correo" name="correo" type="email" placeholder="Correo"
-                            required />
-                    </div>
-
-                    <div class="campo">
-                        <label for="rol" style="font-weight: bold;">Rol</label>
-                        <input class="input-text" id="rol" name="rol" placeholder="Rol" required />
-                    </div>
-                </div> <!-- .contenedor-campos -->
+                </div>
 
                 <div class="alinear-derecha flex">
-                    <button type="submit" class="boton w-sm-100" onclick="registrarEmpleado()">Registrar</button>
+                    <button type="submit" class="boton w-sm-100" onclick="registrarCurso()">Registrar</button>
                 </div>
             </fieldset>
         </form>
     </section>
 
-    <script src="../admin-script/eva"></script>
+
+    
+
+    <script src="../admin-script/modulo.js"></script>
 </body>
 
 </html>

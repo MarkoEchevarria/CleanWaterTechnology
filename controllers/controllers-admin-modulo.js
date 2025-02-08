@@ -1,7 +1,25 @@
 import { pool } from "../db.js"
-import cryto from "crypto"
+import crypto from "crypto"
 import {validateEmpleado} from "../schemas/empleados.js"
 
+
+const showModulos = async (req, res) => {
+    try {
+        const { id } = req.params
+        const result = await pool.query("SELECT * FROM modulo WHERE id_curso = $1", [id])
+        result.rows.forEach((modulo) => {
+            console.log(modulo)
+        })
+        res.status(200).json({ message: "Query sucessful", data: result.rows});
+    } catch (error) {
+        console.log("Error:", error)
+        res.status(500).json({ message: error.message }); 
+    }
+}
+
+export {showModulos}
+
+/*
 const registerEmployee = async (req, res) => {
     try {
         const valid = validateEmpleado(req.body)
@@ -28,18 +46,6 @@ const registerEmployee = async (req, res) => {
     }
 }
 
-const showEmployee = async (req, res) => {
-    try {
-        const result = await pool.query("SELECT * FROM empleado")
-        result.rows.forEach((empleado) => {
-            console.log(empleado)
-        })
-        res.status(200).json({ message: "Query sucessful", data: result.rows});
-    } catch (error) {
-        console.log("Error:", error)
-        res.status(500).json({ message: error.message }); 
-    }
-}
 
 const showOneEmployee = async (req, res) => {
     try {
@@ -76,5 +82,5 @@ const updateEmployee = async (req, res) => {
         res.status(500).json({ message: error.message }); 
     }
 }
+*/
 
-export {registerEmployee, showEmployee, deleteEmployee, updateEmployee, showOneEmployee}
