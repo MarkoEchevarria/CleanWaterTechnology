@@ -4,6 +4,8 @@ import {deleteCurso, registerCurso, showCursos, showOneCurso, updateCurso} from 
 
 const router = Router();
 
+/*
+
 // Rutas del empleado-vista-admin
 router.get("/showEmployee", showEmployee)
 router.get("/showOneEmployee/:id", showOneEmployee)
@@ -18,4 +20,5 @@ router.post("/registerCurso", registerCurso)
 router.delete("/deleteCurso/:id", deleteCurso)
 router.patch("/updateCurso/:id", updateCurso)
 
+*/
 export {router}

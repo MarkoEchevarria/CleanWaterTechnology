@@ -9,7 +9,7 @@ function capitalizeFirstLetter(word) {
 document.addEventListener("DOMContentLoaded", function() {
     async function cargarEmpleados() {
         try {
-            const response = await fetch("/showEmployee");
+            const response = await fetch("/admin/showEmployee");
             const data = await response.json();
             const tabla = document.getElementById("tabla-empleados");
             const listaEmpleados = document.getElementById("listaEmpleados");
@@ -65,7 +65,7 @@ function registrarEmpleado() {
         const data = Object.fromEntries(formData.entries());
         console.log(JSON.stringify(data))
     
-        const response = await fetch("/registerEmployee", {
+        const response = await fetch("/admin/registerEmployee", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data)
@@ -85,7 +85,7 @@ function eliminarEmpleado(id) {
         return;
     }
 
-    fetch(`/deleteEmployee/${id}`, {
+    fetch(`/admin/deleteEmployee/${id}`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
@@ -112,7 +112,7 @@ function recuperarEmpleado(id_empleado) {
     document.getElementById("section-lista-empleados").style.display = "none";
     async function cargarEmpleados() {
         try {
-            const response = await fetch(`/showOneEmployee/${id_empleado}`);
+            const response = await fetch(`/admin/showOneEmployee/${id_empleado}`);
             const data = await response.json();
             empleado  = data.data[0];
             document.getElementById("titulo-formulario-edicion").innerHTML=`<h2>Actualizar datos : ${capitalizeFirstLetter(empleado.nombre)} ${capitalizeFirstLetter(empleado.apellido)}</h2>`;
@@ -167,7 +167,7 @@ function modificarEmpleado(id_empleado) {
 
     async function updateEmployee() {
         try {
-            const response = await fetch(`/updateEmployee/${id_empleado}`, {
+            const response = await fetch(`/admin/updateEmployee/${id_empleado}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json"

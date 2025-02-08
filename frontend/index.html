@@ -79,8 +79,8 @@
                 <div class="bienvenida">
                     <h2>Seleccione su rol:</h2>
                     <div class="opciones">
-                        <button onclick="openModal('Administrador')">Administrador</button>
-                        <button onclick="openModal('Usuario')">Usuario</button>
+                        <button onclick="openModalAdmin()">Administrador</button>
+                        <button onclick="openModalUsuario()">Usuario</button>
                     </div>
                 </div>
             </div>
@@ -101,44 +101,29 @@
         <p>Todos los derechos reservados. Grupo 04</p>
     </footer>
 
-    <div id="loginModal" class="modal">
+    <div id="loginModalUsuario" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h3 id="modal-title"></h3>
-            <input type="text" id="username" placeholder="Usuario" required>
-            <input type="password" id="password" placeholder="Contraseña" required>
-            <button onclick="validateLogin()">Ingresar</button>
+            <span class="close" onclick="closeModalUsuario()">&times;</span>
+            <h3 id="modal-title">Iniciar sesion como Usuario</h3>
+            <input type="text" id="correoUsuario" placeholder="Correo" required>
+            <input type="password" id="passwordUsuario" placeholder="Contraseña" required>
+            <button onclick="validateLoginUsuario()">Ingresar</button>
+            <!--    -->
         </div>
     </div>
 
-    <script>
-        function openModal(role) {
-            document.getElementById('modal-title').innerText = "Iniciar sesión como " + role;
-            document.getElementById('loginModal').style.display = "block";
-        }
+    <div id="loginModalAdmin" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModalAdmin()">&times;</span>
+            <h3 id="modal-title">Iniciar sesion como Administrador</h3>
+            <input type="text" id="correoAdmin" placeholder="Correo" required>
+            <input type="password" id="passwordAdmin" placeholder="Contraseña" required>
+            <button onclick="validateLoginAdmin()">Ingresar</button>
+            <!--    -->
+        </div>
+    </div>
 
-        function closeModal() {
-            document.getElementById('loginModal').style.display = "none";
-        }
+    <script src="principal-script/principal.js"></script>
 
-        window.onclick = function(event) {
-            let modal = document.getElementById('loginModal');
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-
-        function validateLogin() {
-            let username = document.getElementById('username').value;
-            let password = document.getElementById('password').value;
-            if (username === "admin" && password === "admin") {
-                window.location.href = "admin.html";
-            } else if (username === "usuario" && password === "usuario") {
-                window.location.href = "emple.html";
-            } else {
-                alert("Usuario o contraseña incorrectos");
-            }
-        }
-    </script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 import express from "express"
-import { router } from "./routes/routes.js"
+import adminRouter from "./routes/admin.routes.js"
+import authRouter from "./routes/auth.routes.js"
 import morgan from "morgan"
 import path from "path"
 import { fileURLToPath } from "url";
@@ -25,7 +26,8 @@ app.use(morgan("dev"))
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "frontend")))
-app.use(router)
+app.use("/admin", adminRouter)
+app.use("/", authRouter)
 
 app.listen(PORT, () => {
     console.log(`Servidor alojado en http://localhost:${PORT}`)

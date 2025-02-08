@@ -31,8 +31,17 @@ Content-Type: application/json
 }
 
 ### GET Curso
-GET http://localhost:3000/showOneCurso/9e13e785-4d78-4118-8cd9-66066c2d6a01
+GET http://localhost:3000/admin/showCursos
 
 ### DELETE Curso
 
 DELETE http://localhost:3000/deleteCurso/ca38679b-b8e0-4840-a625-676698fd6b55
+
+### GET admin
+GET http://localhost:3000/getAdmin/marko
+
+### Get Modulos for ID
+GET http://localhost:3000/admin/showModulos/23a4c19b-8b5a-4b96-83bb-2bfdd8a645df
+
+### POST Modulos
+GET http://localhost:3000/admin/showModulos/109c79e2-3c17-43f5-b812-d6a883ade4df

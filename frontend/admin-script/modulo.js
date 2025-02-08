@@ -7,48 +7,71 @@ function capitalizeFirstLetter(word) {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-    async function cargarCursos() {
+    async function cargarCursosModulos() {
         try {
-            const response = await fetch("/showCursos");
-            const data = await response.json();
-            const tabla = document.getElementById("tabla-cursos");
-            const listaEmpleados = document.getElementById("listaCursos");
-            const mensajeEmpleados = document.getElementById("lista-cursos");
+            const response = await fetch("/admin/showCursos");
+            const data_cursos = await response.json();
+            const tabla = document.getElementById("tabla-modulos");
+            const listaModulos = document.getElementById("listaModulos");
+            const mensajeModulos = document.getElementById("lista-modulos");
 
-            if (response.ok && data.data.length > 0) {
-                listaEmpleados.innerHTML = "";
-                mensajeEmpleados.style.display = "none";
-                tabla.style.display = "table";
+            if (response.ok && data_cursos.data && data_cursos.data.length > 0) {
+                listaModulos.innerHTML = "";
+                mensajeModulos.style.display = "none";
+                tabla.style.display = "block";
 
-                data.data.forEach(emp => {
-                    const fila = document.createElement("tr");
-                    fila.innerHTML = `
-                        <td>${capitalizeFirstLetter(emp.nombre)}</td>
-                        <td>${capitalizeFirstLetter(emp.descripcion)}</td>
-                        <td>${emp.num_modulos}</td>
-                        <td>${emp.fecha_creacion}</td>
-                        <td>
-                            <button class="btn btn-primary modify-btn" onclick="recuperarCurso('${emp.id_curso}')" style="padding: 20px auto; border-collapse: collapse; font-size: 18px; background-color:rgba(255, 234, 2, 0.87)"><i class="fa-solid fa-user-pen"></i></button>
-
-                            <button class="btn btn-danger delete-btn" onclick="eliminarCurso('${emp.id_curso}')" style="padding: 20px auto; border-collapse: collapse; font-size: 18px; background-color: #ff4141"><i class="fa-solid fa-trash"></i></button>
-                        </td>
+                data_cursos.data.forEach(curso => {
+                    const curso_head = document.createElement("div");
+                    curso_head.setAttribute("class", `curso-${curso.nombre}`);
+                    curso_head.setAttribute("style", `color: red`);
+                    curso_head.innerHTML = `
+                        <div style="font-size: 5em">${curso.nombre}</div>
+                        <div>${curso.descripcion}</div>
                     `;
-                    
-                    listaCursos.appendChild(fila);
+
+                    async function cargarModulos() {
+                        const response_modulo = await fetch(`/admin/showModulos/${curso.id_curso}`);
+                        const modulos = await response_modulo.json();
+                        console.log(modulos.data)
+                        if (modulos.data.length > 0) {
+                            modulos.data.forEach(modulo => {
+                                const moduloDiv = document.createElement("div");
+                                moduloDiv.setAttribute("class", `contenedor-modulo`);
+                                moduloDiv.setAttribute("style", "display: inline");
+                                moduloDiv.innerHTML = `
+                                    <table>
+                                        <div>${modulo.titulo}</div>
+                                        <th> ${modulo.descripcion}</th>
+                                        <th> Numero de iscritos: 0</th>
+                                        <th> <button>Subir Material</button> </th>
+                                    </table>
+                                `;
+                                curso_head.appendChild(moduloDiv);
+                            });
+                        } else {console.log('pues algo salio mal, pipipi')}
+                    }
+
+                    cargarModulos();
+
+                    listaModulos.appendChild(curso_head);
                 });
             } else {
-                listaCursos.innerHTML = "";
+                listaModulos.innerHTML = "";
                 tabla.style.display = "none";
-                //mensajeCursos.style.display = "block";
+                mensajeModulos.style.display = "block";
+                mensajeModulos.textContent = "No hay módulos disponibles.";
             }
         } catch (error) {
             console.error("Error en la petición:", error);
-            // document.getElementById("mensaje-cursos").innerHTML = "<p>Error al cargar los cursos</p>";
+            mensajeModulos.style.display = "block";
+            mensajeModulos.textContent = "Hubo un error al cargar los módulos.";
         }
     }
 
-    cargarCursos();
+    cargarCursosModulos();
 });
+
+
 
 function mostrarFormularioRegistrar() {
     document.getElementById("formulario-registrar-edicion").style.display = "block"
@@ -69,7 +92,7 @@ function registrarCurso() {
 
         console.log(JSON.stringify(data))
     
-        const response = await fetch("/registerCurso", {
+        const response = await fetch("/admin/registerCurso", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data)
@@ -89,7 +112,7 @@ function recuperarCurso(id_curso) {
     document.getElementById("section-lista-cursos").style.display = "none";
     async function cargarCursos() {
         try {
-            const response = await fetch(`/showOneCurso/${id_curso}`);
+            const response = await fetch(`/admin/showOneCurso/${id_curso}`);
             const data = await response.json();
             curso  = data.data[0];
             document.getElementById("titulo-formulario-edicion").innerHTML=`<h2>Actualizar datos : ${capitalizeFirstLetter(curso.nombre)}</h2>`;
@@ -119,7 +142,7 @@ function modificarCurso(id_curso) {
 
     async function updateCurso() {
         try {
-            const response = await fetch(`/updateCurso/${id_curso}`, {
+            const response = await fetch(`/admin/updateCurso/${id_curso}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json"
@@ -163,7 +186,7 @@ function eliminarCurso(id) {
         return;
     }
 
-    fetch(`/deleteCurso/${id}`, {
+    fetch(`/admin/deleteCurso/${id}`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
