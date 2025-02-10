@@ -1,8 +1,16 @@
 import { Router } from "express";
-import { deleteEmployee, registerEmployee, showEmployee, showOneEmployee, updateEmployee } from "../controllers/controllers-admin-empleado.js";
-import {deleteCurso, registerCurso, showCursos, showOneCurso, updateCurso} from "../controllers/controllers-admin-curso.js";
+import { inscribirCurso, showCursos, showCursosInscrito } from "../controllers/controllers-emple-cursos.js";
+import { enterMisCertificados, enterMisCursos, getEmployeeName, verRegistrarCursos } from "../controllers/controllers-emple-principal.js";
 
 const router = Router();
+
+router.get("/showCursos", showCursos)
+router.get("/showCursosInscrito/:dni", showCursosInscrito)
+router.post("/inscribirCurso", inscribirCurso)
+router.get("/getEmployeeName/:dni", getEmployeeName)
+router.get("/enterMisCursos/:dni", enterMisCursos)
+router.get("/verRegistrarCursos/:dni", verRegistrarCursos)
+router.get("/enterMisCertificados/:dni", enterMisCertificados)
 
 /*
 
@@ -21,4 +29,4 @@ router.delete("/deleteCurso/:id", deleteCurso)
 router.patch("/updateCurso/:id", updateCurso)
 
 */
-export {router}
+export default router

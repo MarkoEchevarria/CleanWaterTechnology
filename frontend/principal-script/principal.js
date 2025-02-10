@@ -1,3 +1,5 @@
+// import { response } from "express";
+
 function openModalAdmin() {
     document.getElementById('loginModalAdmin').style.display = "block";
 }
@@ -44,7 +46,23 @@ function validateLoginUsuario() {
             
             if (data.data[0].password === password) {
                 console.log("Login exitoso")
-                window.location.href = "emple.html";
+                //window.location.href = "emple.html";
+                async function enterUsuario() {
+                    const response = await fetch(`/enterUsuario`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({dni: data.data[0].dni})
+                    }) 
+                    if (response.ok) {
+                        const result = await response.json();
+                        console.log("Redirigiendo a:", result.redirectTo);
+                        window.location.href = result.redirectTo;
+                    }
+                }
+                enterUsuario()
+
             } else {
                 console.log("Contraseña incorrecta")
             }

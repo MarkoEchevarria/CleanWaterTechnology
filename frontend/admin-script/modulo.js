@@ -21,12 +21,14 @@ document.addEventListener("DOMContentLoaded", function() {
                 tabla.style.display = "block";
 
                 data_cursos.data.forEach(curso => {
-                    const curso_head = document.createElement("div");
+                    const curso_head = document.createElement("tr");
                     curso_head.setAttribute("class", `curso-${curso.nombre}`);
-                    curso_head.setAttribute("style", `color: red`);
+                    curso_head.setAttribute("style", "color: red; vertical-align: middle; width: 100%; border: 1px solid red");
                     curso_head.innerHTML = `
-                        <div style="font-size: 5em">${curso.nombre}</div>
-                        <div>${curso.descripcion}</div>
+                        <div style="justify-content: center; align-items: center;">
+                            <h2 style="font-size: 2em">${curso.nombre}</h2>
+                            <p style="text-align: center">${curso.descripcion}</p>
+                        </div>
                     `;
 
                     async function cargarModulos() {
@@ -37,13 +39,17 @@ document.addEventListener("DOMContentLoaded", function() {
                             modulos.data.forEach(modulo => {
                                 const moduloDiv = document.createElement("div");
                                 moduloDiv.setAttribute("class", `contenedor-modulo`);
-                                moduloDiv.setAttribute("style", "display: inline");
+                                moduloDiv.setAttribute("style", "swidth: 100%;");
                                 moduloDiv.innerHTML = `
-                                    <table>
-                                        <div>${modulo.titulo}</div>
-                                        <th> ${modulo.descripcion}</th>
-                                        <th> Numero de iscritos: 0</th>
-                                        <th> <button>Subir Material</button> </th>
+                                    <table >
+                                        <tr> 
+                                            <th>${modulo.titulo}</th>
+                                        </tr>
+                                        <tr style="display: flex; ">   
+                                            <td style="flex: auto;"> ${modulo.descripcion}</td>
+                                            <td style="flex: auto;"> Numero de iscritos: 0</td>
+                                            <td style="flex: auto;"> <button>Subir Material</button> </td>
+                                        </tr>
                                     </table>
                                 `;
                                 curso_head.appendChild(moduloDiv);
