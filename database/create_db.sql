@@ -3,12 +3,21 @@
 BEGIN;
 
 
+CREATE TABLE IF NOT EXISTS public.admin
+(
+    id_admin character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    nombre_usuario character varying(100) COLLATE pg_catalog."default",
+    password character varying(100) COLLATE pg_catalog."default",
+    correo character varying(100) COLLATE pg_catalog."default",
+    CONSTRAINT admin_pkey PRIMARY KEY (id_admin)
+);
+
 CREATE TABLE IF NOT EXISTS public.certificado
 (
     id_certificado integer NOT NULL,
-    curso_empleado integer,
     fecha_emision timestamp without time zone,
     descricion character varying(255) COLLATE pg_catalog."default",
+    id_curso_empleado integer NOT NULL,
     CONSTRAINT certificado_pkey PRIMARY KEY (id_certificado)
 );
 
@@ -19,28 +28,33 @@ CREATE TABLE IF NOT EXISTS public.curso
     descripcion character varying(255) COLLATE pg_catalog."default",
     fecha_creacion timestamp without time zone,
     num_modulos integer,
+    codigo character varying(10) COLLATE pg_catalog."default",
     CONSTRAINT curso_pkey PRIMARY KEY (id_curso)
 );
 
 CREATE TABLE IF NOT EXISTS public.curso_empleado
 (
-    id_curso_empleado integer NOT NULL,
     id_curso uuid,
     id_empleado uuid,
     fecha_inscripcion timestamp without time zone,
+    id_curso_empleado serial NOT NULL,
     CONSTRAINT curso_empleado_pkey PRIMARY KEY (id_curso_empleado)
 );
 
 CREATE TABLE IF NOT EXISTS public.empleado
 (
     id_empleado uuid NOT NULL,
-    nombre character varying(255) COLLATE pg_catalog."default",
-    apellido character varying(255) COLLATE pg_catalog."default",
-    dni character varying(255) COLLATE pg_catalog."default",
-    rol character varying(255) COLLATE pg_catalog."default",
-    fecha_registro timestamp without time zone,
-    correo character varying(100) COLLATE pg_catalog."default",
-    CONSTRAINT empleado_pkey PRIMARY KEY (id_empleado)
+    nombre character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    apellido character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    dni character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    rol character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    fecha_registro timestamp without time zone NOT NULL,
+    correo character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    password character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT empleado_pkey PRIMARY KEY (id_empleado),
+    CONSTRAINT empleado_correo_key UNIQUE (correo),
+    CONSTRAINT empleado_dni_key UNIQUE (dni),
+    CONSTRAINT empleado_id_empleado_key UNIQUE (id_empleado)
 );
 
 CREATE TABLE IF NOT EXISTS public.evaluacion
@@ -84,15 +98,8 @@ CREATE TABLE IF NOT EXISTS public.resultado_evaluacion
 );
 
 ALTER TABLE IF EXISTS public.certificado
-    ADD CONSTRAINT certificado_curso_empleado_fkey FOREIGN KEY (curso_empleado)
+    ADD CONSTRAINT certificado_id_curso_empleado_fkey FOREIGN KEY (id_curso_empleado)
     REFERENCES public.curso_empleado (id_curso_empleado) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION;
-
-
-ALTER TABLE IF EXISTS public.curso_empleado
-    ADD CONSTRAINT curso_empleado_id_empleado_fkey FOREIGN KEY (id_empleado)
-    REFERENCES public.empleado (id_empleado) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION
     NOT VALID;
@@ -106,6 +113,14 @@ ALTER TABLE IF EXISTS public.curso_empleado
     NOT VALID;
 
 
+ALTER TABLE IF EXISTS public.curso_empleado
+    ADD CONSTRAINT curso_empleado_id_empleado_fkey FOREIGN KEY (id_empleado)
+    REFERENCES public.empleado (id_empleado) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
 ALTER TABLE IF EXISTS public.evaluacion
     ADD CONSTRAINT evaluacion_id_modulo_fkey FOREIGN KEY (id_modulo)
     REFERENCES public.modulo (id_modulo) MATCH SIMPLE
@@ -114,7 +129,7 @@ ALTER TABLE IF EXISTS public.evaluacion
 
 
 ALTER TABLE IF EXISTS public.modulo
-    ADD FOREIGN KEY (id_curso)
+    ADD CONSTRAINT modulo_id_curso_fkey FOREIGN KEY (id_curso)
     REFERENCES public.curso (id_curso) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION

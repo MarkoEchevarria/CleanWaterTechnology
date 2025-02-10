@@ -16,11 +16,10 @@ Content-Type: application/json
   "correo": "markofidel10@gmail.com",
   "rol": "estudiante"
 }
-### DELETE 
+### DELETE  
 DELETE http://localhost:3000/deleteEmployee/aa16719e-9d8c-4305-a8d7-7ed22c9995d2
 
 ### GET Register Curso
-
 POST http://localhost:3000/registerCurso
 Content-Type: application/json
 
@@ -40,8 +39,29 @@ DELETE http://localhost:3000/deleteCurso/ca38679b-b8e0-4840-a625-676698fd6b55
 ### GET admin
 GET http://localhost:3000/getAdmin/marko
 
+### GET user
+GET http://localhost:3000/getUsuario/fidel@gmail.com
+
 ### Get Modulos for ID
 GET http://localhost:3000/admin/showModulos/23a4c19b-8b5a-4b96-83bb-2bfdd8a645df
 
 ### POST Modulos
 GET http://localhost:3000/admin/showModulos/109c79e2-3c17-43f5-b812-d6a883ade4df
+
+### POST Modulos
+GET http://localhost:3000/empleado/showCursos
+
+### ESTE NO SE
+GET http://localhost:3000/empleado/showCursosInscrito/11112222
+
+### inscribir curso
+POST http://localhost:3000/empleado/inscribirCurso
+Content-Type: application/json
+
+{
+  "correo": "fidel@gmail.com",
+  "nombreCurso": "Python Intermedio"
+}
+
+### GET Employee Name
+GET http://localhost:3000/empleado/getEmployeeName/11112222

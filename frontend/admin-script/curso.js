@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         <td>${capitalizeFirstLetter(emp.descripcion)}</td>
                         <td>${emp.num_modulos}</td>
                         <td>${emp.fecha_creacion}</td>
+                        <td>${emp.codigo}</td>
                         <td>
                             <button class="btn btn-primary modify-btn" onclick="recuperarCurso('${emp.id_curso}')" style="padding: 20px auto; border-collapse: collapse; font-size: 18px; background-color:rgba(255, 234, 2, 0.87)"><i class="fa-solid fa-user-pen"></i></button>
 
