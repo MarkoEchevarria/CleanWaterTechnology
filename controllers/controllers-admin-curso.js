@@ -19,7 +19,7 @@ const registerCurso = async (req, res) => {
 
         const newCurso = {id: cryto.randomUUID(), ...valid.data}
         const result = await pool.query(
-            "INSERT INTO curso (id_curso, nombre, descripcion, fecha_creacion, num_modulos, codigo) VALUES ($1, $2, $3, NOW(), $4, $5) RETURNING *", [newCurso.id, newCurso.nombre, newCurso.descripcion, newCurso.num_modulos, codigo]
+            "INSERT INTO curso (id_curso, nombre, descripcion, fecha_creacion, num_modulos, codigo) VALUES ($1, $2, $3, NOW()::DATE, $4, $5) RETURNING *", [newCurso.id, newCurso.nombre, newCurso.descripcion, newCurso.num_modulos, codigo]
         )
         res.status(201).json({ message: "Query sucessful", data: result.rows[0] });
         
