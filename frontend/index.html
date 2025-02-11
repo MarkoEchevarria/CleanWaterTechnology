@@ -24,7 +24,8 @@
             margin: 10% auto;
             padding: 20px;
             border-radius: 10px;
-            width: 300px;
+            width: 400px;
+            font-size: 1.3em;
             text-align: center;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
         }
@@ -39,7 +40,7 @@
         }
         input {
             width: 100%;
-            padding: 8px;
+            padding: 10px;
             margin: 10px 0;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -49,12 +50,16 @@
             color: white;
             border: none;
             padding: 10px;
+            margin: 10px 0;
             cursor: pointer;
             width: 100%;
             border-radius: 5px;
         }
         .modal button:hover {
             background-color: #006d85;
+        }
+        #modal-title {
+            font-size: 1.5em;
         }
     </style>
 </head>
@@ -72,8 +77,15 @@
         </nav>
     </div>
 
-    <section class="hero">
-        <div class="contenido-hero">
+    <section class="hero" style=" background-image: url(../img/imagen1.jpg);
+    background-repeat: no-repeat;
+    /* para no repetir la imagen muchas veces */
+    background-size: cover;
+    /*para ajustar la imagen si es que es muy pequeña o grande (poner siempre) */
+    height: 80rem;
+    position: relative;
+    margin-bottom: 2rem;">
+        <div class="contenido-hero" style="font-size: 2rem;">
             <h2>Sistema de capacitaciones para el personal</h2>
             <div class="bienvenida-container">
                 <div class="bienvenida">
