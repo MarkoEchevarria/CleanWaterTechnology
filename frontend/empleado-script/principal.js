@@ -38,3 +38,20 @@ function irPaginaCurso() {
     enterMisCursos()
     
 }
+
+function irPaginaInscripcion() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const userDNI = urlParams.get('dni');
+    async function enterInscripcion() {
+        try {
+            const response = await fetch(`/empleado/enterInscripcion/${userDNI}`);
+            if (response.ok) {
+                const result = await response.json();
+                window.location.href = result.redirectTo;
+            }
+        } catch (error) {
+            console.log("Error en la petición:", error)
+        }
+    }
+    enterInscripcion()
+}

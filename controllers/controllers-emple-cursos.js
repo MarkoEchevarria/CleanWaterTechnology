@@ -2,7 +2,8 @@ import { pool } from "../db.js";
 
 const showCursos = async (req, res) => {
     try {
-        const result = await pool.query("SELECT * FROM curso")
+        const {dni} = req.params
+        const result = await pool.query(`SELECT * FROM curso WHERE id_curso NOT IN ( SELECT curso_empleado.id_curso FROM empleado INNER JOIN curso_empleado ON curso_empleado.id_empleado = empleado.id_empleado WHERE empleado.dni = CAST($1 AS VARCHAR(8)))`, [dni])
         res.status(200).json({ message: "Query sucessful", data: result.rows});
     } catch (error) {
         console.log("Error:", error)

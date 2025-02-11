@@ -11,24 +11,24 @@ document.addEventListener("DOMContentLoaded", function() {
         try {
             const response = await fetch("/admin/showCursos");
             const data_cursos = await response.json();
-            const tabla = document.getElementById("tabla-modulos");
-            const listaModulos = document.getElementById("listaModulos");
-            const mensajeModulos = document.getElementById("lista-modulos");
+            const main_modulos = document.getElementById("main-modulos");
+            const listaModulos = document.getElementById("subcontenedor-modulos");
+            const noModulosMensaje = document.getElementById("no-modulos-mensaje");
 
             if (response.ok && data_cursos.data && data_cursos.data.length > 0) {
                 listaModulos.innerHTML = "";
-                mensajeModulos.style.display = "none";
-                tabla.style.display = "block";
+                noModulosMensaje.style.display = "none";
+                main_modulos.style.display = "block";
 
                 data_cursos.data.forEach(curso => {
-                    const curso_head = document.createElement("tr");
-                    curso_head.setAttribute("class", `curso-${curso.nombre}`);
-                    curso_head.setAttribute("style", "color: red; vertical-align: middle; width: 100%; border: 1px solid red");
+                    const curso_head = document.createElement("div");
+                    curso_head.setAttribute("class", `subcontenedor`);
+                    curso_head.setAttribute("id", "subcontendor-modulos");
                     curso_head.innerHTML = `
-                        <div style="justify-content: center; align-items: center;">
-                            <h2 style="font-size: 2em">${curso.nombre}</h2>
-                            <p style="text-align: center">${curso.descripcion}</p>
-                        </div>
+                        <section>
+                            <h3>${capitalizeFirstLetter(curso.nombre)}</h3>
+                            <p>${curso.descripcion}</p>
+                        </section>
                     `;
 
                     async function cargarModulos() {
@@ -38,19 +38,12 @@ document.addEventListener("DOMContentLoaded", function() {
                         if (modulos.data.length > 0) {
                             modulos.data.forEach(modulo => {
                                 const moduloDiv = document.createElement("div");
-                                moduloDiv.setAttribute("class", `contenedor-modulo`);
-                                moduloDiv.setAttribute("style", "swidth: 100%;");
+                                moduloDiv.setAttribute("class", "modulo");
                                 moduloDiv.innerHTML = `
-                                    <table >
-                                        <tr> 
-                                            <th>${modulo.titulo}</th>
-                                        </tr>
-                                        <tr style="display: flex; ">   
-                                            <td style="flex: auto;"> ${modulo.descripcion}</td>
-                                            <td style="flex: auto;"> Numero de iscritos: 0</td>
-                                            <td style="flex: auto;"> <button>Subir Material</button> </td>
-                                        </tr>
-                                    </table>
+                                    <h4 class="titulo-modulo"> ${modulo.titulo} </h4>
+                                    <div class="descripcion-modulo"> ${modulo.descripcion} </div>
+                                    <div class="contador"> Num Inscritos: 0 </div>
+                                    <button class="btn-subirmaterial"> Subir material </button>
                                 `;
                                 curso_head.appendChild(moduloDiv);
                             });
@@ -63,14 +56,14 @@ document.addEventListener("DOMContentLoaded", function() {
                 });
             } else {
                 listaModulos.innerHTML = "";
-                tabla.style.display = "none";
-                mensajeModulos.style.display = "block";
-                mensajeModulos.textContent = "No hay módulos disponibles.";
+                main_modulos.style.display = "none";
+                noModulosMensaje.style.display = "block";
+                noModulosMensaje.textContent = "No hay módulos disponibles.";
             }
         } catch (error) {
             console.error("Error en la petición:", error);
-            mensajeModulos.style.display = "block";
-            mensajeModulos.textContent = "Hubo un error al cargar los módulos.";
+            noModulosMensaje.style.display = "block";
+            noModulosMensaje.textContent = "Hubo un error al cargar los módulos.";
         }
     }
 
