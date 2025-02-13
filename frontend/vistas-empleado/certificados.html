@@ -20,29 +20,52 @@
         <h2 class="text-encabezado"><strong>Clean Water Technology</strong></h2>
     </div>
 
+    <main class="container mx-auto flex flex-wrap justify-center gap-4 p-4">
+        <section class="grid grid-cols-1 md:grid-cols-1 gap-4 w-full">
+            <div class="p-5 bg-white shadow-md rounded-lg text-center" id="misCursos">
+                <h1 class="text-xl font-semibold" style="font-size: 3.5em;">Mis Certificados</h1>
+            </div>
+    
+        </section>
+    </main>
+
 
     <!-- Contenedor principal -->
     <main class="container mx-auto flex flex-wrap justify-center gap-4 p-4">
 
         <!-- Sección Principal -->
-        <section class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+        <section id="listaCertificados" class="p-8">
+            <!--
+            <h2 class="text-4xl font-bold text-teal-700 text-center mb-8">Historial de Certificados</h2>
+            -->
+            <h2 id="mensaje-no-cursos">No hay certificados generados</h2>
 
-            <!-- Historial de Certificados -->
-            <div id="historialCertificados" class="p-5 bg-white shadow-md rounded-lg text-center cursor-pointer">
-                <h2 class="text-xl font-semibold">Historial de Certificados</h2>
-                <img src="../imagenes/historial.png" class="mx-auto w-40">
+
+            <div class="space-y-6" id="certificados">
+                
+
+                <!-- Certificado 1
+                <div class="bg-gradient-to-r from-teal-100 to-teal-50 shadow-md rounded-lg p-5 flex items-center gap-6 border-l-8 border-teal-500">
+                    <img src="imagenes/curso1.jpg" alt="Certificado" class="w-32 h-32 object-cover rounded-lg shadow-md">
+                    <div class="flex-1">
+                        <p class="text-gray-700 font-medium">Fecha de emisión: <span class="text-teal-700 font-semibold">2024-01-15</span></p>
+                        <h3 class="text-xl font-bold text-teal-800 mt-1">Curso de Mantenimiento de Equipos</h3>
+                        <div class="mt-2 flex gap-3">
+                            <a href="archivos/certificado1.pdf" target="_blank" class="bg-teal-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-teal-700">Ver</a>
+                            <a href="archivos/certificado1.pdf" download class="bg-green-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-green-700">Descargar</a>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md w-1/2">
+                        <p class="text-gray-700 text-sm">Este curso aborda las mejores prácticas para el mantenimiento de equipos industriales utilizados en el tratamiento de agua.</p>
+                    </div>
+                </div>
+                 -->
+
             </div>
 
-            <!-- Lista de Certificados -->
-            <div id="listaCertificados" class="p-5 bg-gray-100 shadow-md rounded-lg w-full text-center">
-                <h3 class="text-lg font-semibold text-center">Certificados Obtenidos</h3>
-                <ul class="list-disc pl-6 text-left mx-auto w-fit">
-                    <li>Certificado en Mantenimiento de Equipos</li>
-                    <li>Certificado en Seguridad de Trabajo</li>
-                    <li>Certificado en Tratamiento de Aguas Residuales</li>
-                </ul>
-            </div>
+
         </section>
+
     </main>
 
     <!-- Botón de Regresar -->
@@ -52,6 +75,7 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../empleado-script/certificados.js"></script>
 </body>
 
 </html>
