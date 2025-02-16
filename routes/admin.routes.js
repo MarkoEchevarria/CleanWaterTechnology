@@ -2,6 +2,7 @@ import { Router } from "express";
 import { deleteEmployee, registerEmployee, showEmployee, showOneEmployee, updateEmployee } from "../controllers/controllers-admin-empleado.js";
 import {deleteCurso, registerCurso, showCursos, showOneCurso, updateCurso} from "../controllers/controllers-admin-curso.js";
 import {showModulos} from "../controllers/controllers-admin-modulo.js";
+import { showReporte } from "../controllers/controllers-admin-reporte.js";
 
 const router = Router();
 
@@ -25,5 +26,8 @@ router.patch("/updateCurso/:id", updateCurso)
 
 // Rutas del modulo-vista-admin
 router.get("/showModulos/:id", showModulos)
+
+// Rutas del resultado-vista-admin
+router.get("/showReporte/:id", showReporte)
 
 export default router

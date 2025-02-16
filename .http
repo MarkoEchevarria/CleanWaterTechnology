@@ -69,3 +69,6 @@ GET http://localhost:3000/empleado/getEmployeeName/11112222
 
 ### Show Certificados
 GET http://localhost:3000/empleado/showCertificados/11112222
+
+### SHOW CURSOS
+GET http://localhost:3000/admin/showReporte/1
