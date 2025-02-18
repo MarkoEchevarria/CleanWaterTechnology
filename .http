@@ -72,3 +72,6 @@ GET http://localhost:3000/empleado/showCertificados/11112222
 
 ### SHOW CURSOS
 GET http://localhost:3000/admin/showReporte/1
+
+### GET VIDEO
+DELETE http://localhost:3000/admin/deleteVideo/14

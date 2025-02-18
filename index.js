@@ -7,6 +7,7 @@ import path from "path"
 import { fileURLToPath } from "url";
 import cors from "cors"
 
+
 const PORT = process.env.PORT || 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -25,7 +26,8 @@ app.use(function (req, res, next) {
 
 app.use(morgan("dev"))
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+//app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true, limit: '100mb' }));
 app.use(express.static(path.join(__dirname, "frontend")))
 app.use("/admin", adminRouter)
 app.use("/", authRouter)
