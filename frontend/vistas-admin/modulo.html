@@ -15,6 +15,28 @@
 </head>
 
 <body>
+
+    <style>
+        #videoInput {
+            appearance: none;
+            color: transparent;
+            width: 120px; /* Ajusta el tamaño según necesites */
+        }
+
+        #videoInput::-webkit-file-upload-button {
+            visibility: hidden;
+        }
+
+        #videoInput::before {
+            content: 'Seleccionar archivo';
+            display: inline-block;
+            background: greenyellow;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
     <header>
         <h1 class="titulo">Clean Water Technology</h1>
     </header>
@@ -54,133 +76,20 @@
     
     </div>
 
+    <main class="contenedor sombra separacion" id="main-modulos">
+        <h2>Cursos y Modulos</h2>
 
-        <main class="contenedor sombra separacion" id="main-modulos">
-            <h2>Cursos y Modulos</h2>
-
-            <div id="no-modulos-mensaje" class="contenedor-modulos">
-                <p>No hay modulos registrados</p>
-            </div>
-        
-            <div class="subcontenedor" id="subcontenedor-modulos">
-                <section>
-                    <h3>JavaScript</h3>
-                    <P>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Placeat molestiae veniam vitae illo
-                        voluptatem numquam obcaecati deserunt, consectetur laboriosam itaque impedit eveniet sit,
-                        perspiciatis eligendi consequuntur temporibus soluta asperiores reprehenderit.</P>
-                </section>
-        
-        
-                <div class="modulo">
-                    <h4 class="titulo-modulo">Introduccion a JavaScript</h4>
-                    <div class="descripcion-modulo">Conceptos basicos y sintaxis</div>
-                    <div class="contador"> Numero de Inscritos: 5</div>
-                    <button class="btn-subirmaterial">Subir Material</button>
-                </div>
-        
-                <div class="modulo">
-                    <h4 class="titulo-modulo">Variables y Tipos de Datos</h4>
-                    <div class="descripcion-modulo">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Commodi
-                        dolorum quam unde, id soluta sequi amet minus, ullam culpa molestiae quidem ab quos! A molestiae
-                        molestias quia eveniet, minima sequi!</div>
-                    <div class="contador"> Numero de Inscritos: 8</div>
-                    <button class="btn-subirmaterial">Subir Material</button>
-                </div>
-        
-                <div class="modulo">
-                    <h4 class="titulo-modulo">Funciones en JavaScript</h4>
-                    <div class="descripcion-modulo">Creacion y Uso de Funciones</div>
-                    <div class="contador"> Numero de Inscritos: 5</div>
-                    <button class="btn-subirmaterial">Subir Material</button>
-                </div>
-            </div>
-        
-        </main>
-
-
-
-
-
-
-
-
-
-
-
-    <section id="formulario-edicion" class="contenedor sombra" style="display: none;">
-        <h2 id="titulo-formulario-edicion">Editar Curso</h2>
-        <form class="formulario">
-            <fieldset>
-                <legend>Modifique los campos</legend>
-                <div class="contenedor-cursos">
-                    <div class="campo">
-                        <label>Nombre</label>
-                        <input id="edit-nombres" class="input-text" type="text" placeholder="Nombre">
-                    </div>
-                    <div class="campo">
-                        <label>Numeror de Modulos</label>
-                        <input id="edit-num_modulos" class="input-text" type="text" placeholder="Numero de Modulos">
-                    </div>
-                    <div class="campo">
-                        <label>Descripcion</label>
-                        <input id="edit-descripcion" class="input-text" type="text" placeholder="Descripcion">
-                    </div>
-                </div>
-                <div style=" flex-wrap: wrap; justify-content: space-between; width: 100%">
-                    <div class="alinear-derecha flex regresar-cursos ">
-                        <a href="../vistas-admin/curso.html"><input id="regresar-cursos" class="boton w-sm-100"
-                                value="Regresar" style="background-color: #ff4141"></a>
-
-                    </div>
-                    <div class="alinear-derecha flex update-guardar-cambios">
-                        <input id="guardar-cambios" class="boton w-sm-100" value="Guardar cambios "
-                            style="color:#a9aaaa; background-color:  #d6d7d7;">
-                    </div>
-                </div>
-            </fieldset>
-        </form>
-    </section>
-
-    <section id="formulario-registrar-edicion" class="contenedor sombra" style="display: none;" style="background: #4D4D4D;
-    padding: 20px;
-    border-radius: 10px;
-    width: 400px;
-    color: white;
-    font-family: Arial, sans-serif;">
-        <h2>Registrar Curso</h2>
-
-        <form class="formulario" id="formularioRegistrarCurso">
-            <fieldset>
-                <legend>Rellene los campos</legend>
-
-                <div class="contenedor-campos">
-                    <div class="campo">
-                        <label for="nombre" style="font-weight: bold;">Nombre del Curso</label>
-                        <input class="input-text" id="nombre" name="nombre" placeholder="Nombres" required />
-                    </div>
-
-                    <div class="campo">
-                        <label for="num_modulos" style="font-weight: bold;">Numero de Modulos</label>
-                        <input class="input-text" id="num_modulos" name="num_modulos" placeholder="Numero de modulos" type="number" required />
-                    </div>
-
-                    <div class="campo">
-                        <label for="descripcion" style="font-weight: bold;">Descripcion del Curso</label>
-                        <input class="input-text" id="descripcion" name="descripcion" placeholder="Descripcion" required/>
-                    </div>
-                </div>
-
-                <div class="alinear-derecha flex">
-                    <button type="submit" class="boton w-sm-100" onclick="registrarCurso()">Registrar</button>
-                </div>
-            </fieldset>
-        </form>
-    </section>
-
-
+        <div id="no-modulos-mensaje" class="contenedor-modulos">
+            <p>No hay modulos registrados</p>
+        </div>
     
+        <div class="subcontenedor" id="subcontenedor-modulos">
+        </div>
+    
+    </main>
 
     <script src="../admin-script/modulo.js"></script>
+
 </body>
 
 </html>

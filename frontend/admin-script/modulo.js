@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 noModulosMensaje.style.display = "none";
                 main_modulos.style.display = "block";
 
-                data_cursos.data.forEach(curso => {
+                for (const curso of data_cursos.data) {
                     const curso_head = document.createElement("div");
                     curso_head.setAttribute("class", `subcontenedor`);
                     curso_head.setAttribute("id", "subcontendor-modulos");
@@ -31,29 +31,47 @@ document.addEventListener("DOMContentLoaded", function() {
                         </section>
                     `;
 
-                    async function cargarModulos() {
-                        const response_modulo = await fetch(`/admin/showModulos/${curso.id_curso}`);
-                        const modulos = await response_modulo.json();
-                        console.log(modulos.data)
-                        if (modulos.data.length > 0) {
-                            modulos.data.forEach(modulo => {
-                                const moduloDiv = document.createElement("div");
-                                moduloDiv.setAttribute("class", "modulo");
-                                moduloDiv.innerHTML = `
-                                    <h4 class="titulo-modulo"> ${modulo.titulo} </h4>
-                                    <div class="descripcion-modulo"> ${modulo.descripcion} </div>
-                                    <div class="contador"> Num Inscritos: 0 </div>
-                                    <button class="btn-subirmaterial"> Subir material </button>
-                                `;
-                                curso_head.appendChild(moduloDiv);
-                            });
-                        } else {console.log('pues algo salio mal, pipipi')}
-                    }
+                    const response_modulo = await fetch(`/admin/showModulos/${curso.id_curso}`);
+                    const modulos = await response_modulo.json();
+                    console.log(modulos.data)
+                    if (modulos.data.length > 0) {
+                        modulos.data.forEach( async (modulo) => {
+                            const moduloDiv = document.createElement("div");
+                            moduloDiv.setAttribute("class", "modulo");
+                            moduloDiv.innerHTML = `
+                                <h4 class="titulo-modulo"> ${modulo.titulo} </h4>
+                                <div class="descripcion-modulo"> ${modulo.descripcion} </div>
+                                <div class="contador"> Num Inscritos: 0 </div>
+                            `
 
-                    cargarModulos();
+                            const response_video = await fetch(`/admin/video/${modulo.id_modulo}`);
+                            const data_video = await response_video.json();
+
+                            const videoDiv = document.createElement("form");
+                            videoDiv.setAttribute("id", "uploadForm");
+                            console.log("este es el data_video",data_video)
+
+                            // console.log(data)
+                            if (data_video.length > 0) {
+                                videoDiv.innerHTML = `
+                                    <!-- <div> Ya existe material para este modulo.</div> -->
+                                    <button type="button" onclick="eliminarVideo(${modulo.id_modulo})" >Eliminar Material Existente</button>
+                                    `;
+                                    moduloDiv.appendChild(videoDiv);
+                            } else {
+                                videoDiv.innerHTML = `
+                                    <input type="file" id="videoInput${modulo.id_modulo}" accept="video/*" required>
+                                    <button type="button" onclick="subirVideo(${modulo.id_modulo})" >Subir</button>
+                                    `;
+                                    
+                            }
+                            moduloDiv.appendChild(videoDiv);
+                            curso_head.appendChild(moduloDiv);                           
+                        });
+                    } else {console.log("pues algo salio mal pipipi, mira a continuacion",modulos.data)}
 
                     listaModulos.appendChild(curso_head);
-                });
+                };
             } else {
                 listaModulos.innerHTML = "";
                 main_modulos.style.display = "none";
@@ -70,139 +88,58 @@ document.addEventListener("DOMContentLoaded", function() {
     cargarCursosModulos();
 });
 
+async function subirVideo(id_modulo) {
+    const fileInput = document.getElementById(`videoInput${id_modulo}`);
+    const file = fileInput.files[0];
 
+    if (!file) return alert("Selecciona un archivo");
 
-function mostrarFormularioRegistrar() {
-    document.getElementById("formulario-registrar-edicion").style.display = "block"
-    document.getElementById("section-lista-cursos").style.display = "none"
-} 
+    const formData = new FormData();
+    formData.append("video", file);
+    formData.append("id_modulo", id_modulo);
 
-function registrarCurso() {
-    document.getElementById("formularioRegistrarCurso").addEventListener("submit", agregarCurso)
-
-    async function agregarCurso(event) {
-        event.preventDefault();
-        const formData = new FormData(this);
-        const data = Object.fromEntries(formData.entries());
-
-        if (data.num_modulos) {
-            data.num_modulos = parseInt(data.num_modulos, 10);
-        }
-
-        console.log(JSON.stringify(data))
-    
-        const response = await fetch("/admin/registerCurso", {
+    try {
+        const response = await fetch("http://localhost:3000/admin/upload", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data)
+            body: formData,
         });
-    
+
+        const result = await response.json();
+
         if (response.ok) {
-            alert("Datos enviados correctamente.");
-            location.reload();
+            document.getElementById("message").textContent = `Video ${id_modulo} subido correctamente`;
         } else {
-            alert("Hubo un error al enviar los datos.");
+            document.getElementById("message").textContent = `Error en el video ${id_modulo}: ` + result.message;
         }
+    } catch (error) {
+        console.error("Error en la subida:", error);
+        document.getElementById("message").textContent = `Error al subir el video ${id_modulo}`;
     }
 }
 
-function recuperarCurso(id_curso) {
-    document.getElementById("formulario-edicion").style.display = "block";
-    document.getElementById("section-lista-cursos").style.display = "none";
-    async function cargarCursos() {
-        try {
-            const response = await fetch(`/admin/showOneCurso/${id_curso}`);
-            const data = await response.json();
-            curso  = data.data[0];
-            document.getElementById("titulo-formulario-edicion").innerHTML=`<h2>Actualizar datos : ${capitalizeFirstLetter(curso.nombre)}</h2>`;
+async function eliminarVideo(id_modulo) {
+    try {
+        const response = await fetch(`/admin/video/${id_modulo}`, {
+            method: "GET",
+        });
 
-            document.getElementById("edit-nombres").value = capitalizeFirstLetter(curso.nombre);
-            document.getElementById("edit-num_modulos").value = curso.num_modulos;
-            document.getElementById("edit-descripcion").value = curso.descripcion;
+        const result = await response.json();
 
-            const inputs = document.querySelectorAll('.input-text');
-            inputs.forEach(input => {
-                input.addEventListener('input', () => habilitarBoton(curso.id_curso));
+        if (response.ok && result.length > 0) {
+            const video = result[0];
+            const responseDelete = await fetch(`http://localhost:3000/admin/deleteVideo/${video.id_multimedia}`, {
+                method: "DELETE",
             });
 
-        } catch (error) {
-            console.error("Error en la petición:", error);
-        }
-    }
-    cargarCursos()
-}
-
-function modificarCurso(id_curso) {
-    console.log(id_curso)
-
-    const nombre = document.getElementById("edit-nombres").value;
-    const num_modulos = document.getElementById("edit-num_modulos").value;
-    const descripcion = document.getElementById("edit-descripcion").value;
-
-    async function updateCurso() {
-        try {
-            const response = await fetch(`/admin/updateCurso/${id_curso}`, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ nombre, num_modulos, descripcion })
-            })
-            if (response.ok) {
-                location.reload();
-            } else {
-                console.error("Error al modificar curso");
+            if (!responseDelete.ok) {
+                throw new Error("Error al eliminar el video");
             }
-        } catch (error) {
-            console.error("Error en la petición:", error);
+        } else {
+            console.log("No hay video para este modulo");
         }
+
+    } catch (error) {
+        console.error("Error en la eliminación:", error);
+        document.getElementById("message").textContent = `Error al eliminar el video ${id_modulo}`;
     }
-    updateCurso();
-}
-
-
-function habilitarBoton(id_curso) {
-    const nombre = document.getElementById('edit-nombres').value.trim();
-    const num_modulos = document.getElementById('edit-num_modulos').value.trim();
-    const descripcion = document.getElementById('edit-descripcion').value.trim();
-
-    const botonGuardar = document.getElementById('guardar-cambios');
-
-    if (nombre && num_modulos && descripcion) {
-        botonGuardar.disabled = false;
-        botonGuardar.style.color = '#fff';
-        botonGuardar.style.backgroundColor = '#4CAF50'
-        botonGuardar.onclick = () => modificarCurso(id_curso);
-    } else {
-        botonGuardar.disabled = true;
-        botonGuardar.style.color = '#a9aaaa';
-        botonGuardar.style.backgroundColor = '#d6d7d7';
-    }
-}
-
-function eliminarCurso(id) {
-    if (!confirm("¿Estás seguro de que deseas eliminar este curso?")) {
-        return;
-    }
-
-    fetch(`/admin/deleteCurso/${id}`, {
-        method: "DELETE",
-        headers: {
-            "Content-Type": "application/json",
-        },
-    })
-    .then(response => {
-        if (!response.ok) {
-            return response.json().then(err => { throw new Error(err.message || "Error desconocido"); });
-        }
-        return response.json();
-    })
-    .then(data => {
-        alert("Curso eliminado correctamente");
-        location.reload();
-    })
-    .catch(error => {
-        console.error("Error al eliminar curso:", error);
-        alert("No se pudo eliminar el curso: " + error.message);
-    });
 }
