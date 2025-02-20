@@ -62,7 +62,6 @@ function validateLoginUsuario() {
                     }
                 }
                 enterUsuario()
-
             } else {
                 console.log("Contraseña incorrecta")
             }
