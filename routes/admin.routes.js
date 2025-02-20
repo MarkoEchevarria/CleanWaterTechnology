@@ -21,6 +21,7 @@ router.patch("/updateEmployee/:id", updateEmployee)
 // Rutas del curso-vista-admin
 router.get("/showCursos", showCursos)
 router.get("/showOneCurso/:id", showOneCurso)
+router.post("/registerCurso", registerCurso)
 router.delete("/deleteCurso/:id", deleteCurso)
 router.patch("/updateCurso/:id", updateCurso)
 
@@ -35,6 +36,5 @@ router.post("/upload", uploadVideo);
 router.get("/videos", getVideos);
 router.get("/video/:id", getOneVideo);
 router.delete("/deleteVideo/:id", deleteVideo);
-
 
 export default router;

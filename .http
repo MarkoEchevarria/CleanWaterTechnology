@@ -75,3 +75,45 @@ GET http://localhost:3000/admin/showReporte/1
 
 ### GET VIDEO
 DELETE http://localhost:3000/admin/deleteVideo/14
+
+### REDIRECT MODULOS POR CURSO
+GET http://localhost:3000/empleado/redirectModulosCurso/11112fadfa-fjdfj2uiouerq-djjdf
+
+### PROBANDO LA OTRA FOMRA SIN UUIDS
+GET http://localhost:3000/empleado/redirectModulosCurso/11
+
+###
+GET http://localhost:3000/empleado/showCursosInscrito/11112222
+
+### AFDAF
+GET http://localhost:3000/empleado/showModulos/a867a8fe-523d-475c-9354-33f5a95b0918
+
+### GET VIDEO
+GET http://localhost:3000/empleado/getVideo/1
+
+### GET VIDEO
+POST http://localhost:3000/empleado/registrarCurso/11112222
+Content-Type: application/json
+
+{
+  "codigo": "0M10E53SCP",
+  "id_curso": "8165fae8-9b07-4456-b21e-ef26b06dabe5"
+}
+
+
+### GET VIDEO
+POST  http://localhost:3000/empleado/verificarCodigo
+Content-Type: application/json
+
+{
+  "codigo": "0M10E53fSCP",
+  "id_curso": "8165fae8-9b07-4456-b21e-ef26b06dabe5"
+}
+
+### REGISTER CURSO
+POST http://localhost:3000/empleado/registrarCurso/11112222
+Content-Type: application/json
+
+{
+  "id_curso": "8165fae8-9b07-4456-b21e-ef26b06dabe5"
+}

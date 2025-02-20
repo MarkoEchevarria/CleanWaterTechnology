@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", function() {
         try {
             const urlParams = new URLSearchParams(window.location.search);
             const userDNI = urlParams.get('dni');
-            console.log(userDNI)
             const response = await fetch(`/empleado/showCursosInscrito/${userDNI}`);
             const data = await response.json();
             const cuadro_cursos = document.getElementById("cuadro_cursos");
@@ -22,11 +21,13 @@ document.addEventListener("DOMContentLoaded", function() {
                 mensajeEmpleados.style.display = "none";
 
                 data.data.forEach(emp => {
+                    console.log(`El codigo para el curso ${emp.nombre} es ${emp.id_curso}`)
                     const cuadroCurso = document.createElement("div");
                     cuadroCurso.setAttribute("class", "col-4");
                     cuadroCurso.setAttribute("style", `width: 30%; text-align: center; display: flex; border-radius: 10%;flex-direction:column ;justify-content: center; align-items: stretch;" onmouseover="this.style.transform='translateY(-10px)'; background-color: #f1f1f1`);
                     cuadroCurso.setAttribute("onmouseover", "this.style.transform='translateY(-10px)';");
                     cuadroCurso.setAttribute("onmouseout", "this.style.transform='translateY(0)';");
+                    cuadroCurso.setAttribute("onclick", `cargarModulos("${emp.id_curso}");`);
                     cuadroCurso.innerHTML = `
 
                         <img src="../imagenes/curso.png" alt="" style="width: 70%; border-radius: 10px; margin: 0 auto; align-items: stretch;">
@@ -48,3 +49,20 @@ document.addEventListener("DOMContentLoaded", function() {
 
     cargarCursos();
 });
+
+function cargarModulos(id_curso) {
+    async function cargarRutaModulos(id_curso) {
+        console.log(id_curso)
+        
+        const response = await fetch(`/empleado/redirectModulosCurso/${id_curso}`);
+        if (response.ok) {
+            const result = await response.json();
+            console.log("Result es: ", result)
+            ruta = result.redirectTo;
+            console.log("Redirigiendo a:", ruta);
+            window.location.href = result.redirectTo;
+            console.log(response);
+        }
+    }
+    cargarRutaModulos(id_curso);
+}

@@ -14,7 +14,7 @@ const showCursos = async (req, res) => {
 const showCursosInscrito = async (req, res) => {
     try {
         const {dni} = req.params
-        const result = await pool.query("SELECT curso.nombre, curso.descripcion, curso.num_modulos, curso.codigo FROM curso INNER JOIN curso_empleado ON curso.id_curso = curso_empleado.id_curso INNER JOIN empleado ON empleado.id_empleado = curso_empleado.id_empleado WHERE empleado.dni = CAST($1 AS VARCHAR(8))", [dni])
+        const result = await pool.query("SELECT curso.nombre, curso.descripcion, curso.num_modulos, curso.codigo, curso.id_curso FROM curso INNER JOIN curso_empleado ON curso.id_curso = curso_empleado.id_curso INNER JOIN empleado ON empleado.id_empleado = curso_empleado.id_empleado WHERE empleado.dni = CAST($1 AS VARCHAR(8))", [dni])
         res.status(200).json({ message: "Query sucessful", data: result.rows});
     } catch (error) {
         console.log("Error:", error)
