@@ -30,14 +30,15 @@ document.addEventListener("DOMContentLoaded", function() {
                     //cuadroModulo.setAttribute("class", "col-4");
                     cuadroModulo.classList.add("p-4", "bg-blue-100", "border-l-4", "border-blue-600", "shadow-md", "rounded-lg", "flex", "items-center", "justify-between");
                     cuadroModulo.innerHTML = `
-                        <img src="#" alt="Módulo 1" class="w-16 h-16 rounded-lg">
+                        <img src="../imagenes/modulos.png" alt="Módulo 1" class="w-16 h-16 rounded-lg">
                         <div class="flex-1 mx-4">
                             <h2 class="text-xl font-semibold text-blue-700">${capitalizeFirstLetter(emp.titulo)}</h2>
                             <p class="text-gray-600">${capitalizeFirstLetter(emp.descripcion)}</p>
                         </div>
                         <div class="flex gap-2">
                             <a class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600" onclick="cargarVideo(${emp.id_modulo})">Ver Video</a>
-                            <button class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600" onclick="alert('Accediendo a la evaluación del Módulo 1')">Evaluación</button>
+
+                            <a class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600" onclick="cargarPdf(${emp.id_modulo})">Evaluacion</a>
                         </div>
 
                     `;
@@ -46,7 +47,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 });
             } else {
                 lista_modulos.innerHTML = "";
-                // tabla.style.display = "none";
             }
         } catch (error) {
             console.error("Error en la petición:", error);
@@ -71,4 +71,21 @@ function cargarVideo(id_modulo) {
         }
     }
     cargarRutaVideos(id_modulo);
+}
+
+function cargarPdf(id_modulo) {
+    async function cargarRutaPdfs(id_modulo) {
+        console.log(id_modulo)
+        
+        const response = await fetch(`/empleado/redirectPdfModulo/${id_modulo}`);
+        if (response.ok) {
+            const result = await response.json();
+            console.log("Result es: ", result)
+            ruta = result.redirectTo;
+            console.log("Redirigiendo a:", ruta);
+            window.location.href = result.redirectTo;
+            console.log(response);
+        }
+    }
+    cargarRutaPdfs(id_modulo);
 }

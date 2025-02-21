@@ -4,6 +4,9 @@ import {deleteCurso, registerCurso, showCursos, showOneCurso, updateCurso} from 
 import {showModulos} from "../controllers/controllers-admin-modulo.js";
 import { showReporte } from "../controllers/controllers-admin-reporte.js";
 import { uploadVideo, getVideos, getOneVideo, deleteVideo } from "../controllers/controllers-videos.js";
+import { redirectCrearEvaluacion } from "../controllers/controllers-admin-evaluacion.js";
+import { getModulo } from "../controllers/controllers-admin-crearEvaluacion.js";
+import { deletePdf, getOnePdf, getPdfs, uploadPdf } from "../controllers/controllers-pdfs.js";
 
 const router = Router();
 
@@ -36,5 +39,14 @@ router.post("/upload", uploadVideo);
 router.get("/videos", getVideos);
 router.get("/video/:id", getOneVideo);
 router.delete("/deleteVideo/:id", deleteVideo);
+
+// Rutas del para subir pdfs
+router.post("/uploadpdf", uploadPdf);
+router.get("/pdfs", getPdfs);
+router.get("/pdf/:id", getOnePdf);
+router.delete("/deletePdf/:id", deletePdf);
+
+router.get("/getModulo/:id_modulo", getModulo)
+router.get("/redirectCrearEvaluacion/:id_modulo", redirectCrearEvaluacion)
 
 export default router;

@@ -49,23 +49,40 @@ document.addEventListener("DOMContentLoaded", function() {
 
                             const videoDiv = document.createElement("form");
                             videoDiv.setAttribute("id", "uploadForm");
-                            console.log("este es el data_video",data_video)
 
-                            // console.log(data)
                             if (data_video.length > 0) {
                                 videoDiv.innerHTML = `
                                     <!-- <div> Ya existe material para este modulo.</div> -->
-                                    <button type="button" onclick="eliminarVideo(${modulo.id_modulo})" >Eliminar Material Existente</button>
+                                    <button type="button" onclick="eliminarVideo(${modulo.id_modulo})" >Eliminar Video</button>
                                     `;
                                     moduloDiv.appendChild(videoDiv);
                             } else {
                                 videoDiv.innerHTML = `
                                     <input type="file" id="videoInput${modulo.id_modulo}" accept="video/*" required>
                                     <button type="button" onclick="subirVideo(${modulo.id_modulo})" >Subir</button>
+                                    `;  
+                            }
+
+                            const response_pdf = await fetch(`/admin/pdf/${modulo.id_modulo}`);
+                            const data_pdf = await response_pdf.json();
+
+                            const pdfDiv = document.createElement("form");
+                            pdfDiv.setAttribute("id", "uploadForm");
+
+                            if (data_pdf.length > 0) {
+                                pdfDiv.innerHTML = `
+                                    <!-- <div> Ya existe material para este modulo.</div> -->
+                                    <button type="button" onclick="eliminarPdf(${modulo.id_modulo})" >Eliminar Pdf</button>
                                     `;
-                                    
+                                    moduloDiv.appendChild(pdfDiv);
+                            } else {
+                                pdfDiv.innerHTML = `
+                                    <input type="file" id="pdfInput${modulo.id_modulo}" accept="application/pdf" required>
+                                    <button type="button" onclick="subirPdf(${modulo.id_modulo})">Subir PDF</button>
+                                `
                             }
                             moduloDiv.appendChild(videoDiv);
+                            moduloDiv.appendChild(pdfDiv)
                             curso_head.appendChild(moduloDiv);                           
                         });
                     } else {console.log("pues algo salio mal pipipi, mira a continuacion",modulos.data)}
@@ -99,21 +116,12 @@ async function subirVideo(id_modulo) {
     formData.append("id_modulo", id_modulo);
 
     try {
-        const response = await fetch("http://localhost:3000/admin/upload", {
+        response = await fetch("http://localhost:3000/admin/upload", {
             method: "POST",
             body: formData,
         });
-
-        const result = await response.json();
-
-        if (response.ok) {
-            document.getElementById("message").textContent = `Video ${id_modulo} subido correctamente`;
-        } else {
-            document.getElementById("message").textContent = `Error en el video ${id_modulo}: ` + result.message;
-        }
     } catch (error) {
         console.error("Error en la subida:", error);
-        document.getElementById("message").textContent = `Error al subir el video ${id_modulo}`;
     }
 }
 
@@ -141,5 +149,51 @@ async function eliminarVideo(id_modulo) {
     } catch (error) {
         console.error("Error en la eliminación:", error);
         document.getElementById("message").textContent = `Error al eliminar el video ${id_modulo}`;
+    }
+}
+
+async function subirPdf(id_modulo) {
+    const fileInput = document.getElementById(`pdfInput${id_modulo}`);
+    const file = fileInput.files[0];
+
+    if (!file) return alert("Selecciona un archivo");
+
+    const formData = new FormData();
+    formData.append("pdf", file);
+    formData.append("id_modulo", id_modulo);
+
+    try {
+        response = await fetch("http://localhost:3000/admin/uploadpdf", {
+            method: "POST",
+            body: formData,
+        });
+    } catch (error) {
+        console.error("Error en la subida:", error);
+    }
+}
+
+async function eliminarPdf(id_modulo) {
+    try {
+        const response = await fetch(`/admin/pdf/${id_modulo}`, {
+            method: "GET",
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.length > 0) {
+            const pdf = result[0];
+            const responseDelete = await fetch(`http://localhost:3000/admin/deletePdf/${pdf.id_evaluacion}`, {
+                method: "DELETE",
+            });
+
+            if (!responseDelete.ok) {
+                throw new Error("Error al eliminar el pdf");
+            }
+        } else {
+            console.log("No hay pdf para este modulo");
+        }
+
+    } catch (error) {
+        console.error("Error en la eliminación:", error);
     }
 }

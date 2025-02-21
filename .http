@@ -117,3 +117,12 @@ Content-Type: application/json
 {
   "id_curso": "8165fae8-9b07-4456-b21e-ef26b06dabe5"
 }
+
+### GET MODULO
+GET http://localhost:3000/empleado/getModulo/1
+
+### REDIRECT CREAR EVALUACION
+GET http://localhost:3000/admin/redirectCrearEvaluacion/1
+
+### GET MODULO ADMIN
+GET http://localhost:3000/admin/getModulo/3
