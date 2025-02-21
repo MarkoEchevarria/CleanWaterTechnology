@@ -1,36 +1,4 @@
 document.addEventListener("DOMContentLoaded", function() {
-    /**
-    const cursos = [
-        {
-            nombre: "Blockchain Básico",
-            modulos: [
-                {
-                    nombre: "Introducción a Blockchain",
-                    evaluaciones: [
-                        { empleado: "Juan Pérez", dni: "12345678", fecha: "2024-02-10", nota: 85 }
-                    ]
-                },
-                {
-                    nombre: "Criptografía en Blockchain",
-                    evaluaciones: [
-                        { empleado: "María Gómez", dni: "87654321", fecha: "2024-02-12", nota: 90 }
-                    ]
-                }
-            ]
-        },
-        {
-            nombre: "Seguridad Informática",
-            modulos: [
-                {
-                    nombre: "Principios de Seguridad",
-                    evaluaciones: [
-                        { empleado: "Carlos López", dni: "56781234", fecha: "2024-02-15", nota: 88 }
-                    ]
-                }
-            ]
-        }
-    ];
-     */
 
     async function cargarReporteEvaluaciones() {
         try {
@@ -75,6 +43,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                                     <th class='p-2'>DNI</th>
                                                     <th class='p-2'>Fecha Examen</th>
                                                     <th class='p-2'>Nota</th>
+                                                    <th class='p-2'>Calificar</th>
                                                 </tr>
                                             </thead>
                                             `
@@ -87,6 +56,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                                 <td class='p-2'>${nota.dni}</td>
                                                 <td class='p-2'>${nota.fecha}</td>
                                                 <td class='p-2'>${nota.puntuacion}</td>
+                                                <td class='p-2'> <button class="btn btn-primary modify-btn" onclick="revisar('${nota.id_empleado}', ${nota.id_modulo})"> Revisar </button> </td>
                                             `;
                                             tbody_div.appendChild(nota_fila)
                                         } );
@@ -124,3 +94,7 @@ document.addEventListener("DOMContentLoaded", function() {
     cargarReporteEvaluaciones();
 
 });
+
+function revisar(id_empleado, id_modulo) {
+    window.location.href = `/vistas-admin/revisar.html?id_empleado=${id_empleado}&id_modulo=${id_modulo}`
+}

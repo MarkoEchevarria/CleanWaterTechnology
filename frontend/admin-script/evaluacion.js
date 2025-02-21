@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                 moduloDiv.classList.add("p-3", "bg-gray-100", "rounded-md", "shadow-sm", "flex", "justify-between", "items-center")
                                 moduloDiv.innerHTML = `
                                     <span class="text-gray-700 font-medium"> ${modulo.titulo} </span>
-                                    <button class="bg-teal-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-teal-700">Subir Evaluación</button>
+                                    <button class="bg-teal-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-teal-700" onclick="enviarPaginaEvaluaciond(${modulo.id_modulo})">Subir Evaluación</button>
                                 `;
                                 div_curso_head.appendChild(moduloDiv);
                             });
@@ -71,3 +71,20 @@ document.addEventListener("DOMContentLoaded", function() {
 
     cargarCursosModulosEvaluaciones();
 });
+
+function enviarPaginaEvaluacion(id_modulo) {
+    async function enviarRutaEvaluacion(id_modulo) {
+        console.log(id_modulo)
+        
+        const response = await fetch(`/admin/redirectCrearEvaluacion/${id_modulo}`);
+        if (response.ok) {
+            const result = await response.json();
+            console.log("Result es: ", result)
+            ruta = result.redirectTo;
+            console.log("Redirigiendo a:", ruta);
+            window.location.href = result.redirectTo;
+            console.log(response);
+        }
+    }
+    enviarRutaEvaluacion(id_modulo);
+}
