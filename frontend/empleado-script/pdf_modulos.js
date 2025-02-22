@@ -17,6 +17,9 @@ document.addEventListener("DOMContentLoaded", function() {
         const buttonEnviar = document.getElementById("enviarPdf");
         buttonEnviar.setAttribute("onclick", `subirPdf(${id_modulo}, ${dni})`);
 
+        const RegresarButton = document.getElementById("RegresarButton");
+        RegresarButton.setAttribute("onclick", `volverModulos(${id_modulo},${dni})`);
+
     async function loadPdfs() {
 
         const modulo_titulo = document.getElementById("modulo_titulo");
@@ -115,5 +118,25 @@ async function eliminarPdf(id_modulo, dni) {
 
     } catch (error) {
         console.error("Error en la eliminación:", error);
+    }
+}
+
+async function volverModulos(id_modulo, dni) {
+    try {
+        const response = await fetch(`/empleado/getCursoByModulo/${id_modulo}`);
+        const result = await response.json();
+        const id_curso = result.data[0].id_curso;
+
+        const response2 = await fetch(`/empleado/volverModulos/${id_curso}&${dni}`);
+        if (response2.ok) {
+            const result2 = await response2.json();
+            if (result2.redirectTo) {
+                window.location.href = result2.redirectTo;
+            } else {
+                console.log("No se pudo redirigir");
+            }
+        }
+    } catch (error) {
+        console.error("Error en la petición:", error);
     }
 }

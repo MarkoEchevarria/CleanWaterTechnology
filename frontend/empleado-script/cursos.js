@@ -17,6 +17,9 @@ document.addEventListener("DOMContentLoaded", function() {
             const listaEmpleados = document.getElementById("section_cursos");
             const mensajeEmpleados = document.getElementById("lista-cursos");
 
+            const RegresarButton = document.getElementById("RegresarButton");
+            RegresarButton.setAttribute("onclick", `volverInicio(${userDNI})`);
+
             if (response.ok && data.data.length > 0) {
                 mensajeEmpleados.style.display = "none";
 
@@ -67,4 +70,16 @@ function cargarModulos(id_curso) {
         }
     }
     cargarRutaModulos(id_curso);
+}
+
+async function volverInicio(dni) {
+    const volver = await fetch(`/empleado/volverInicio/${dni}`);
+    if (volver.ok) {
+        const result = await volver.json();
+        if (result.redirectTo){
+            window.location.href = result.redirectTo;
+        } else {
+            console.log("No se recibió una URL de redirección");
+        }
+    }
 }

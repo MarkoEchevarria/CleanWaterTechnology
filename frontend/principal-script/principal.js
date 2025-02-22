@@ -1,5 +1,3 @@
-// import { response } from "express";
-
 function openModalAdmin() {
     document.getElementById('loginModalAdmin').style.display = "block";
 }
@@ -46,7 +44,6 @@ function validateLoginUsuario() {
             
             if (data.data[0].password === password) {
                 console.log("Login exitoso")
-                //window.location.href = "emple.html";
                 async function enterUsuario() {
                     const response = await fetch(`/enterUsuario`, {
                         method: 'POST',
