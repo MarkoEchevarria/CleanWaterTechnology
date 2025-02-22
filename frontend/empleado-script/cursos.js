@@ -53,8 +53,10 @@ document.addEventListener("DOMContentLoaded", function() {
 function cargarModulos(id_curso) {
     async function cargarRutaModulos(id_curso) {
         console.log(id_curso)
-        
-        const response = await fetch(`/empleado/redirectModulosCurso/${id_curso}`);
+        const urlParams = new URLSearchParams(window.location.search);
+        const dni = urlParams.get('dni');
+
+        const response = await fetch(`/empleado/redirectModulosCurso/${id_curso}&${dni}`);
         if (response.ok) {
             const result = await response.json();
             console.log("Result es: ", result)

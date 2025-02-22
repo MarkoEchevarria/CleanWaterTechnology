@@ -71,7 +71,7 @@ GET http://localhost:3000/empleado/getEmployeeName/11112222
 GET http://localhost:3000/empleado/showCertificados/11112222
 
 ### SHOW CURSOS
-GET http://localhost:3000/admin/showReporte/1
+GET http://localhost:3000/admin/showReporte/12
 
 ### GET VIDEO
 DELETE http://localhost:3000/admin/deleteVideo/14
@@ -126,3 +126,6 @@ GET http://localhost:3000/admin/redirectCrearEvaluacion/1
 
 ### GET MODULO ADMIN
 GET http://localhost:3000/admin/getModulo/3
+
+### GET REVISAR EVALUACION
+GET http://localhost:3000/admin/revisarAdmin/21aec45d-29f2-4aeb-a1bb-9bc8f7cebc81&12

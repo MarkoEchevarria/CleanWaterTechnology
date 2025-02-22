@@ -59,8 +59,9 @@ document.addEventListener("DOMContentLoaded", function() {
 function cargarVideo(id_modulo) {
     async function cargarRutaVideos(id_modulo) {
         console.log(id_modulo)
-        
-        const response = await fetch(`/empleado/redirectVideoModulo/${id_modulo}`);
+        const urlParams = new URLSearchParams(window.location.search);
+        const dni = urlParams.get('dni')
+        const response = await fetch(`/empleado/redirectVideoModulo/${id_modulo}&${dni}`);
         if (response.ok) {
             const result = await response.json();
             console.log("Result es: ", result)
@@ -76,8 +77,9 @@ function cargarVideo(id_modulo) {
 function cargarPdf(id_modulo) {
     async function cargarRutaPdfs(id_modulo) {
         console.log(id_modulo)
-        
-        const response = await fetch(`/empleado/redirectPdfModulo/${id_modulo}`);
+        const urlParams = new URLSearchParams(window.location.search);
+        const dni = urlParams.get('dni')
+        const response = await fetch(`/empleado/redirectPdfModulo/${id_modulo}&${dni}`);
         if (response.ok) {
             const result = await response.json();
             console.log("Result es: ", result)

@@ -9,6 +9,7 @@ import { getVideo } from "../controllers/controllers-emple-video.js";
 import { registrarCurso, verificarCodigo } from "../controllers/controllers-emple-registrarcurso.js";
 import { redirectPdfModulo } from "../controllers/controllers-emple-pdf-video.js";
 import { getPdf } from "../controllers/controllers-emple-pdf.js";
+import { deletePdf, getOnePdf, getPdfs, uploadPdf } from "../controllers/controllers-emple-controlarEvaluacion.js";
 
 const router = Router();
 
@@ -21,16 +22,21 @@ router.get("/enterInscripcion/:dni", enterInscripcion)
 router.get("/enterMisCertificados/:dni", enterMisCertificados)
 router.get("/showCertificados/:dni", showCertificados)
 
-router.get("/redirectModulosCurso/:id_curso", redirectModulosCurso)
+router.get("/redirectModulosCurso/:id_curso&:dni", redirectModulosCurso)
 router.get("/showModulos/:id", showModulos)
 router.get("/getModulo/:id_modulo", getModulo)
 router.get("/verDatosCurso/:id", verDatosCurso)
-router.get("/redirectVideoModulo/:id_modulo", redirectVideoModulo)
-router.get("/redirectPdfModulo/:id_modulo", redirectPdfModulo)
+router.get("/redirectVideoModulo/:id_modulo&:dni", redirectVideoModulo)
+router.get("/redirectPdfModulo/:id_modulo&:dni", redirectPdfModulo)
 
 router.get("/getVideo/:id", getVideo)
 router.get("/getPdf/:id", getPdf)
 router.post("/registrarCurso/:dni", registrarCurso)
 router.post("/verificarCodigo", verificarCodigo)
+
+router.post("/uploadpdf", uploadPdf); // /:dni&:id_modulo
+router.get("/pdfs", getPdfs);
+router.get("/pdf/:id_modulo&:dni", getOnePdf);
+router.delete("/deletePdf/:id_evaluacion_empleado", deletePdf);
 
 export default router
