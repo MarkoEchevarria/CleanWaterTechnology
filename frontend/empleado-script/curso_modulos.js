@@ -11,8 +11,12 @@ document.addEventListener("DOMContentLoaded", function() {
         try {
             const urlParams = new URLSearchParams(window.location.search);
             const id_curso = urlParams.get('id_curso');
+            const dni = urlParams.get('dni');
             const response = await fetch(`/empleado/showModulos/${id_curso}`);
             const data = await response.json();
+
+            const RegresarButton = document.getElementById("RegresarButton");
+            RegresarButton.setAttribute("onclick", `volverCursos(${dni})`);
 
             const titulo_modulos = document.getElementById("titulo_modulos");
             const curso_datos = await fetch(`/empleado/verDatosCurso/${id_curso}`);
@@ -27,7 +31,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 data.data.forEach(emp => {
                     const cuadroModulo = document.createElement("div");
-                    //cuadroModulo.setAttribute("class", "col-4");
                     cuadroModulo.classList.add("p-4", "bg-blue-100", "border-l-4", "border-blue-600", "shadow-md", "rounded-lg", "flex", "items-center", "justify-between");
                     cuadroModulo.innerHTML = `
                         <img src="../imagenes/modulos.png" alt="Módulo 1" class="w-16 h-16 rounded-lg">
@@ -42,7 +45,6 @@ document.addEventListener("DOMContentLoaded", function() {
                         </div>
 
                     `;
-                    
                     lista_modulos.appendChild(cuadroModulo);
                 });
             } else {
@@ -52,23 +54,18 @@ document.addEventListener("DOMContentLoaded", function() {
             console.error("Error en la petición:", error);
         }
     }
-
     cargarModulos();
 });
 
 function cargarVideo(id_modulo) {
     async function cargarRutaVideos(id_modulo) {
-        console.log(id_modulo)
         const urlParams = new URLSearchParams(window.location.search);
         const dni = urlParams.get('dni')
         const response = await fetch(`/empleado/redirectVideoModulo/${id_modulo}&${dni}`);
         if (response.ok) {
             const result = await response.json();
-            console.log("Result es: ", result)
             ruta = result.redirectTo;
-            console.log("Redirigiendo a:", ruta);
             window.location.href = result.redirectTo;
-            console.log(response);
         }
     }
     cargarRutaVideos(id_modulo);
@@ -76,18 +73,26 @@ function cargarVideo(id_modulo) {
 
 function cargarPdf(id_modulo) {
     async function cargarRutaPdfs(id_modulo) {
-        console.log(id_modulo)
         const urlParams = new URLSearchParams(window.location.search);
         const dni = urlParams.get('dni')
         const response = await fetch(`/empleado/redirectPdfModulo/${id_modulo}&${dni}`);
         if (response.ok) {
             const result = await response.json();
-            console.log("Result es: ", result)
             ruta = result.redirectTo;
-            console.log("Redirigiendo a:", ruta);
             window.location.href = result.redirectTo;
-            console.log(response);
         }
     }
     cargarRutaPdfs(id_modulo);
+}
+
+async function volverCursos(dni) {
+    const volver = await fetch(`/empleado/volverCursos/${dni}`);
+    if (volver.ok) {
+        const result = await volver.json();
+        if (result.redirectTo) {
+            window.location.href = result.redirectTo;
+        } else {
+            console.log("No se pudo redirigir");
+        }
+    }
 }

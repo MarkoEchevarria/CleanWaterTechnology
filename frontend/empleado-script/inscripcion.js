@@ -18,6 +18,9 @@ document.addEventListener("DOMContentLoaded", function() {
             // const listaEmpleados = document.getElementById("section_cursos");
             const mensaje_no_cursos = document.getElementById("mensaje-no-cursos");
 
+            const RegresarButton = document.getElementById("RegresarButton");
+            RegresarButton.setAttribute("onclick", `volverInicio(${userDNI})`);
+
             if (response.ok && data.data.length > 0) {
                 mensaje_no_cursos.style.display = "none";
 
@@ -118,4 +121,16 @@ function registrarCurso(id_curso) {
         console.error("Error en la petición:", error);
     }
     
+}
+
+async function volverInicio(dni) {
+    const volver = await fetch(`/empleado/volverInicio/${dni}`);
+    if (volver.ok) {
+        const result = await volver.json();
+        if (result.redirectTo){
+            window.location.href = result.redirectTo;
+        } else {
+            console.log("No se recibió una URL de redirección");
+        }
+    }
 }

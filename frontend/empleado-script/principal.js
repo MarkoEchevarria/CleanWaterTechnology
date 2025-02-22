@@ -55,3 +55,20 @@ function irPaginaInscripcion() {
     }
     enterInscripcion()
 }
+
+function irPaginaCertificados() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const userDNI = urlParams.get('dni');
+    async function enterCertificados() {
+        try {
+            const response = await fetch(`/empleado/enterMisCertificados/${userDNI}`);
+            if (response.ok) {
+                const result = await response.json();
+                window.location.href = result.redirectTo;
+            }
+        } catch (error) {
+            console.log("Error en la petición:", error)
+        }
+    }
+    enterCertificados()
+}

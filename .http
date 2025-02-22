@@ -129,3 +129,9 @@ GET http://localhost:3000/admin/getModulo/3
 
 ### GET REVISAR EVALUACION
 GET http://localhost:3000/admin/revisarAdmin/21aec45d-29f2-4aeb-a1bb-9bc8f7cebc81&12
+
+### 
+GET http://localhost:3000/empleado/volverInicio/11112222
+
+### 
+GET http://localhost:3000/empleado/getCursoByModulo/1

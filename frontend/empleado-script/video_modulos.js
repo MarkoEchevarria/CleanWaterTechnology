@@ -12,9 +12,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
         const urlParams = new URLSearchParams(window.location.search);
         const id_modulo = urlParams.get('id_modulo');
+        const dni = urlParams.get('dni');
 
         const modulo_titulo = document.getElementById("modulo_titulo");
         const modulo_descripcion = document.getElementById("modulo_descripcion");   
+
+        const RegresarButton = document.getElementById("RegresarButton");
+        RegresarButton.setAttribute("onclick", `volverModulos(${id_modulo},${dni})`);
 
         const response = await fetch(`/empleado/getVideo/${id_modulo}`);
         const video = await response.json();
@@ -43,3 +47,23 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     loadVideos()
 });
+
+async function volverModulos(id_modulo, dni) {
+    try {
+        const response = await fetch(`/empleado/getCursoByModulo/${id_modulo}`);
+        const result = await response.json();
+        const id_curso = result.data[0].id_curso;
+
+        const response2 = await fetch(`/empleado/volverModulos/${id_curso}&${dni}`);
+        if (response2.ok) {
+            const result2 = await response2.json();
+            if (result2.redirectTo) {
+                window.location.href = result2.redirectTo;
+            } else {
+                console.log("No se pudo redirigir");
+            }
+        }
+    } catch (error) {
+        console.error("Error en la petición:", error);
+    }
+}

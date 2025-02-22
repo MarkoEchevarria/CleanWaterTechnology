@@ -37,11 +37,13 @@ const enterInscripcion = async (req, res) => {
 const enterMisCertificados = async (req, res) => {
     try {
         const {dni} = req.params
-        res.status(200).json({ message: "Login successful", redirectTo: `/cursos.html?dni=${dni}` });
+        res.status(200).json({ message: "Login successful", redirectTo: `/vistas-empleado/certificados.html?dni=${dni}` });
     } catch (error) {
         console.log("Error:", error)
         res.status(500).json({ message: error.message });
     }
 }
+
+
 
 export { getEmployeeName,enterMisCertificados, enterMisCursos, enterInscripcion }

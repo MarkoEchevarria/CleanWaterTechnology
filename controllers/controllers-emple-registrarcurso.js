@@ -25,4 +25,14 @@ const registrarCurso = async (req, res) => {
     }
 }
 
-export {registrarCurso, verificarCodigo}
+const volverInicio = async (req, res) => {
+    try {
+        const {dni} = req.params
+        res.status(200).json({ redirectTo: `/emple.html?dni=${dni}` });
+    } catch (error) {
+        console.log("Error:", error)
+        res.status(500).json({ message: error.message }); 
+    }
+}
+
+export {registrarCurso, verificarCodigo, volverInicio}
