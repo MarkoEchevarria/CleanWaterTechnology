@@ -1,3 +1,8 @@
+function formatearFecha(fechaISO) {
+    const [year, month, day] = new Date(fechaISO).toISOString().split("T")[0].split("-");
+    return `${day}-${month}-${year}`;
+}
+
 document.addEventListener("DOMContentLoaded", function() {
 
     async function cargarReporteEvaluaciones() {
@@ -28,10 +33,10 @@ document.addEventListener("DOMContentLoaded", function() {
                                 moduloElement.classList.add("p-3", "bg-gray-100", "rounded-md", "shadow-sm");
                                 moduloElement.innerHTML = `<summary class='text-gray-700 font-medium cursor-pointer'>${modulo.titulo}</summary>`;
                                
-                                
                                 async function cargarNotas() {
                                     const response_notas = await fetch (`/admin/showReporte/${modulo.id_modulo}`)
                                     const nota = await response_notas.json()
+                                    console.log(nota)
                                     const table = document.createElement("table");
                                         table.classList.add("mt-3", "w-full", "border", "border-gray-300", "text-gray-700");
                                     if ( response_notas.ok && nota.data && nota.data.length > 0 ) {
@@ -48,15 +53,16 @@ document.addEventListener("DOMContentLoaded", function() {
                                             </thead>
                                             `
                                         const tbody_div = document.createElement("tbody");
-                                        nota.data.forEach( nota => {
+                                        console.log(nota.data)
+                                        nota.data.forEach( item => {
                                             const nota_fila = document.createElement("tr"); 
                                             nota_fila.setAttribute("class", "border")
                                             nota_fila.innerHTML = `
-                                                <td class='p-2'>${nota.nombre}</td>
-                                                <td class='p-2'>${nota.dni}</td>
-                                                <td class='p-2'>${nota.fecha}</td>
-                                                <td class='p-2'>${nota.puntuacion}</td>
-                                                <td class='p-2'> <button class="btn btn-primary modify-btn" onclick="revisar('${nota.id_empleado}', ${nota.id_modulo})"> Revisar </button> </td>
+                                                <td class='p-2'>${item.nombre}</td>
+                                                <td class='p-2'>${item.dni}</td>
+                                                <td class='p-2'>${formatearFecha(item.fecha)}</td>
+                                                <td class='p-2'>${item.puntuacion}</td>
+                                                <td class='p-2'> <button class="btn btn-primary modify-btn" onclick="revisar('${item.id_empleado}', ${item.id_modulo})"> Revisar </button> </td>
                                             `;
                                             tbody_div.appendChild(nota_fila)
                                         } );

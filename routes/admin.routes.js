@@ -1,12 +1,14 @@
 import { Router } from "express";
 import { deleteEmployee, registerEmployee, showEmployee, showOneEmployee, updateEmployee } from "../controllers/controllers-admin-empleado.js";
-import {deleteCurso, registerCurso, showCursos, showOneCurso, updateCurso} from "../controllers/controllers-admin-curso.js";
-import {showModulos} from "../controllers/controllers-admin-modulo.js";
+import { deleteCurso, registerCurso, showCursos, showOneCurso, updateCurso} from "../controllers/controllers-admin-curso.js";
+import { showModulos} from "../controllers/controllers-admin-modulo.js";
 import { showReporte } from "../controllers/controllers-admin-reporte.js";
 import { uploadVideo, getVideos, getOneVideo, deleteVideo } from "../controllers/controllers-videos.js";
 import { redirectCrearEvaluacion } from "../controllers/controllers-admin-evaluacion.js";
 import { getModulo } from "../controllers/controllers-admin-crearEvaluacion.js";
 import { deletePdf, getOnePdf, getPdfs, uploadPdf } from "../controllers/controllers-pdfs.js";
+import { revisarAdmin } from "../controllers/controllers-admin-revisar.js";
+import { calificarAdmin } from "../controllers/controllers-admin-calificar.js";
 
 const router = Router();
 
@@ -46,7 +48,11 @@ router.get("/pdfs", getPdfs);
 router.get("/pdf/:id", getOnePdf);
 router.delete("/deletePdf/:id", deletePdf);
 
+router.get("/revisarAdmin/:id_empleado&:id_modulo", revisarAdmin)
+
 router.get("/getModulo/:id_modulo", getModulo)
 router.get("/redirectCrearEvaluacion/:id_modulo", redirectCrearEvaluacion)
+
+router.post("/calificarAdmin/:id_empleado&:id_modulo&:puntuacion", calificarAdmin)
 
 export default router;
