@@ -14,7 +14,7 @@ const __dirname = path.dirname(__filename);
 
 const app = express()
 
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+app.use(cors({ origin: `http://localhost:${PORT}`, credentials: true }));
 
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');

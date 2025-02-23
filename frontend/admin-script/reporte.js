@@ -1,6 +1,18 @@
 function formatearFecha(fechaISO) {
-    const [year, month, day] = new Date(fechaISO).toISOString().split("T")[0].split("-");
-    return `${day}-${month}-${year}`;
+    if (fechaISO === null) {
+        return '---'
+    } else {
+        const [year, month, day] = new Date(fechaISO).toISOString().split("T")[0].split("-");
+        return `${day}-${month}-${year}`;
+    }
+}
+
+function capitalizeFirstLetter(word) {
+    const firstLetter = word.charAt(0)
+    const firstLetterCap = firstLetter.toUpperCase()
+    const remainingLetters = word.slice(1)
+    const capitalizedWord = firstLetterCap + remainingLetters
+    return capitalizedWord
 }
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -36,7 +48,6 @@ document.addEventListener("DOMContentLoaded", function() {
                                 async function cargarNotas() {
                                     const response_notas = await fetch (`/admin/showReporte/${modulo.id_modulo}`)
                                     const nota = await response_notas.json()
-                                    console.log(nota)
                                     const table = document.createElement("table");
                                         table.classList.add("mt-3", "w-full", "border", "border-gray-300", "text-gray-700");
                                     if ( response_notas.ok && nota.data && nota.data.length > 0 ) {
@@ -53,19 +64,30 @@ document.addEventListener("DOMContentLoaded", function() {
                                             </thead>
                                             `
                                         const tbody_div = document.createElement("tbody");
-                                        console.log(nota.data)
                                         nota.data.forEach( item => {
                                             const nota_fila = document.createElement("tr"); 
                                             nota_fila.setAttribute("class", "border")
-                                            nota_fila.innerHTML = `
-                                                <td class='p-2'>${item.nombre}</td>
-                                                <td class='p-2'>${item.dni}</td>
-                                                <td class='p-2'>${formatearFecha(item.fecha)}</td>
-                                                <td class='p-2'>${item.puntuacion}</td>
-                                                <td class='p-2'> <button class="btn btn-primary modify-btn" onclick="revisar('${item.id_empleado}', ${item.id_modulo})"> Revisar </button> </td>
-                                            `;
+                                            if (item.puntuacion === null) {
+                                                nota_fila.innerHTML = `
+                                                    <td class='p-2'>${capitalizeFirstLetter(item.nombre)} ${capitalizeFirstLetter(item.apellido)}</td>
+                                                    <td class='p-2'>${item.dni}</td>
+                                                    <td class='p-2'>${formatearFecha(item.fecha)}</td>
+                                                    <td class='p-2 tr-puntuacion'> -- </td>
+                                                    <td class='p-2'> <button class="btn btn-primary modify-btn" style="background-color: #4CAF50" onclick="revisar('${item.id_empleado}', ${item.id_modulo})"> Revisar </button> </td>
+                                                `;
+                                            } else {
+                                                nota_fila.innerHTML = `
+                                                    <td class='p-2'>${item.nombre}</td>
+                                                    <td class='p-2'>${item.dni}</td>
+                                                    <td class='p-2'>${formatearFecha(item.fecha)}</td>
+                                                    <td class='p-2 tr-puntuacion'>${item.puntuacion}</td>
+                                                    <td class='p-2'> <button class="btn btn-primary modify-btn" style="background-color: #4CAF50" onclick="revisar('${item.id_empleado}', ${item.id_modulo})"> Revisar </button> </td>
+                                            `; 
+                                            }
                                             tbody_div.appendChild(nota_fila)
-                                        } );
+                                        } 
+                                            
+                                        );
 
                                         table.appendChild(tbody_div)
 
@@ -79,10 +101,13 @@ document.addEventListener("DOMContentLoaded", function() {
                                 
                                 
                                 modulosContainer.appendChild(moduloElement);
+
+                                
                             });
                         } else {
                             console.log("Algo salio mal con el if de modulos")
                         }
+                        
                     }
                     cargarModulos()
                     
@@ -95,6 +120,9 @@ document.addEventListener("DOMContentLoaded", function() {
             noEvaluacionesMensaje.style.display = "block";
             noEvaluacionesMensaje.textContent = "Hubo un error al cargar los módulos.";
         }
+        
+        
+
     }
 
     cargarReporteEvaluaciones();
