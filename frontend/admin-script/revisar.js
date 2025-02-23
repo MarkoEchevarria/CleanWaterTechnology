@@ -15,7 +15,6 @@ document.addEventListener("DOMContentLoaded", function() {
         const id_empleado = urlParams.get('id_empleado');
 
         const modulo_titulo = document.getElementById("modulo_titulo");
-        // const modulo_descripcion = document.getElementById("modulo_descripcion");   
 
         const response = await fetch(`/admin/revisarAdmin/${id_empleado}&${id_modulo}`);
         const pdf = await response.json();
@@ -24,10 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const modulo = await responseTitle.json();
 
         modulo_titulo.innerHTML = `Evaluacion del modulo: ${capitalizeFirstLetter(modulo.data[0].titulo)}`;
-        //modulo_descripcion.innerHTML = `${capitalizeFirstLetter(modulo.data[0].descripcion)}`;
-
         const container = document.getElementById("pdf_contenedor");
-        
         if (pdf.length === 0) {
             container.innerHTML = `
             <div style="height: 15em; display: flex; justify-content: center; align-items: center;"> 
@@ -39,9 +35,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 <iframe src="${pdf[0].url}" width="100%" height="100%" style="border: none;" class="rounded-lg"></iframe>
                 `
         }
-
-        console.log(id_empleado, id_modulo)
-
         const label = document.getElementById("label");
         const input = document.getElementById("input");
         const buttonNota = document.getElementById("buttonNota");

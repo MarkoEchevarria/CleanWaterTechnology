@@ -7,9 +7,7 @@ function capitalizeFirstLetter(word) {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-
     async function loadVideos() {
-
         const urlParams = new URLSearchParams(window.location.search);
         const id_modulo = urlParams.get('id_modulo');
         const dni = urlParams.get('dni');

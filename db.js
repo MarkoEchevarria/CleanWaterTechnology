@@ -10,7 +10,8 @@ const pool = new Pool({
     host: db.host,
     port: db.port,
     database: db.database
-}) **/
+})
+**/
 
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,

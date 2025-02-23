@@ -1,6 +1,3 @@
-import { pool } from "../db.js"
-import cryto from "crypto"
-
 const redirectModulosCurso = async (req, res) => {
     try {
         const { id_curso, dni } = req.params

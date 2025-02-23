@@ -1,7 +1,4 @@
 import { pool } from "../db.js"
-import crypto from "crypto"
-import {validateEmpleado} from "../schemas/empleados.js"
-
 
 const calificarAdmin = async (req, res) => {
     try {

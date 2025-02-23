@@ -7,6 +7,5 @@ const router = Router();
 router.get("/getAdmin/:correo", getAdmin)
 router.get("/getUsuario/:correo", getUsuario)
 router.post("/enterUsuario", enterUsuario)
-//router.get("/showOneEmployee/:id", showOneEmployee)
 
 export default router;

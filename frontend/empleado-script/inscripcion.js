@@ -15,7 +15,6 @@ document.addEventListener("DOMContentLoaded", function() {
             const response = await fetch(`/empleado/showCursos/${userDNI}`);
             const data = await response.json();
             const cuadro_cursos = document.getElementById("cursos");
-            // const listaEmpleados = document.getElementById("section_cursos");
             const mensaje_no_cursos = document.getElementById("mensaje-no-cursos");
 
             const RegresarButton = document.getElementById("RegresarButton");
@@ -25,7 +24,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 mensaje_no_cursos.style.display = "none";
 
                 data.data.forEach(emp => {
-                    console.log(emp.id_curso)
                     const cuadroCurso = document.createElement("div");
                     cuadroCurso.setAttribute("class", "curso");
                     cuadroCurso.setAttribute("style", "background-color: #caf9f0; border: 1px solid #ddd; border-radius: 1rem; padding: 2rem; box-shadow: 0px 5px 15px rgba(112, 112, 112, 0.48);");
@@ -51,7 +49,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 });
             } else {
                 cuadro_cursos.innerHTML = "";
-                // tabla.style.display = "none";
             }
         } catch (error) {
             console.error("Error en la petición:", error);
@@ -68,7 +65,6 @@ function registrarCurso(id_curso) {
             const data = { codigo, id_curso };
             const urlParams = new URLSearchParams(window.location.search);
             const dni = urlParams.get('dni');
-            console.log(data.codigo, data.id_curso, dni)
             const result = await fetch(`/empleado/verificarCodigo`, {
                 method: "POST",
                 headers: {
@@ -76,8 +72,7 @@ function registrarCurso(id_curso) {
                 },
                 body: JSON.stringify(data),
             })
-            const resutVerificar = await result.json(); 
-            console.log(resutVerificar)
+            const resutVerificar = await result.json();
             if (result.ok && resutVerificar.data && resutVerificar.data.length > 0) {
                 async function registrarCursos() {
                     const incripcion = await fetch(`/empleado/registrarCurso/${dni}`, {
@@ -89,7 +84,6 @@ function registrarCurso(id_curso) {
                     })
                     if (incripcion.ok) {
                         alert("Curso registrado con éxito");
-                        //window.location.href = `/empleado/inscripcion?dni=${dni}`;
                     } else {
                         alert("Error al registrar el curso");
                     }

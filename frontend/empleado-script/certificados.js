@@ -23,7 +23,6 @@ document.addEventListener("DOMContentLoaded", function() {
             const response = await fetch(`/empleado/showCertificados/${userDNI}`);
             const data = await response.json();
             const cuadro_certificados = document.getElementById("certificados");
-            // const listaEmpleados = document.getElementById("section_cursos");
             const mensaje_no_cursos = document.getElementById("mensaje-no-cursos");
 
             const RegresarButton = document.getElementById("RegresarButton");
@@ -35,7 +34,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 data.data.forEach(emp => {
                     const cuadroCurso = document.createElement("div");
                     cuadroCurso.setAttribute("class", "curso");
-                    //cuadroCurso.setAttribute("style", "background-color: #caf9f0; border: 1px solid #ddd; border-radius: 1rem; padding: 2rem; box-shadow: 0px 5px 15px rgba(112, 112, 112, 0.48);");
                     cuadroCurso.classList.add("bg-gradient-to-r", "from-teal-100", "to-teal-50", "shadow-md", "rounded-lg", "p-5", "flex", "items-center", "gap-6", "border-l-8", "border-teal-500");
                     cuadroCurso.innerHTML = `
 
@@ -56,13 +54,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 });
             } else {
                 cuadro_certificados.innerHTML = "";
-                // tabla.style.display = "none";
             }
         } catch (error) {
             console.error("Error en la petición:", error);
         }
     }
-
     cargarCursos();
 });
 
