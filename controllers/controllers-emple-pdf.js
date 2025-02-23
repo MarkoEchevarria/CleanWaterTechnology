@@ -1,6 +1,4 @@
-import { cloudinary } from "../config.js";
 import { pool } from "../db.js";
-import multer from "multer";
 
 const getPdf = async (req, res) => {
     try {

@@ -9,7 +9,6 @@ function capitalizeFirstLetter(word) {
 window.onload = async function () {
     const urlParams = new URLSearchParams(window.location.search);
     const userDNI = urlParams.get('dni');
-
     try {
         const response = await fetch ( `empleado/getEmployeeName/${userDNI}` )
         const data = await response.json();

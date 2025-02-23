@@ -30,10 +30,8 @@ document.addEventListener("DOMContentLoaded", function() {
                             <p>${curso.descripcion}</p>
                         </section>
                     `;
-
                     const response_modulo = await fetch(`/admin/showModulos/${curso.id_curso}`);
                     const modulos = await response_modulo.json();
-                    console.log(modulos.data)
                     if (modulos.data.length > 0) {
                         modulos.data.forEach( async (modulo) => {
                             const moduloDiv = document.createElement("div");
@@ -43,7 +41,6 @@ document.addEventListener("DOMContentLoaded", function() {
                                 <div class="descripcion-modulo"> ${modulo.descripcion} </div>
                                 <div class="contador"> Num Inscritos: 0 </div>
                             `
-
                             const response_video = await fetch(`/admin/video/${modulo.id_modulo}`);
                             const data_video = await response_video.json();
 
@@ -62,7 +59,6 @@ document.addEventListener("DOMContentLoaded", function() {
                                     <button type="button" onclick="subirVideo(${modulo.id_modulo})" >Subir</button>
                                     `;  
                             }
-
                             const response_pdf = await fetch(`/admin/pdf/${modulo.id_modulo}`);
                             const data_pdf = await response_pdf.json();
 
@@ -72,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             if (data_pdf.length > 0) {
                                 pdfDiv.innerHTML = `
                                     <!-- <div> Ya existe material para este modulo.</div> -->
-                                    <button type="button" onclick="eliminarPdf(${modulo.id_modulo})" >Eliminar Pdf</button>
+                                    <button type="button" onclick="eliminarPdf(${modulo.id_modulo})" > Eliminar Pdf </button>
                                     `;
                                     moduloDiv.appendChild(pdfDiv);
                             } else {
@@ -85,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             moduloDiv.appendChild(pdfDiv)
                             curso_head.appendChild(moduloDiv);                           
                         });
-                    } else {console.log("pues algo salio mal pipipi, mira a continuacion",modulos.data)}
+                    } else {console.log('No hay modulos disponibles',modulos.data)}
 
                     listaModulos.appendChild(curso_head);
                 };
@@ -108,15 +104,12 @@ document.addEventListener("DOMContentLoaded", function() {
 async function subirVideo(id_modulo) {
     const fileInput = document.getElementById(`videoInput${id_modulo}`);
     const file = fileInput.files[0];
-
     if (!file) return alert("Selecciona un archivo");
-
     const formData = new FormData();
     formData.append("video", file);
     formData.append("id_modulo", id_modulo);
-
     try {
-        response = await fetch("http://localhost:3000/admin/upload", {
+        response = await fetch("/admin/upload", {
             method: "POST",
             body: formData,
         });
@@ -130,22 +123,18 @@ async function eliminarVideo(id_modulo) {
         const response = await fetch(`/admin/video/${id_modulo}`, {
             method: "GET",
         });
-
         const result = await response.json();
-
         if (response.ok && result.length > 0) {
             const video = result[0];
-            const responseDelete = await fetch(`http://localhost:3000/admin/deleteVideo/${video.id_multimedia}`, {
+            const responseDelete = await fetch(`/admin/deleteVideo/${video.id_multimedia}`, {
                 method: "DELETE",
             });
-
             if (!responseDelete.ok) {
                 throw new Error("Error al eliminar el video");
             }
         } else {
             console.log("No hay video para este modulo");
         }
-
     } catch (error) {
         console.error("Error en la eliminación:", error);
         document.getElementById("message").textContent = `Error al eliminar el video ${id_modulo}`;
@@ -155,15 +144,12 @@ async function eliminarVideo(id_modulo) {
 async function subirPdf(id_modulo) {
     const fileInput = document.getElementById(`pdfInput${id_modulo}`);
     const file = fileInput.files[0];
-
     if (!file) return alert("Selecciona un archivo");
-
     const formData = new FormData();
     formData.append("pdf", file);
     formData.append("id_modulo", id_modulo);
-
     try {
-        response = await fetch("http://localhost:3000/admin/uploadpdf", {
+        response = await fetch("/admin/uploadpdf", {
             method: "POST",
             body: formData,
         });
@@ -177,22 +163,18 @@ async function eliminarPdf(id_modulo) {
         const response = await fetch(`/admin/pdf/${id_modulo}`, {
             method: "GET",
         });
-
         const result = await response.json();
-
         if (response.ok && result.length > 0) {
             const pdf = result[0];
-            const responseDelete = await fetch(`http://localhost:3000/admin/deletePdf/${pdf.id_evaluacion}`, {
+            const responseDelete = await fetch(`/admin/deletePdf/${pdf.id_evaluacion}`, {
                 method: "DELETE",
             });
-
             if (!responseDelete.ok) {
                 throw new Error("Error al eliminar el pdf");
             }
         } else {
             console.log("No hay pdf para este modulo");
         }
-
     } catch (error) {
         console.error("Error en la eliminación:", error);
     }

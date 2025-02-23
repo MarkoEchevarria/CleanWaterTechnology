@@ -1,15 +1,9 @@
 import { pool } from "../db.js"
-import crypto from "crypto"
-import {validateEmpleado} from "../schemas/empleados.js"
-
 
 const showEvaluaciones = async (req, res) => {
     try {
         const { id } = req.params
         const result = await pool.query("SELECT * FROM modulo WHERE id_curso = $1", [id])
-        result.rows.forEach((modulo) => {
-            console.log(modulo)
-        })
         res.status(200).json({ message: "Query sucessful", data: result.rows});
     } catch (error) {
         console.log("Error:", error)

@@ -48,8 +48,7 @@ const uploadPdf = async (req, res) => {
         console.log("Insertando en base de datos...");
 
         const dbResponse = await pool.query(
-            "INSERT INTO evaluacion_empleado (id_modulo, url, public_id, id_empleado, fecha) VALUES (CAST($1 AS INT), $2, $3, (SELECT id_empleado FROM empleado WHERE dni=$4), NOW() ) ", 
-            [req.body.id_modulo, result.secure_url, result.public_id, req.body.dni]
+            "INSERT INTO evaluacion_empleado (id_modulo, url, public_id, id_empleado, fecha) VALUES (CAST($1 AS INT), $2, $3, (SELECT id_empleado FROM empleado WHERE dni=$4), NOW() ) ", [req.body.id_modulo, result.secure_url, result.public_id, req.body.dni]
         );
         console.log("Respuesta de la base de datos:", dbResponse.rows);
         

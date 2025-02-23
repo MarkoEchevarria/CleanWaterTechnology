@@ -34,7 +34,6 @@ document.addEventListener("DOMContentLoaded", function() {
                             <button class="btn btn-danger delete-btn" onclick="eliminarEmpleado('${emp.id_empleado}')" style="padding: 20px auto; border-collapse: collapse; font-size: 18px; background-color: #ff4141"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     `;
-                    
                     listaEmpleados.appendChild(fila);
                 });
             } else {
@@ -47,7 +46,6 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("mensaje-empleados").innerHTML = "<p>Error al cargar los empleados</p>";
         }
     }
-
     cargarEmpleados();
 });
 
@@ -63,7 +61,6 @@ function registrarEmpleado() {
         event.preventDefault();
         const formData = new FormData(this);
         const data = Object.fromEntries(formData.entries());
-        console.log(JSON.stringify(data))
     
         const response = await fetch("/admin/registerEmployee", {
             method: "POST",
@@ -157,8 +154,6 @@ function habilitarBoton(id_empleado) {
 }
 
 function modificarEmpleado(id_empleado) {
-    console.log(id_empleado)
-
     const nombre = document.getElementById("edit-nombres").value;
     const apellido = document.getElementById("edit-apellidos").value;
     const dni = document.getElementById("edit-dni").value;

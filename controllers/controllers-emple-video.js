@@ -1,6 +1,4 @@
-import { cloudinary } from "../config.js";
 import { pool } from "../db.js";
-import multer from "multer";
 
 const getVideo = async (req, res) => {
     try {

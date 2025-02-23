@@ -49,14 +49,11 @@ document.addEventListener("DOMContentLoaded", function() {
             } else {
                 listaCursos.innerHTML = "";
                 tabla.style.display = "none";
-                //mensajeCursos.style.display = "block";
             }
         } catch (error) {
             console.error("Error en la petición:", error);
-            // document.getElementById("mensaje-cursos").innerHTML = "<p>Error al cargar los cursos</p>";
         }
     }
-
     cargarCursos();
 });
 
@@ -77,8 +74,6 @@ function registrarCurso() {
             data.num_modulos = parseInt(data.num_modulos, 10);
         }
 
-        console.log(JSON.stringify(data))
-    
         const response = await fetch("/admin/registerCurso", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -121,8 +116,6 @@ function recuperarCurso(id_curso) {
 }
 
 function modificarCurso(id_curso) {
-    console.log(id_curso)
-
     const nombre = document.getElementById("edit-nombres").value;
     const num_modulos = document.getElementById("edit-num_modulos").value;
     const descripcion = document.getElementById("edit-descripcion").value;
@@ -148,7 +141,6 @@ function modificarCurso(id_curso) {
     updateCurso();
 }
 
-
 function habilitarBoton(id_curso) {
     const nombre = document.getElementById('edit-nombres').value.trim();
     const num_modulos = document.getElementById('edit-num_modulos').value.trim();
@@ -172,7 +164,6 @@ function eliminarCurso(id) {
     if (!confirm("¿Estás seguro de que deseas eliminar este curso?")) {
         return;
     }
-
     fetch(`/admin/deleteCurso/${id}`, {
         method: "DELETE",
         headers: {

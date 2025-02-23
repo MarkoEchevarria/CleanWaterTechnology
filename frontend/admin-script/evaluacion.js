@@ -12,11 +12,9 @@ document.addEventListener("DOMContentLoaded", function() {
             const response = await fetch("/admin/showCursos");
             const data_cursos = await response.json();
             const main_evaluacion = document.getElementById("main-evaluacion");
-            // const listaEvaluaciones = document.getElementById("lista-evaluaciones");
             const noEvaluacionesMensaje = document.getElementById("noEvaluacionesMensaje");
 
             if (response.ok && data_cursos.data && data_cursos.data.length > 0) {
-                // listaEvaluaciones.innerHTML = "";
                 noEvaluacionesMensaje.style.display = "none";
                 main_evaluacion.style.display = "block";
 
@@ -36,7 +34,6 @@ document.addEventListener("DOMContentLoaded", function() {
                         const modulos = await response_modulo.json();
                         const div_curso_head = document.createElement("div")
                         div_curso_head.classList.add("mt-3", "space-y-3")
-                        console.log(modulos.data)
                         if (modulos.data.length > 0) {
                             modulos.data.forEach(modulo => {
                                 const moduloDiv = document.createElement("div");
@@ -49,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                 div_curso_head.appendChild(moduloDiv);
                             });
                             curso_head.appendChild(div_curso_head)
-                        } else {console.log('pues algo salio mal, pipipi')}
+                        } else {console.log('No hay modulos disponibles')}
                     }
 
                     cargarEvaluaciones();
@@ -74,8 +71,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function enviarPaginaEvaluacion(id_modulo) {
     async function enviarRutaEvaluacion(id_modulo) {
-        console.log(id_modulo)
-        
         const response = await fetch(`/admin/redirectCrearEvaluacion/${id_modulo}`);
         if (response.ok) {
             const result = await response.json();
@@ -83,7 +78,6 @@ function enviarPaginaEvaluacion(id_modulo) {
             ruta = result.redirectTo;
             console.log("Redirigiendo a:", ruta);
             window.location.href = result.redirectTo;
-            console.log(response);
         }
     }
     enviarRutaEvaluacion(id_modulo);

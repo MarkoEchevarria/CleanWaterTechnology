@@ -1,5 +1,4 @@
 import { pool } from "../db.js"
-import cryto from "crypto"
 
 const getAdmin = async (req, res) => {
     try {

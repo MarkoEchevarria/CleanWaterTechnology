@@ -21,9 +21,6 @@ const enterMisCursos = async (req, res) => {
     }
 }
 
-
-
-
 const enterInscripcion = async (req, res) => {
     try {
         const {dni} = req.params
@@ -43,7 +40,5 @@ const enterMisCertificados = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 }
-
-
 
 export { getEmployeeName,enterMisCertificados, enterMisCursos, enterInscripcion }

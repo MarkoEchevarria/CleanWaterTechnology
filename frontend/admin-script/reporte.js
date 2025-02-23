@@ -85,32 +85,22 @@ document.addEventListener("DOMContentLoaded", function() {
                                             `; 
                                             }
                                             tbody_div.appendChild(nota_fila)
-                                        } 
-                                            
+                                        }        
                                         );
-
                                         table.appendChild(tbody_div)
-
                                     } else {
                                         table.innerHTML = '<h2>No hay notas para este modulo</h2>'
                                     }
-
                                     moduloElement.appendChild(table);
                                 }
                                 cargarNotas()
-                                
-                                
-                                modulosContainer.appendChild(moduloElement);
-
-                                
+                                modulosContainer.appendChild(moduloElement);       
                             });
                         } else {
                             console.log("Algo salio mal con el if de modulos")
                         }
-                        
                     }
                     cargarModulos()
-                    
                     cursoElement.appendChild(modulosContainer);
                     container.appendChild(cursoElement);
                 })
@@ -120,13 +110,8 @@ document.addEventListener("DOMContentLoaded", function() {
             noEvaluacionesMensaje.style.display = "block";
             noEvaluacionesMensaje.textContent = "Hubo un error al cargar los módulos.";
         }
-        
-        
-
     }
-
     cargarReporteEvaluaciones();
-
 });
 
 function revisar(id_empleado, id_modulo) {

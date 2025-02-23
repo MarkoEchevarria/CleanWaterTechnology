@@ -23,7 +23,6 @@ document.addEventListener("DOMContentLoaded", function() {
     async function loadPdfs() {
 
         const modulo_titulo = document.getElementById("modulo_titulo");
-        //const modulo_descripcion = document.getElementById("modulo_descripcion");   
 
         const response = await fetch(`/empleado/getPdf/${id_modulo}`);
         const pdf = await response.json();
@@ -32,7 +31,6 @@ document.addEventListener("DOMContentLoaded", function() {
         const modulo = await responseTitle.json();
 
         modulo_titulo.innerHTML = `Evaluacion del modulo: ${capitalizeFirstLetter(modulo.data[0].titulo)}`;
-        //modulo_descripcion.innerHTML = `${capitalizeFirstLetter(modulo.data[0].descripcion)}`;
 
         const container = document.getElementById("pdf_contenedor");
         
@@ -43,9 +41,7 @@ document.addEventListener("DOMContentLoaded", function() {
             </div>
             `
         } else {
-            container.innerHTML =`
-                <iframe src="${pdf[0].url}" width="100%" height="100%" style="border: none;" class="rounded-lg"></iframe>
-                `
+            container.innerHTML =` <iframe src="${pdf[0].url}" width="100%" height="100%" style="border: none;" class="rounded-lg"></iframe> `
         }
 
         const response2 = await fetch(`/empleado/pdf/${id_modulo}&${dni}`);
@@ -71,9 +67,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 async function subirPdf(id_modulo, dni) {
-    //const urlParams = new URLSearchParams(window.location.search);
-    //const dni = urlParams.get('dni');
-    
     const fileInput = document.getElementById(`pdfInput${id_modulo}`);
     const file = fileInput.files[0];
 
@@ -85,7 +78,7 @@ async function subirPdf(id_modulo, dni) {
     formData.append("dni", dni);
 
     try {
-        response = await fetch("http://localhost:3000/empleado/uploadpdf", {
+        response = await fetch("/empleado/uploadpdf", {
             method: "POST",
             body: formData,
         });
@@ -93,19 +86,17 @@ async function subirPdf(id_modulo, dni) {
         console.error("Error en la subida:", error);
     }
 }
-    
 
 async function eliminarPdf(id_modulo, dni) {
     try {
         const response = await fetch(`/empleado/pdf/${id_modulo}&${dni}`, {
             method: "GET",
         });
-
         const result = await response.json();
 
         if (response.ok && result.length > 0) {
             const pdf = result[0];
-            const responseDelete = await fetch(`http://localhost:3000/empleado/deletePdf/${pdf.id_evaluacion_empleado}`, {
+            const responseDelete = await fetch(`/empleado/deletePdf/${pdf.id_evaluacion_empleado}`, {
                 method: "DELETE",
             });
 
