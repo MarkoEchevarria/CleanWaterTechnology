@@ -7,8 +7,12 @@ function capitalizeFirstLetter(word) {
 }
 
 function formatearFecha(fechaISO) {
-    const [year, month, day] = new Date(fechaISO).toISOString().split("T")[0].split("-");
-    return `${day}-${month}-${year}`;
+    if (fechaISO === null) {
+        return '---'
+    } else {
+        const [year, month, day] = new Date(fechaISO).toISOString().split("T")[0].split("-");
+        return `${day}-${month}-${year}`;
+    }
 }
 
 document.addEventListener("DOMContentLoaded", function() {
