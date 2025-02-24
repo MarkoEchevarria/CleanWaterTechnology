@@ -135,3 +135,21 @@ GET http://localhost:3000/empleado/volverInicio/11112222
 
 ### 
 GET http://localhost:3000/empleado/getCursoByModulo/1
+
+###
+POST http://localhost:3000/empleado/llenarCertificado
+Content-Type: application/json
+
+{
+  "nombre": "Juan Pérez",
+  "curso": "Blockchain y Criptografía",
+  "fecha": "2025-02-24",
+  "numCertificado": 2025001,
+  "notaFinal": 95,
+  "modulos": [
+        "Introducción a Blockchain",
+        "Conceptos de Criptografía",
+        "Casos de Uso",
+        "Seguridad y Normativas"
+    ]
+}

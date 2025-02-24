@@ -10,6 +10,7 @@ import { registrarCurso, verificarCodigo, volverInicio } from "../controllers/co
 import { redirectPdfModulo } from "../controllers/controllers-emple-pdf-video.js";
 import { getPdf } from "../controllers/controllers-emple-pdf.js";
 import { deletePdf, getOnePdf, getPdfs, uploadPdf } from "../controllers/controllers-emple-controlarEvaluacion.js";
+import { llenarCertificado, obtenerDatosCertificado } from "../controllers/controllers-emple-genCertificado.js";
 
 const router = Router();
 
@@ -45,5 +46,8 @@ router.delete("/deletePdf/:id_evaluacion_empleado", deletePdf);
 router.get("/volverInicio/:dni", volverInicio)
 router.get("/volverCursos/:dni", volverCursos)
 router.get("/volverModulos/:id_curso&:dni", volverModulos)
+
+router.post("/llenarCertificado", llenarCertificado)
+router.get("/obtenerDatosCertificado/:nombre_curso&:dni", obtenerDatosCertificado)
 
 export default router

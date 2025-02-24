@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capacitacion Clean Water Technology</title>
+    <link rel="preload" href="css/normalize.css" as="style">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link href="https://fonts.googleapis.com/css2?family=Krub:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="../css/styles_crear_modulos.css" as="style">
+    <link href="../css/styles_crear_modulos.css" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <h1 class="titulo">Clean Water Technology</h1>
+    </header>
+
+    <div class="nav-bg">
+        <nav class="navegacion-principal contenedor">
+    
+            <div class="dropdown">
+                <a href="/admin.html">Inicio</a>
+            </div>
+    
+            <div class="dropdown">
+                <a href="/vistas-admin/empleado.html" class="dropbtn">Empleados</a>
+            </div>
+    
+            <div class="dropdown">
+                <a href="/vistas-admin/curso.html" class="dropbtn">Cursos</a>
+            </div>
+
+            <div class="dropdown">
+                <a href="/vistas-admin/crearModulos.html" class="dropbtn">Modulos</a>
+            </div>
+
+            <div class="dropdown">
+                <a href="/vistas-admin/modulo.html" class="dropbtn">Material y Evaluaciones</a>
+            </div>
+    
+            <div class="dropdown">
+                <a href="/vistas-admin/reporte.html" class="dropbtn">Calificaciones</a>
+            </div>
+    
+            <div class="dropdown" style="background-color:rgb(255, 65, 65); width: 10em;">
+                <a href="/index.html">Salir</a>
+            </div>
+    
+        </nav>
+    </div>
+
+    <main class="container">
+        <h2>Creacion de Modulos</h2>
+        <section>
+            <div class="curso">
+                <details>
+                    <summary>Python Intermedio</summary>
+                    <div class="module-container"></div>
+                    <button class="agregar-modulo" onclick="MostrarOcultar(event)">+</button>
+                    <div class="modulo-formulario oculto">
+                        <input type="text" class="titulo-modulo" placeholder="Título del módulo">
+                        <input type="text" class="descripcion-modulo" placeholder="Descripción del módulo">
+                        <button class="guardar-modulo">Guardar Módulo</button>
+                    </div>
+                </details>
+            </div>
+            <div class="curso">
+                <details>
+                    <summary>HTML y CSS</summary>
+                    <div class="module-container"></div>
+                    <button class="agregar-modulo" onclick="MostrarOcultar(event)">+</button>
+                    <div class="modulo-formulario oculto">
+                        <input type="text" class="titulo-modulo" placeholder="Título del módulo">
+                        <input type="text" class="descripcion-modulo" placeholder="Descripción del módulo">
+                        <button class="guardar-modulo">Guardar Módulo</button>
+                    </div>                   
+                </details>
+            </div>
+        </section>
+    </main>
+
+    <script src="../empleado-script/crear_modulos.js"></script>
+</body>
+
+</html>

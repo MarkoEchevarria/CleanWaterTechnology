@@ -43,7 +43,8 @@ document.addEventListener("DOMContentLoaded", function() {
                             <h3 class="text-2xl font-bold text-teal-800 mt-1">${capitalizeFirstLetter(emp.nombre_curso)}</h3>
                             <div class="mt-2 flex gap-3">
                                 <a href="#" target="_blank" class="bg-teal-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-teal-700">Ver</a>
-                                <a href="#" download class="bg-green-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-green-700">Descargar</a>
+                                <a href="#" download class="bg-green-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-green-700"
+                                id="botonGenerarCertificado" onclick="event.preventDefault(); descargarPdf('${emp.nombre}', '${emp.apellido}', '${emp.nombre_curso}' ,'${emp.fecha_emision}', '${emp.dni}')">Descargar</a>
                             </div>
                         </div>
                         <div class="bg-white p-6 rounded-lg shadow-md w-1/2" >
@@ -72,4 +73,68 @@ async function volverInicio(dni) {
             console.log("No se recibió una URL de redirección");
         }
     }
+}
+
+async function generarCertificado(datos) {
+    try {
+        const response = await fetch("/empleado/llenarCertificado", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(datos),
+        });
+
+        if (!response.ok) {
+            throw new Error("Error al generar el certificado");
+        }
+
+        // Crear un enlace de descarga con la respuesta
+        const blob = await response.blob();
+
+        if (blob.type !== "application/pdf") {
+            throw new Error("La respuesta no es un archivo PDF.");
+        }
+
+        const url = window.URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `Certificado_${datos.nombre}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+    } catch (error) {
+        console.error("❌ Error:", error.message);
+    }
+}
+
+/**
+const datosCertificado = {
+    nombre: "Juan Pérez",
+    curso: "Blockchain y Criptografía",
+    fecha: "2025-02-24",
+    numCertificado: 2025001,
+    notaFinal: 95,
+    modulos: [
+        "Introducción a Blockchain",
+        "Conceptos de Criptografía",
+        "Casos de Uso",
+        "Seguridad y Normativas"
+    ]
+};
+**/
+
+async function descargarPdf ( nombre, apellido, nombre_curso, fecha_emision, dni ){
+
+    const datos = await fetch(`/empleado/obtenerDatosCertificado/${nombre_curso}&${dni}`)
+    const datosCertificado = await datos.json()
+    datosCertificado.nombre = `${nombre} ${apellido}`
+    fecha_formateada = formatearFecha(fecha_emision)
+    datosCertificado.fecha = fecha_formateada
+    datosCertificado.numCertificado = Math.floor(Math.random() * 1000000)
+    console.log(datosCertificado)
+
+    generarCertificado(datosCertificado)
 }
