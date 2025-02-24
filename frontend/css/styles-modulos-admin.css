@@ -69,6 +69,135 @@ body {
     font-style: italic;
 }
 
+
+/*-----------------------------------------------------------------------------------*/
+/*CREACION DE MODULOS*/
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+}
+.header {
+    background-color: #008080;
+    padding: 20px;
+    text-align: center;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+.container {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+}
+h2 {
+    text-align: center;
+}
+.curso details {
+    background: white;
+    padding: 15px;
+    margin: 10px 0;
+    border-left: 5px solid #008080;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+.agregar-modulo{
+    background-color: #008080;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-left: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    font-size: 16px;
+}
+.agregar-modulo:hover {
+    background-color: #005f5f;
+}
+
+button {
+    padding: 10px;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.module-container {
+    padding-left: 30px;
+}
+
+.module {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    padding: 10px;
+    border-left: 3px solid #008080;
+    margin: 5px 0;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.module strong {
+    flex: 1;
+    font-weight: bold;
+}
+
+.module p {
+    flex: 2;
+    text-align: right;
+    margin: 0;
+}
+
+.modal label{
+    display: block;
+    text-align: left;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.modulo-formulario{
+    background: white;
+    padding: 10px;
+    margin: 10px 0;
+    border-left: 5px solid var(--gris);
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    max-width: 100%;  
+    margin: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.modulo-formulario input{
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.guardar-modulo {
+    background-color: #008080;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    white-space: nowrap;
+}
+.oculto {
+    display: none;
+}
+
+
+/*-----------------------------------------------------------------------------------*/
+
+
 /*-----------------------------------------------------------------------------------*/
 /*ESTILO PARA EL MODULO*/
 main h3 {
@@ -88,11 +217,11 @@ main h3 {
     border-radius: 2rem;
 }
 
-main p {
+main p{
     text-align: center;
 }
 
-.modulo {
+.modulo{
     display: flex;
     align-items: center;
     gap: 10px;
@@ -103,22 +232,21 @@ main p {
     background-color: #f9f9f9;
 }
 
-.modulo h4 {
+.modulo h4{
     margin: 3rem;
 }
-
-.descripcion-modulo {
+.descripcion-modulo{
     flex: 1;
     max-width: 60%;
     margin: 2rem;
     text-align: center;
 }
 
-.contador {
+.contador{
     margin: 2rem;
 }
 
-.btn-subirmaterial {
+.btn-subirmaterial{
     background-color: var(--secundario);
     color: white;
     border: none;
@@ -127,9 +255,31 @@ main p {
     cursor: pointer;
     margin: 2rem;
 }
-
 /*FIN ESTILO MODULO*/
 /*-----------------------------------------------------------------------------------*/
+
+.modulo {
+    display: flex;
+    flex-wrap: nowrap;         
+    align-items: center;     
+    justify-content: space-between;
+    gap: 1rem;               
+    margin: 1rem 0;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+
+.contenido-hero h2 {
+    font-size: 4.5rem;
+}
+
+.contenido-hero p {
+    font-size: 2.5rem;
+}
+
+
 
 .contenedor {
     max-width: 120rem;
@@ -360,7 +510,7 @@ h3 {
     /* para no repetir la imagen muchas veces */
     background-size: cover;
     /*para ajustar la imagen si es que es muy pequeña o grande (poner siempre) */
-    height: 450px;
+    height: 80rem;
     position: relative;
     margin-bottom: 2rem;
 }

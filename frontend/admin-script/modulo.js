@@ -30,22 +30,25 @@ document.addEventListener("DOMContentLoaded", function() {
                             <p>${curso.descripcion}</p>
                         </section>
                     `;
+                    curso_head.innerHTML += `<div id="desplegar" onclick='desplegar("${curso.id_curso}")' style="text-align: center; display: block; display: flex; justify-content: center; align-items: center;" > <div style="font-size: 3em; border-radius: 30px; background: #99d5dc; height: 50px; width: 50px" > + </div> </div>`;
                     const response_modulo = await fetch(`/admin/showModulos/${curso.id_curso}`);
                     const modulos = await response_modulo.json();
                     if (modulos.data.length > 0) {
                         modulos.data.forEach( async (modulo) => {
                             const moduloDiv = document.createElement("div");
-                            moduloDiv.setAttribute("class", "modulo");
+                            moduloDiv.classList.add("modulo", `modulo-${curso.id_curso}`);
+                            moduloDiv.style.display = "none";
                             moduloDiv.innerHTML = `
-                                <h4 class="titulo-modulo"> ${modulo.titulo} </h4>
-                                <div class="descripcion-modulo"> ${modulo.descripcion} </div>
-                                <div class="contador"> Num Inscritos: 0 </div>
+                                <h4 class="titulo-modulo" style="flex-shrink: 0; flex-basis: 15%; text-align: center !important;"> ${modulo.titulo} </h4>
+                                <div class="descripcion-modulo" style="flex-shrink: 0; flex-basis: 20%;  text-align: center !important;"> ${modulo.descripcion} </div>
+                                <div class="contador" style="flex-shrink: 0; flex-basis: 15%;  text-align: center !important; margin: 3px" > Num Inscritos: 0 </div>
                             `
                             const response_video = await fetch(`/admin/video/${modulo.id_modulo}`);
                             const data_video = await response_video.json();
 
                             const videoDiv = document.createElement("form");
                             videoDiv.setAttribute("id", "uploadForm");
+                            videoDiv.setAttribute("style", "flex-shrink: 0; flex-basis: 20%; display: flex; align-items: center; justify-content: center;");
 
                             if (data_video.length > 0) {
                                 videoDiv.innerHTML = `
@@ -54,27 +57,36 @@ document.addEventListener("DOMContentLoaded", function() {
                                     `;
                                     moduloDiv.appendChild(videoDiv);
                             } else {
-                                videoDiv.innerHTML = `
-                                    <input type="file" id="videoInput${modulo.id_modulo}" accept="video/*" required>
-                                    <button type="button" onclick="subirVideo(${modulo.id_modulo})" >Subir</button>
-                                    `;  
+                                videoDiv.innerHTML = 
+                                    `
+                                    <label for="videoInput${modulo.id_modulo}" class="custom-file-upload" style="background-color: #eeeeef; color: black; padding: 8px 12px; cursor: pointer; border-radius: 5px; display: inline-block;">
+                                        Elegir Video
+                                    </label>
+                                    <input type="file" id="videoInput${modulo.id_modulo}" accept="video/*" required style="display: none;">
+                                    <button type="button" onclick="subirVideo(${modulo.id_modulo})">Subir Video</button>
+                                    `
                             }
                             const response_pdf = await fetch(`/admin/pdf/${modulo.id_modulo}`);
                             const data_pdf = await response_pdf.json();
 
                             const pdfDiv = document.createElement("form");
                             pdfDiv.setAttribute("id", "uploadForm");
+                            pdfDiv.setAttribute("style", "flex-shrink: 0; flex-basis: 20%; display: flex; align-items: center; justify-content: center;");
 
                             if (data_pdf.length > 0) {
                                 pdfDiv.innerHTML = `
                                     <!-- <div> Ya existe material para este modulo.</div> -->
-                                    <button type="button" onclick="eliminarPdf(${modulo.id_modulo})" > Eliminar Pdf </button>
+                                    <button type="button" onclick="eliminarPdf(${modulo.id_modulo})" > Eliminar Examen </button>
                                     `;
                                     moduloDiv.appendChild(pdfDiv);
                             } else {
-                                pdfDiv.innerHTML = `
-                                    <input type="file" id="pdfInput${modulo.id_modulo}" accept="application/pdf" required>
-                                    <button type="button" onclick="subirPdf(${modulo.id_modulo})">Subir PDF</button>
+                                pdfDiv.innerHTML = 
+                                `
+                                    <label for="videoInput${modulo.id_modulo}" class="custom-file-upload" style="background-color: #eeeeef; color: black; padding: 8px 12px; cursor: pointer; border-radius: 5px; display: inline-block; text-align: center;">
+                                        Elegir Examen
+                                    </label>
+                                    <input type="file" id="videoInput${modulo.id_modulo}" accept="video/*" required style="display: none;">
+                                    <button type="button" onclick="subirVideo(${modulo.id_modulo})">Subir Examen</button>
                                 `
                             }
                             moduloDiv.appendChild(videoDiv);
@@ -99,7 +111,18 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     cargarCursosModulos();
+    
 });
+function desplegar(id_curso) {
+    var x = document.getElementsByClassName(`modulo-${id_curso}`);
+    for (let a of x) {
+        if (a.style.display === "none") {
+            a.style.display = "flex";
+        } else {
+            a.style.display = "none";
+        }
+    }
+}
 
 async function subirVideo(id_modulo) {
     const fileInput = document.getElementById(`videoInput${id_modulo}`);
