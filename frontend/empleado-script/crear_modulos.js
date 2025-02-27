@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
+
+    actualizarNumModulos();
+
     document.querySelectorAll(".agregar-modulo").forEach(button => {
         button.addEventListener("click", (event) => {
             const form = event.target.nextElementSibling;
@@ -28,3 +31,23 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
+
+async function actualizarNumModulos() {
+    try {
+        const response = await fetch("/admin/listarCursos");
+        const cursos = await response.json();
+        if (response.ok && cursos.data && cursos.data.length > 0) {
+            cursos.data.forEach(curso => {
+                async function contarModulos() {
+                    const response = await fetch(`/admin/contarModulos/${curso.id_curso}`);
+                    if (response.ok) {
+                        console.log(`${curso.id_curso} actualizado`);
+                    }
+                }
+                contarModulos()
+            })
+        }
+    } catch (error) {
+        console.log("Error:", error);
+    }
+}

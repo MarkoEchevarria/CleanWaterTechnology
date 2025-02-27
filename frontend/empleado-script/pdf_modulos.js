@@ -12,10 +12,10 @@ document.addEventListener("DOMContentLoaded", function() {
         const id_modulo = urlParams.get('id_modulo');
         const dni = urlParams.get('dni');
 
-        const inputdiv = document.getElementById("inputdiv");
-        inputdiv.setAttribute("id", `pdfInput${id_modulo}`);
-        const buttonEnviar = document.getElementById("enviarPdf");
-        buttonEnviar.setAttribute("onclick", `subirPdf(${id_modulo}, ${dni})`);
+        //const inputdiv = document.getElementById("inputdiv");
+        //inputdiv.setAttribute("id", `pdfInput${id_modulo}`);
+        //const buttonEnviar = document.getElementById("enviarPdf");
+        //buttonEnviar.setAttribute("onclick", `subirPdf(${id_modulo}, ${dni})`);
 
         const RegresarButton = document.getElementById("RegresarButton");
         RegresarButton.setAttribute("onclick", `volverModulos(${id_modulo},${dni})`);
@@ -50,21 +50,44 @@ document.addEventListener("DOMContentLoaded", function() {
         const contenedorFormResol = document.getElementById("contenedorFormResol");
         contenedorFormResol.innerHTML = ``
 
-        if (response2.ok && pdf2.length > 0) {
+        const response3 = await fetch(`/empleado/getPdf/${id_modulo}`);
+        const pdf3 = await response3.json();
+        if ((pdf3[0]) && (pdf3[0].url)) {
+            if (response2.ok && pdf2.length > 0) {
+                if (response2.ok && pdf2[0].puntuacion) {
+                    contenedorFormResol.innerHTML = `
+                        <div style="height: 2em; display: flex; justify-content: center; align-items: center;">
+                            <h1 style="font-size: 1.5em"> La calificacion de tu examen es: ${pdf2[0].puntuacion} </h1>
+                        </div>
+                    `
+                } else {
+                    contenedorFormResol.innerHTML = `
+                        <button type="button" onclick="eliminarPdf(${id_modulo},${dni})" style="background-color: #ff4141; height: 34px; width: 100px; border-radius: 5px;">Eliminar Examen</button>
+                    `
+                }
+                
+            } else {
+                contenedorFormResol.innerHTML =
+                `
+                <label for="pdfInput${id_modulo}" class="custom-file-upload" style="background-color: rgba(255, 234, 2, 0.87); margin-right: 2em ;color: black; padding: 8px 12px; cursor: pointer; border-radius: 5px; display: inline-block; text-align: center;">
+                    Subir Resolucion
+                </label>
+                <input type="file" id="pdfInput${id_modulo}" accept="application/pdf" required style="display: none;">
+                <button type="button" onclick="subirPdf(${id_modulo}, ${dni})" style="background-color: #4CAF50; height: 34px; width: 100px; border-radius: 5px;">Enviar Resolucion</button>
+                `
+            }
+        } else { 
             contenedorFormResol.innerHTML = `
-                <!-- <div> Ya existe material para este modulo.</div> -->
-                <button type="button" onclick="eliminarPdf(${id_modulo},${dni})" >Eliminar Pdf</button>
+            <div style="height: 2em; display: flex; justify-content: center; align-items: center;">
+                <h1 style="font-size: 1.5em"> No puedes enviar tu desarrollo, aun no se ha subido el examen. </h1>
+            </div>
             `
-        } else {
-            contenedorFormResol.innerHTML = `
-            <input type="file" id="pdfInput${id_modulo}" accept="application/pdf" required>
-            <button type="button" onclick="subirPdf(${id_modulo}, ${dni})">Subir PDF</button>
-        `
         }
+
+        
     }
     loadPdfs()
 });
-
 
 async function subirPdf(id_modulo, dni) {
     const fileInput = document.getElementById(`pdfInput${id_modulo}`);

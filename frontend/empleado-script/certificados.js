@@ -89,7 +89,6 @@ async function generarCertificado(datos) {
             throw new Error("Error al generar el certificado");
         }
 
-        // Crear un enlace de descarga con la respuesta
         const blob = await response.blob();
 
         if (blob.type !== "application/pdf") {
@@ -109,22 +108,6 @@ async function generarCertificado(datos) {
         console.error("❌ Error:", error.message);
     }
 }
-
-/**
-const datosCertificado = {
-    nombre: "Juan Pérez",
-    curso: "Blockchain y Criptografía",
-    fecha: "2025-02-24",
-    numCertificado: 2025001,
-    notaFinal: 95,
-    modulos: [
-        "Introducción a Blockchain",
-        "Conceptos de Criptografía",
-        "Casos de Uso",
-        "Seguridad y Normativas"
-    ]
-};
-**/
 
 async function descargarPdf ( nombre, apellido, nombre_curso, fecha_emision, dni ){
 

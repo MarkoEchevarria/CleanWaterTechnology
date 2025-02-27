@@ -67,24 +67,52 @@ document.addEventListener("DOMContentLoaded", function() {
                                         nota.data.forEach( item => {
                                             const nota_fila = document.createElement("tr"); 
                                             nota_fila.setAttribute("class", "border")
-                                            if (item.puntuacion === null) {
-                                                nota_fila.innerHTML = `
-                                                    <td class='p-2'>${capitalizeFirstLetter(item.nombre)} ${capitalizeFirstLetter(item.apellido)}</td>
-                                                    <td class='p-2'>${item.dni}</td>
-                                                    <td class='p-2'>${formatearFecha(item.fecha)}</td>
-                                                    <td class='p-2 tr-puntuacion'> -- </td>
-                                                    <td class='p-2'> <button class="btn btn-primary modify-btn" style="background-color: #4CAF50" onclick="revisar('${item.id_empleado}', ${item.id_modulo})"> Revisar </button> </td>
-                                                `;
-                                            } else {
-                                                nota_fila.innerHTML = `
-                                                    <td class='p-2'>${item.nombre}</td>
-                                                    <td class='p-2'>${item.dni}</td>
-                                                    <td class='p-2'>${formatearFecha(item.fecha)}</td>
-                                                    <td class='p-2 tr-puntuacion'>${item.puntuacion}</td>
-                                                    <td class='p-2'> <button class="btn btn-primary modify-btn" style="background-color: #4CAF50" onclick="revisar('${item.id_empleado}', ${item.id_modulo})"> Revisar </button> </td>
-                                            `; 
+
+                                            async function mostrarExamen() {
+                                                const response = await fetch(`/admin/showExamenesSubidos/${item.dni}&${item.id_modulo}`)
+                                                const examen = await response.json()
+                                                if (response.ok && examen.data.length) {
+                                                    if (item.puntuacion === null) {
+                                                        nota_fila.innerHTML = `
+                                                            <td class='p-2'>${capitalizeFirstLetter(item.nombre)} ${capitalizeFirstLetter(item.apellido)}</td>
+                                                            <td class='p-2'>${item.dni}</td>
+                                                            <td class='p-2'>${formatearFecha(item.fecha)}</td>
+                                                            <td class='p-2 tr-puntuacion'> -- </td>
+                                                            <td class='p-2'> <button class="btn btn-primary modify-btn" style="background-color: #4CAF50" onclick="revisar('${item.id_empleado}', ${item.id_modulo})"> Revisar </button> </td>
+                                                        `;
+                                                    } else {
+                                                        nota_fila.innerHTML = `
+                                                            <td class='p-2'>${capitalizeFirstLetter(item.nombre)} ${capitalizeFirstLetter(item.apellido)}</td>
+                                                            <td class='p-2'>${item.dni}</td>
+                                                            <td class='p-2'>${formatearFecha(item.fecha)}</td>
+                                                            <td class='p-2 tr-puntuacion'>${item.puntuacion}</td>
+                                                            <td class='p-2'> <button class="btn btn-primary modify-btn" style="background-color: #4CAF50" onclick="revisar('${item.id_empleado}', ${item.id_modulo})"> Revisar </button> </td>
+                                                    `; 
+                                                    }
+                                                    tbody_div.appendChild(nota_fila)
+                                                } else {
+                                                    if (item.puntuacion === null) {
+                                                        nota_fila.innerHTML = `
+                                                            <td class='p-2'>${capitalizeFirstLetter(item.nombre)} ${capitalizeFirstLetter(item.apellido)}</td>
+                                                            <td class='p-2'>${item.dni}</td>
+                                                            <td class='p-2'>${formatearFecha(item.fecha)}</td>
+                                                            <td class='p-2 tr-puntuacion'> -- </td>
+                                                            <td class='p-2'> <button class="btn btn-primary modify-btn" style="background-color: gray" > Revisar </button> </td>
+                                                        `;
+                                                    } else {
+                                                        nota_fila.innerHTML = `
+                                                            <td class='p-2'>${capitalizeFirstLetter(item.nombre)} ${capitalizeFirstLetter(item.apellido)}</td>
+                                                            <td class='p-2'>${item.dni}</td>
+                                                            <td class='p-2'>${formatearFecha(item.fecha)}</td>
+                                                            <td class='p-2 tr-puntuacion'>${item.puntuacion}</td>
+                                                            <td class='p-2'> <button class="btn btn-primary modify-btn" style="background-color: gray" > Revisar </button> </td>
+                                                    `; 
+                                                    }
+                                                    tbody_div.appendChild(nota_fila)
+                                                }
                                             }
-                                            tbody_div.appendChild(nota_fila)
+                                            mostrarExamen()
+                                            
                                         }        
                                         );
                                         table.appendChild(tbody_div)
@@ -112,6 +140,41 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
     cargarReporteEvaluaciones();
+
+    async function verificarCertificados() {
+        const dnis = await fetch("/admin/listarDnis")
+        const dnisData = await dnis.json()
+        dnisData.data.forEach( async dni => {
+            const response = await fetch(`/admin/obtenerNotas/${dni.dni}`)
+            const data = await response.json()
+            data.data.forEach( item => {
+                avg = parseInt(item.promedio)
+                if ( Number.isInteger(avg) && item.promedio >= 12) {
+                    console.log(`El empleado con dni ${dni.dni} ha aprobado el curso ${item.nombre} con nota ${avg}`)
+                    console.log(dni.dni, item.id_curso)
+                    
+                    async function certificar(dni, id_curso) { 
+                        console.log( 'estos son los valores a pasar: ',dni, id_curso)
+                        const data = { dni, id_curso }
+                        const certificado = await fetch(`/admin/consolidarCertificado`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(data)
+                        })
+                        console.log(certificado)
+                    }
+                    certificar(dni.dni, item.id_curso)
+                        //const certificado = await fetch(`/admin/consolidarCertificado/${dni.dni}&${item.id_curso}`)
+                } else {
+                   console.log(`El empleado con dni ${dni.dni} NO ha aprobado el curso ${item.nombre}.`)
+                }
+            })
+
+        })  
+    }
+    verificarCertificados()
 });
 
 function revisar(id_empleado, id_modulo) {
