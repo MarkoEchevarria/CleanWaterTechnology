@@ -9,7 +9,7 @@ import { getModulo } from "../controllers/controllers-admin-crearEvaluacion.js";
 import { deletePdf, getOnePdf, getPdfs, uploadPdf } from "../controllers/controllers-pdfs.js";
 import { revisarAdmin } from "../controllers/controllers-admin-revisar.js";
 import { calificarAdmin } from "../controllers/controllers-admin-calificar.js";
-import { consolidarCertificado, contarModulos, listarCursos, listarDnis, obtenerNotas } from "../controllers/controllers-admin-auto-certificados.js";
+import { agregarModulo, consolidarCertificado, contarModulos, eliminarModulo, listarAllCursos, listarCursos, listarDnis, listarModulos, obtenerNotas } from "../controllers/controllers-admin-auto-certificados.js";
 
 const router = Router();
 
@@ -61,5 +61,9 @@ router.post("/consolidarCertificado", consolidarCertificado)
 router.get("/listarDnis", listarDnis)
 router.get("/contarModulos/:id_curso", contarModulos)
 router.get("/listarCursos", listarCursos)
+router.get("/listarAllCursos", listarAllCursos)
+router.post("/agregarModulo", agregarModulo)
+router.get("/listarModulos/:id_curso", listarModulos)
+router.delete("/eliminarModulo/:id_modulo", eliminarModulo)
 
 export default router;
