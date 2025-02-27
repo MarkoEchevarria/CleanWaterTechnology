@@ -54,4 +54,47 @@ const listarCursos = async (req, res) => {
     }
 }
 
-export { obtenerNotas, consolidarCertificado, listarDnis, listarCursos, contarModulos }
+const listarAllCursos = async (req, res) => {
+    try {
+        const result = await pool.query("SELECT * FROM curso;")
+        res.status(200).json({ message: "Query sucessful", data: result.rows});
+    } catch (error) {
+        console.log("Error:", error)
+        res.status(500).json({ message: error.message });
+    }
+}
+
+const agregarModulo = async (req, res) => {
+    try {
+        const { id_curso, titulo, descripcion } = req.body
+        const result = await pool.query("INSERT INTO modulo( id_curso, titulo, descripcion) VALUES ($1, $2, $3);", [id_curso, titulo, descripcion])
+        res.status(200).json({ message: "Query sucessful", data: result.rows});
+    } catch (error) {
+        console.log("Error:", error)
+        res.status(500).json({ message: error.message });
+    }
+}
+
+const listarModulos = async (req, res) => {
+    try {
+        const { id_curso } = req.params
+        const result = await pool.query("SELECT * FROM modulo WHERE id_curso = $1;", [id_curso])
+        res.status(200).json({ message: "Query sucessful", data: result.rows});       
+    } catch (error) {
+        console.log("Error:", error)
+        res.status(500).json({ message: error.message });
+    }
+}
+
+const eliminarModulo = async (req, res) => {
+    try {
+        const { id_modulo } = req.params
+        const result = await pool.query("DELETE FROM modulo WHERE id_modulo = $1;", [id_modulo])
+        res.status(200).json({ message: "Query sucessful", data: result.rows});
+    } catch (error) {
+        console.log("Error:", error)
+        res.status(500).json({ message: error.message });
+    }
+}
+
+export { obtenerNotas, consolidarCertificado, listarDnis, listarCursos, contarModulos, listarAllCursos, agregarModulo, listarModulos, eliminarModulo }

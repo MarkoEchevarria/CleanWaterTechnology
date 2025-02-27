@@ -51,37 +51,14 @@
         </nav>
     </div>
 
-    <main class="container">
+    <main class="container" style="max-width: 1200px !important;">
         <h2>Creacion de Modulos</h2>
-        <section>
-            <div class="curso">
-                <details>
-                    <summary>Python Intermedio</summary>
-                    <div class="module-container"></div>
-                    <button class="agregar-modulo" onclick="MostrarOcultar(event)">+</button>
-                    <div class="modulo-formulario oculto">
-                        <input type="text" class="titulo-modulo" placeholder="Título del módulo">
-                        <input type="text" class="descripcion-modulo" placeholder="Descripción del módulo">
-                        <button class="guardar-modulo">Guardar Módulo</button>
-                    </div>
-                </details>
-            </div>
-            <div class="curso">
-                <details>
-                    <summary>HTML y CSS</summary>
-                    <div class="module-container"></div>
-                    <button class="agregar-modulo" onclick="MostrarOcultar(event)">+</button>
-                    <div class="modulo-formulario oculto">
-                        <input type="text" class="titulo-modulo" placeholder="Título del módulo">
-                        <input type="text" class="descripcion-modulo" placeholder="Descripción del módulo">
-                        <button class="guardar-modulo">Guardar Módulo</button>
-                    </div>                   
-                </details>
-            </div>
+        <section id="section-cursos">
+
         </section>
     </main>
 
-    <script src="../empleado-script/crear_modulos.js"></script>
+    <script src="../admin-script/crearModulos.js"></script>
 </body>
 
 </html>
