@@ -15,7 +15,7 @@ const registrarCurso = async (req, res) => {
     try {
         const { dni}  = req.params
         const { id_curso } = req.body
-        const result = await pool.query("INSERT INTO curso_empleado (id_curso, id_empleado) VALUES ($1, (SELECT id_empleado FROM empleado WHERE dni=$2))", [id_curso, dni]);
+        const result = await pool.query("INSERT INTO curso_empleado (id_curso, id_empleado, fecha_inscripcion) VALUES ($1, (SELECT id_empleado FROM empleado WHERE dni=$2), NOW())", [id_curso, dni]);
         res.status(200).json({ message: "Curso registrado con exito", data: result });
     } catch (error) {
         console.log("Error:", error)

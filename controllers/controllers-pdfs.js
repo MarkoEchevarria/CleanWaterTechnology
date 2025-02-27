@@ -46,8 +46,8 @@ const uploadPdf = async (req, res) => {
 
         console.log("Insertando en base de datos...");
         const dbResponse = await pool.query(
-            "INSERT INTO evaluacion (id_modulo, url, public_id) VALUES ($1, $2, $3) RETURNING *", 
-            [req.body.id_modulo, result.secure_url, result.public_id]
+            "INSERT INTO evaluacion (id_modulo, url, public_id, fecha_programada ) VALUES ($1, $2, $3, NOW() + $4 * INTERVAL '1 day') RETURNING *", 
+            [req.body.id_modulo, result.secure_url, result.public_id, 7]
         );
         console.log("Respuesta de la base de datos:", dbResponse.rows);
         

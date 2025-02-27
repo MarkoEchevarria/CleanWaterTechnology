@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             <p>${curso.descripcion}</p>
                         </section>
                     `;
-                    curso_head.innerHTML += `<div id="desplegar" onclick='desplegar("${curso.id_curso}")' style="text-align: center; display: block; display: flex; justify-content: center; align-items: center;" > <div style="font-size: 3em; border-radius: 30px; background: #99d5dc; height: 50px; width: 50px" > + </div> </div>`;
+                    curso_head.innerHTML += `<div id="desplegar" onclick='desplegar("${curso.id_curso}")' style="text-align: center; display: block; display: flex; justify-content: center; align-items: center;" > <div id="simbolo${curso.id_curso}" style="font-size: 3em; border-radius: 30px; background: #99d5dc; height: 50px; width: 50px; display: flex; align-items: center; justify-content: center" > + </div> </div>`; 
                     const response_modulo = await fetch(`/admin/showModulos/${curso.id_curso}`);
                     const modulos = await response_modulo.json();
                     if (modulos.data.length > 0) {
@@ -82,11 +82,11 @@ document.addEventListener("DOMContentLoaded", function() {
                             } else {
                                 pdfDiv.innerHTML = 
                                 `
-                                    <label for="videoInput${modulo.id_modulo}" class="custom-file-upload" style="background-color: #eeeeef; color: black; padding: 8px 12px; cursor: pointer; border-radius: 5px; display: inline-block; text-align: center;">
+                                    <label for="pdfInput${modulo.id_modulo}" class="custom-file-upload" style="background-color: #eeeeef; color: black; padding: 8px 12px; cursor: pointer; border-radius: 5px; display: inline-block; text-align: center;">
                                         Elegir Examen
                                     </label>
-                                    <input type="file" id="videoInput${modulo.id_modulo}" accept="video/*" required style="display: none;">
-                                    <button type="button" onclick="subirVideo(${modulo.id_modulo})">Subir Examen</button>
+                                    <input type="file" id="pdfInput${modulo.id_modulo}" accept="application/pdf" required style="display: none;">
+                                    <button type="button" onclick="subirPdf(${modulo.id_modulo})">Subir Examen</button>
                                 `
                             }
                             moduloDiv.appendChild(videoDiv);
@@ -115,15 +115,18 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 function desplegar(id_curso) {
     var x = document.getElementsByClassName(`modulo-${id_curso}`);
+    const simbolo = document.getElementById(`simbolo${id_curso}`);
     for (let a of x) {
         if (a.style.display === "none") {
+            simbolo.textContent = "-";
             a.style.display = "flex";
         } else {
+            simbolo.textContent = "+";
             a.style.display = "none";
         }
     }
 }
-
+// CORREGIR ACA
 async function subirVideo(id_modulo) {
     const fileInput = document.getElementById(`videoInput${id_modulo}`);
     const file = fileInput.files[0];

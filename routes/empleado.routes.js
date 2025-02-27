@@ -38,7 +38,7 @@ router.get("/getPdf/:id", getPdf)
 router.post("/registrarCurso/:dni", registrarCurso)
 router.post("/verificarCodigo", verificarCodigo)
 
-router.post("/uploadpdf", uploadPdf); // /:dni&:id_modulo
+router.post("/uploadpdf", uploadPdf);
 router.get("/pdfs", getPdfs);
 router.get("/pdf/:id_modulo&:dni", getOnePdf);
 router.delete("/deletePdf/:id_evaluacion_empleado", deletePdf);

@@ -153,3 +153,24 @@ Content-Type: application/json
         "Seguridad y Normativas"
     ]
 }
+
+### OBTENER NOTAS
+GET http://localhost:3000/admin/obtenerNotas/11112222
+
+###
+GET http://localhost:3000/admin/listarDnis
+
+###
+GET http://localhost:3000/admin/contarModulos/23a4c19b-8b5a-4b96-83bb-2bfdd8a645df
+
+###
+GET http://localhost:3000/admin/showExamenesSubidos/11112222&12
+
+### fadf
+POST http://localhost:3000/admin/consolidarCertificado
+Content-Type: application/json
+
+{
+  "dni": "11112222",
+  "id_curso": "109c79e2-3c17-43f5-b812-d6a883ade4df"
+}

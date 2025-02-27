@@ -6,6 +6,11 @@ import { pool } from "../db.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
+function parseFecha(fecha) {
+    const [dia, mes, anio] = fecha.split('-');
+    return new Date(`${anio}-${mes}-${dia}`);
+}
+
 const llenarCertificado = async (req, res) => {
     try {
         const {nombre, curso, fecha, notaFinal, numCertificado, modulos} = req.body
@@ -28,7 +33,7 @@ const llenarCertificado = async (req, res) => {
 
         const nombres = nombre.toUpperCase();
         const cursos = curso.toUpperCase();
-        const fechas = new Intl.DateTimeFormat("es-ES", { dateStyle: "long" }).format(new Date(fecha));
+        const fechas = new Intl.DateTimeFormat("es-ES", { dateStyle: "long" }).format(new Date(parseFecha(fecha)));
         const notas = notaFinal.toString();
         const numCertificados = numCertificado.toString();
 
@@ -45,12 +50,6 @@ const llenarCertificado = async (req, res) => {
 
         segundaPagina.drawText(notas, { x: posiciones.notaFinal[0], y: posiciones.notaFinal[1], size: 15, color: rgb(0, 0, 0) });
         const temarioTexto = `${cursos}:\n\t${modulos.map((m, i) => `${i + 1}. ${m}`).join("\n\t")}`; 
-
-        /**
-         const temarioTexto = `${cursos}:
-        ${modulos.map((m, i) => `${i + 1}. ${m}`).join("\n")}`;  
-        **/
-        //segundaPagina.drawText(temarioTexto, { x: posiciones.temario[0], y: posiciones.temario[1], size: 15, color: rgb(0, 0, 0) });
         segundaPagina.drawText(temarioTexto, { x: posiciones.temario[0], y: posiciones.temario[1], size: 15, color: rgb(0, 0, 0) });
 
         const pdfBytes = await pdfDoc.save();
