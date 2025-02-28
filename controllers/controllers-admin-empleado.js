@@ -15,7 +15,7 @@ const registerEmployee = async (req, res) => {
             return res.status(400).json({ message: "Correo ya registrado" })
         }
 
-        const result = await pool.query( "INSERT INTO empleado (id_empleado, nombre, apellido, dni, correo, rol, fecha_registro, password) VALUES ($1, $2, $3, $4, $5, $6, NOW(), $4) RETURNING *", [newEmployee.id, newEmployee.nombre, newEmployee.apellido, newEmployee.dni, newEmployee.correo, newEmployee.rol])
+        const result = await pool.query( "INSERT INTO empleado (id_empleado, nombre, apellido, dni, correo, fecha_registro, password) VALUES ($1, $2, $3, $4, $5, NOW(), $4) RETURNING *", [newEmployee.id, newEmployee.nombre, newEmployee.apellido, newEmployee.dni, newEmployee.correo])
         res.status(201).json({ message: "Query sucessful", data: result.rows[0] });
     } catch (error) {
         console.log("Error:", error)
@@ -58,8 +58,8 @@ const deleteEmployee = async (req, res) => {
 const updateEmployee = async (req, res) => {
     try {
         const { id } = req.params
-        const { nombre, apellido, dni, correo, rol } = req.body
-        const result = await pool.query( "UPDATE empleado SET nombre = $1, apellido = $2, dni = $3, correo = $4, rol = $5 WHERE id_empleado = $6 RETURNING *", [nombre, apellido, dni, correo, rol, id])
+        const { nombre, apellido, dni, correo} = req.body
+        const result = await pool.query( "UPDATE empleado SET nombre = $1, apellido = $2, dni = $3, correo = $4 WHERE id_empleado = $5 RETURNING *", [nombre, apellido, dni, correo, id])
         res.status(200).json({ message: "Query sucessful", data: result.rows });
     } catch (error) {
         console.log("Error:", error)

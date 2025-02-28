@@ -17,7 +17,7 @@ const registerCurso = async (req, res) => {
 
         const newCurso = {id: cryto.randomUUID(), ...valid.data}
         const result = await pool.query(
-            "INSERT INTO curso (id_curso, nombre, descripcion, fecha_creacion, num_modulos, codigo) VALUES ($1, $2, $3, NOW()::DATE, $4, $5) RETURNING *", [newCurso.id, newCurso.nombre, newCurso.descripcion, newCurso.num_modulos, codigo]
+            "INSERT INTO curso (id_curso, nombre, descripcion, fecha_creacion, codigo) VALUES ($1, $2, $3, NOW()::DATE, $4 ) RETURNING *", [newCurso.id, newCurso.nombre, newCurso.descripcion, codigo]
         )
         res.status(201).json({ message: "Query sucessful", data: result.rows[0] });
     } catch (error) {
@@ -50,8 +50,8 @@ const showOneCurso = async (req, res) => {
 const updateCurso = async (req, res) => {
     try {
         const { id } = req.params
-        const { nombre, num_modulos, descripcion } = req.body
-        const result = await pool.query("UPDATE curso SET nombre = $1, num_modulos = $2, descripcion = $3 WHERE id_curso = $4 RETURNING *", [nombre, num_modulos, descripcion, id])
+        const { nombre, descripcion } = req.body
+        const result = await pool.query("UPDATE curso SET nombre = $1, descripcion = $3 WHERE id_curso = $4 RETURNING *", [nombre, descripcion, id])
         res.status(200).json({ message: "Query sucessful", data: result.rows });
     } catch (error) {
         console.log("Error:", error)

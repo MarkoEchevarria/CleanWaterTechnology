@@ -27,7 +27,6 @@ document.addEventListener("DOMContentLoaded", function() {
                         <td>${capitalizeFirstLetter(emp.apellido)}</td>
                         <td>${emp.dni}</td>
                         <td>${emp.correo}</td>
-                        <td>${capitalizeFirstLetter(emp.rol)}</td>
                         <td>
                             <button class="btn btn-primary modify-btn" onclick="recuperarEmpleado('${emp.id_empleado}')" style="padding: 20px auto; border-collapse: collapse; font-size: 18px; background-color:rgba(255, 234, 2, 0.87)"><i class="fa-solid fa-user-pen"></i></button>
 
@@ -118,7 +117,6 @@ function recuperarEmpleado(id_empleado) {
             document.getElementById("edit-apellidos").value = capitalizeFirstLetter(empleado.apellido);
             document.getElementById("edit-dni").value = empleado.dni;
             document.getElementById("edit-correo").value = empleado.correo;
-            document.getElementById("edit-rol").value = capitalizeFirstLetter(empleado.rol);
 
             const inputs = document.querySelectorAll('.input-text');
             inputs.forEach(input => {
@@ -137,11 +135,10 @@ function habilitarBoton(id_empleado) {
     const apellido = document.getElementById('edit-apellidos').value.trim();
     const dni = document.getElementById('edit-dni').value.trim();
     const correo = document.getElementById('edit-correo').value.trim();
-    const rol = document.getElementById('edit-rol').value.trim();
 
     const botonGuardar = document.getElementById('guardar-cambios');
 
-    if (nombre && apellido && dni && correo && rol) {
+    if (nombre && apellido && dni && correo) {
         botonGuardar.disabled = false;
         botonGuardar.style.color = '#fff';
         botonGuardar.style.backgroundColor = '#4CAF50'
@@ -158,7 +155,6 @@ function modificarEmpleado(id_empleado) {
     const apellido = document.getElementById("edit-apellidos").value;
     const dni = document.getElementById("edit-dni").value;
     const correo = document.getElementById("edit-correo").value;
-    const rol = document.getElementById("edit-rol").value;
 
     async function updateEmployee() {
         try {
@@ -167,7 +163,7 @@ function modificarEmpleado(id_empleado) {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ nombre, apellido, dni, correo, rol })
+                body: JSON.stringify({ nombre, apellido, dni, correo})
             })
             if (response.ok) {
                 location.reload();

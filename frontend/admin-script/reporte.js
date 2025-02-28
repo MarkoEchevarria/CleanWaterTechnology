@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     
                     const cursoElement = document.createElement("details");
                     cursoElement.classList.add("bg-white", "shadow-md", "rounded-lg", "p-5", "border-l-8", "border-teal-500");
-                    cursoElement.innerHTML = `<summary class='text-2xl font-bold text-teal-800 cursor-pointer'>${curso.nombre}</summary>`;
+                    cursoElement.innerHTML = `<summary class='text-2xl font-bold text-teal-800 cursor-pointer' style="font-size: 1em !important; padding: 1em !important">${curso.nombre}</summary>`;
                     
                     const modulosContainer = document.createElement("div");
                     modulosContainer.classList.add("mt-3", "space-y-3");
