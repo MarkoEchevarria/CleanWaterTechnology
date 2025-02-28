@@ -14,14 +14,16 @@ document.addEventListener("DOMContentLoaded", function() {
             console.log(userDNI)
             const response = await fetch(`/empleado/showCursos/${userDNI}`);
             const data = await response.json();
+            const noCursos = document.getElementById("noCursos");
             const cuadro_cursos = document.getElementById("cursos");
-            const mensaje_no_cursos = document.getElementById("mensaje-no-cursos");
+            // const mensaje_no_cursos = document.getElementById("mensaje-no-cursos");
 
             const RegresarButton = document.getElementById("RegresarButton");
             RegresarButton.setAttribute("onclick", `volverInicio(${userDNI})`);
 
             if (response.ok && data.data.length > 0) {
-                mensaje_no_cursos.style.display = "none";
+                noCursos.style.display = "none";
+                // mensaje_no_cursos.style.display = "none";
 
                 data.data.forEach(emp => {
                     const cuadroCurso = document.createElement("div");
@@ -48,6 +50,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     cuadro_cursos.appendChild(cuadroCurso);
                 });
             } else {
+                noCursos.style.display = "flex";
                 cuadro_cursos.innerHTML = "";
             }
         } catch (error) {

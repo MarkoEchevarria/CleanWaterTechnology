@@ -98,8 +98,8 @@ document.addEventListener("DOMContentLoaded", function() {
                     listaModulos.appendChild(curso_head);
                 };
             } else {
-                listaModulos.innerHTML = "";
-                main_modulos.style.display = "none";
+                listaModulos.style.display = "none";
+                main_modulos.style.display = "block";
                 noModulosMensaje.style.display = "block";
                 noModulosMensaje.textContent = "No hay módulos disponibles.";
             }

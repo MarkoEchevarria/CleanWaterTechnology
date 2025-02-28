@@ -29,12 +29,12 @@ document.addEventListener("DOMContentLoaded", function() {
                     }
                 }
 
-                data.data.forEach(emp => {
+                data.data.forEach(emp => {// emp.num_modulos
                     const fila = document.createElement("tr");
                     fila.innerHTML = `
                         <td>${capitalizeFirstLetter(emp.nombre)}</td>
                         <td>${capitalizeFirstLetter(emp.descripcion)}</td>
-                        <td>${emp.num_modulos}</td>
+                        <td>${ emp.num_modulos }</td> 
                         <td>${formatearFecha(emp.fecha_creacion)}</td>
                         <td>${emp.codigo}</td>
                         <td>
@@ -70,9 +70,10 @@ function registrarCurso() {
         const formData = new FormData(this);
         const data = Object.fromEntries(formData.entries());
 
+        /**
         if (data.num_modulos) {
             data.num_modulos = parseInt(data.num_modulos, 10);
-        }
+        } **/
 
         const response = await fetch("/admin/registerCurso", {
             method: "POST",
@@ -117,7 +118,7 @@ function recuperarCurso(id_curso) {
 
 function modificarCurso(id_curso) {
     const nombre = document.getElementById("edit-nombres").value;
-    const num_modulos = document.getElementById("edit-num_modulos").value;
+    // const num_modulos = document.getElementById("edit-num_modulos").value;
     const descripcion = document.getElementById("edit-descripcion").value;
 
     async function updateCurso() {
@@ -127,7 +128,7 @@ function modificarCurso(id_curso) {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ nombre, num_modulos, descripcion })
+                body: JSON.stringify({ nombre, descripcion }) //  num_modulos, 
             })
             if (response.ok) {
                 location.reload();
@@ -143,12 +144,12 @@ function modificarCurso(id_curso) {
 
 function habilitarBoton(id_curso) {
     const nombre = document.getElementById('edit-nombres').value.trim();
-    const num_modulos = document.getElementById('edit-num_modulos').value.trim();
+    // const num_modulos = document.getElementById('edit-num_modulos').value.trim();
     const descripcion = document.getElementById('edit-descripcion').value.trim();
 
     const botonGuardar = document.getElementById('guardar-cambios');
 
-    if (nombre && num_modulos && descripcion) {
+    if (nombre && descripcion) { // num_modulos &&
         botonGuardar.disabled = false;
         botonGuardar.style.color = '#fff';
         botonGuardar.style.backgroundColor = '#4CAF50'
