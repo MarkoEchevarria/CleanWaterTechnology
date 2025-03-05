@@ -4,7 +4,7 @@ const empleadoSchema = z.object({
     nombre: z.string(),
     apellido: z.string(),
     dni: z.string().length(8),
-    rol: z.string(),
+    // rol: z.string(),
     correo: z.string().email(),
 })
 

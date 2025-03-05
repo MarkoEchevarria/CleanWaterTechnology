@@ -5,14 +5,14 @@ GET http://localhost:3000/showEmployee
 GET http://localhost:3000/showOneEmployee/788eeec8-9f69-4661-9dad-bea397a8a35b
 
 ### POST registerEmployee
-POST http://localhost:3000/registerEmployee
+POST http://localhost:3000/admin/registerEmployee
 Content-Type: application/json
 
 {
   "id_empleado": 1,
   "nombre": "Marko",
   "apellido": "Echevarria",
-  "dni": 12345678,
+  "dni": "12345678",
   "correo": "markofidel10@gmail.com",
   "rol": "estudiante"
 }
