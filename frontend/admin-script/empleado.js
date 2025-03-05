@@ -60,6 +60,7 @@ function registrarEmpleado() {
         event.preventDefault();
         const formData = new FormData(this);
         const data = Object.fromEntries(formData.entries());
+        console.log(data)
     
         const response = await fetch("/admin/registerEmployee", {
             method: "POST",
