@@ -27,6 +27,12 @@ https://cleanwatertechnology.onrender.com
 - Express.js
 - PostgreSQL
 
+## 
+
+![Vista de Inicio](inicio.png)
+![Vista de Bienvenida de Admin](admin.png)
+![Vista de Bienvenida de Usuario](usuario.png)
+
 ## Database Diagram
 
 ![ERD Diagram](database/db_postgresql.png)
