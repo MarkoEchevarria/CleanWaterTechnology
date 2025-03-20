@@ -27,7 +27,7 @@ https://cleanwatertechnology.onrender.com
 - Express.js
 - PostgreSQL
 
-## Vistas de Inicio
+## User Views
 
 ![Vista de Inicio](inicio.png)
 ![Vista de Bienvenida de Admin](admin.png)
