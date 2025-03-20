@@ -11,6 +11,11 @@ https://cleanwatertechnology.onrender.com
 * User: admin@gmail.com
 * Password: admin
 
+## Credentials Usuario
+
+* User: fidel@gmail.com
+* Password: 11112222
+
 ## Technologies Used
 
 - HTML
